@@ -1,0 +1,192 @@
+html,
+body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #F1BA86;
+}
+
+header {
+    background-color: #614E3B;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 15px 5px 15px;
+}
+
+.logo {
+    width: 80px;
+}
+header input {
+    height: 35px;
+    border-radius: 100px;
+    width: 40%;
+}
+#menu{
+    width: 60px;
+}
+nav {
+    background-color: #D0B389;
+    padding: 5px 15px 5px 15px;
+    display: flex;
+    justify-content: space-evenly;
+}
+nav a {
+    font-size: 23px;
+    text-decoration: none;
+    color: black;
+}
+.MenuDelDia {
+    width: 100%;
+    height: 25%;
+    background-color: #474740;
+    overflow: hidden;
+    margin: 0;
+    color: antiquewhite;
+}
+.MenuDelDia img {
+    height: 150%;
+    width: 50%;
+    margin-right: 30px;
+    float: left;
+}
+/* Agrega estos estilos en tu archivo CSS */
+
+/* Estilo general para el main */
+main {
+    padding: 20px;
+    text-align: center;
+    padding-top: 0;
+}
+
+/* Estilo para el título "Historial de Pedidos" */
+h4 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+/* Estilo para el contenedor del historial de pedidos */
+.historial-pedidos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Estilo para los títulos de las columnas */
+.pedido-titulo {
+    display: flex;
+    background-color: #D0B389;
+    padding: 8px;
+    width: 100%;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    align-items: center;
+
+
+}
+
+/* Estilo para cada fila de pedido */
+.pedido {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #474740;
+    border-bottom: 1px solid #474740;
+    padding: 10px;
+    width: 100%;
+}
+
+/* Estilo para la imagen del producto */
+.imagen-producto {
+    width: 60px; /* Ajusta el tamaño de la imagen según tus necesidades */
+    height: 60px; /* Ajusta el tamaño de la imagen según tus necesidades */
+    object-fit: cover;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+/* Estilo para el nombre del producto */
+.nombre-producto {
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+/* Estilo para la descripción del producto */
+.descripcion-producto {
+    font-size: 16px;
+    margin: 0;
+}
+
+/* Estilo para el precio del producto */
+.precio-producto {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Estilo para el estado del pedido */
+.estado-producto {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+    color: green; /* Puedes cambiar el color según el estado (Listo, En proceso, Pendiente) */
+}
+
+.N_orden {
+    width: 80px;
+    margin-right: 20px;
+} 
+
+.nom {
+    width: 250px;
+    margin-right: 20px;
+}
+.desc, .descripcion-producto{
+    width: 650px;
+    margin-right: 20px;
+}
+
+.pres, .precio-producto {
+    width: 70px;
+    margin-right: 20px;
+}
+
+.esta, .estado-producto{
+    width: 100px;
+}
+
+
+footer {
+    background-color: #474740;
+    color: antiquewhite;
+    line-height: 20px;
+    padding: 10px;
+    display: flex;
+    list-style: none;
+
+    justify-content: space-evenly;
+    
+}
+
+footer a {
+    text-decoration: none;
+    color:antiquewhite;
+    display: flex;
+}
+
+ul {
+    padding-left: 20px;
+    list-style: none;
+}
+
+.izqui {
+    grid-row: 1;
+    grid-column: 1;
+}
+ul {
+    padding-left: 20px;
+    list-style: none;
+
+}
