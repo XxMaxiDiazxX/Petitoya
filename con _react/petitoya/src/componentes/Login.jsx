@@ -1,24 +1,49 @@
-import "../styles/index.css"
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
 export const Login = () => {
   return (
-      <div class="cont-cont">
-        <div class="contefoto"></div>
-        <div class="relleno">
-          <h4>Inicio Sesion</h4>
-          <form action="php/inicio sesion.php" class="mames" onsubmit="return validarFormulario()" method="post">
-            <input type="text" name="documento" class="usua" placeholder="Documento" required />
-            <input id="password" type="password" name="contrasena" class="contra" placeholder="Contraseña" required />
-            <span class="error" id="mensajeContrasena"></span>
-            <button type="submit">Ingresar</button>
-          </form>
-          <div class="botones-inferiores">
-            <a class="boton-registro" href="/registro">Registro</a>
-            <a class="boton-invitado" href="/">Invitado</a>
+    <div className="container mt-5">
+      <h1>Iniciar Sesión</h1>
+      <Formik
+        initialValues={{ username: '', password: '' }}
+        validationSchema={Yup.object({
+          username: Yup.string()
+            .required('El nombre de usuario es obligatorio'),
+          password: Yup.string()
+            .required('La contraseña es obligatoria')
+        })}
+        onSubmit={(values) => {
+          console.log('Inicio de sesión exitoso:', values);
+        }}
+      >
+        <Form>
+          <div className="form-group">
+            <label htmlFor="username">Nombre de usuario</label>
+            <Field
+              type="text"
+              name="username"
+              className="form-control"
+              placeholder="Tu nombre de usuario"
+            />
+            <ErrorMessage name="username" component="div" className="text-danger" />
           </div>
-        </div>
-      </div>
+
+          <div className="form-group">
+            <label htmlFor="password">Contraseña</label>
+            <Field
+              type="password"
+              name="password"
+              className="form-control"
+              placeholder="Tu contraseña"
+            />
+            <ErrorMessage name="password" component="div" className="text-danger" />
+          </div>
+
+          <button type="submit" className="btn btn-primary">Iniciar Sesión</button>
+        </Form>
+      </Formik>
+    </div>
   );
 }
-
-export default Login;
