@@ -4,9 +4,7 @@ import ReactDOM from 'react-dom/client'
 // import Login from './componentes/login'
 import { Webos } from './Webos'
 import { BrowserRouter } from 'react-router-dom'
-
-
-import 'bootstrap/dist/css/bootstrap.min.css'
+//import './styles/custom.scss'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
