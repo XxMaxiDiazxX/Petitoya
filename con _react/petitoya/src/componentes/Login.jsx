@@ -10,7 +10,7 @@ export const Login = () => {
 
   return (
     <div className="login">
-      <div className="cont-cont">
+      <div className="cont-cont bg-white">
         <div className="contefoto"></div>
         <div className="relleno">
           <h4>Inicio Sesion</h4>

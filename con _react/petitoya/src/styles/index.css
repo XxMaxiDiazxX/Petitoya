@@ -41,7 +41,7 @@ body {
 }
 
 .contefoto {
-    background-image: url(".../img/cafe.jpg");
+    background-image: url("../img/cafe.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     height: 100%;
