@@ -76,6 +76,18 @@ body {
     width: 85%;
     align-items: center;
 }
+.red{
+    border: red solid 2px;
+}
+.Init{
+    padding: 20px;
+    border: red solid 2px;
+    width: 100%;
+}
+
+.cosa{
+    width: 85%;
+}
 .mames button{
     width: max-content;
     height: max-content;
