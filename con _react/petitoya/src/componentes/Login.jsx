@@ -2,6 +2,7 @@ import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import '../styles/index.css';
+import { Link } from 'react-router-dom';
 
 
 export const Login = () => {
@@ -63,8 +64,8 @@ export const Login = () => {
             </Form>
           </Formik>
           <div class="container-sm">
-                <a class="" href="registro.html">Registro</a>
-                <a class="" href="inicio.html">Invitado</a>
+                <a class=""><Link to="/inicio">Invitado</Link></a>
+                <a class="">Registro</a>
           </div>
         </div>
       </div>

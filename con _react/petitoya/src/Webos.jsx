@@ -10,11 +10,11 @@ import { Routes, Route } from 'react-router-dom'
 
 export const Webos = () => {
     return (
+        
         <Routes>
             <Route exact path="/" Component={Login} />
-            
-            <Route path="/hola" Component={BasicExample} />
-            <Route path="/bar" Component={BarraNavegacion} /> 
+            <Route path="/registro" Component={BasicExample} />
+            <Route path="/Inicio" Component={BarraNavegacion} /> 
         </Routes>
     );
 }
