@@ -42,7 +42,7 @@ export const BarraNavegacion = () => {
 
       <Navbar expand="lg" className="bg-Barra" data-bs-theme="light" class="">
         <Container>
-          <Nav.Link><Link to='#'>inicio</Link></Nav.Link>
+          <Nav.Link><Link to=''>inicio</Link></Nav.Link>
           <Nav.Link><Link to='menu'>menu</Link></Nav.Link>
           <Nav.Link href="#link">pedidos</Nav.Link>
         </Container>
