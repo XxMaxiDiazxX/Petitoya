@@ -5,11 +5,11 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import React from 'react';
+import { Inicio } from './Product/Inicio';
 import BasicExample from './Home';
-import { Link } from 'react-router-dom';
 
 
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Link } from 'react-router-dom'
 
 
 export const BarraNavegacion = () => {
@@ -43,13 +43,14 @@ export const BarraNavegacion = () => {
       <Navbar expand="lg" className="bg-Barra" data-bs-theme="light" class="">
         <Container>
           <Nav.Link><Link to='/'>inicio</Link></Nav.Link>
-          <Nav.Link href="/">menu</Nav.Link>
+          <Nav.Link><Link to='/inicio/menu'>menu</Link></Nav.Link>
           <Nav.Link href="#link">pedidos</Nav.Link>
         </Container>
       </Navbar>
 
       <Routes>
-        <Route exact path="/" Component={BasicExample} />
+        <Route path="/" Component={Inicio} />
+        <Route path="/menu" component={BasicExample} />
       </Routes>
 
 

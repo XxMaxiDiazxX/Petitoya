@@ -36,7 +36,7 @@ export const Login = () => {
               console.log('Inicio de sesion Exitoso', values);
             }}
           >
-            <Form className='container-sm red d-grid text-center mb-5'>
+            <Form className='container-sm d-grid text-center mb-5'>
               <div className='form-group mb-4'>
                 <label htmlFor="documento" >Nombre de usuario</label>
                 <Field
@@ -63,7 +63,7 @@ export const Login = () => {
               <button type="submit" className="btn btn-custom-color nuevo ">Iniciar Sesion</button>
             </Form>
           </Formik>
-          <div class="container-sm">
+          <div class="container-sm red">
                 <a class=""><Link to="/inicio">Invitado</Link></a>
                 <a class="">Registro</a>
           </div>
