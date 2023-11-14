@@ -33,7 +33,7 @@ export const BarraNavegacion = () => {
           <NavDropdown title="cuenta" id="basic-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">cuenta</NavDropdown.Item>
             <NavDropdown.Item href="#action/3.2">configuracion</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">cerrar sesion</NavDropdown.Item>
+            <NavDropdown.Item><Link to='/'>cerrar sesion</Link></NavDropdown.Item>
           </NavDropdown>
         </Container>
       </Navbar>
@@ -42,15 +42,15 @@ export const BarraNavegacion = () => {
 
       <Navbar expand="lg" className="bg-Barra" data-bs-theme="light" class="">
         <Container>
-          <Nav.Link><Link to='/'>inicio</Link></Nav.Link>
-          <Nav.Link><Link to='/inicio/menu'>menu</Link></Nav.Link>
+          <Nav.Link><Link to='#'>inicio</Link></Nav.Link>
+          <Nav.Link><Link to='menu'>menu</Link></Nav.Link>
           <Nav.Link href="#link">pedidos</Nav.Link>
         </Container>
       </Navbar>
 
       <Routes>
-        <Route path="/" Component={Inicio} />
-        <Route path="/menu" component={BasicExample} />
+        <Route exaxt path="/" Component={Inicio} />
+        <Route path="menu" Component={BasicExample} />
       </Routes>
 
 

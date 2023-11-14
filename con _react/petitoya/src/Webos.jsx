@@ -1,8 +1,8 @@
 import React from 'react';
-import { Login } from './componentes/login';
 import BasicExample from './componentes/Home';
 import { BarraNavegacion } from './componentes/BarraNavegacion';
 import './styles/custom.scss'
+import {Login} from './componentes/Login';
 
 
 
@@ -14,7 +14,7 @@ export const Webos = () => {
         <Routes>
             <Route exact path="/" Component={Login} />
             <Route path="/registro" Component={BasicExample} />
-            <Route path="/Inicio" Component={BarraNavegacion} /> 
+            <Route path="inicio/*" Component={BarraNavegacion} /> 
         </Routes>
     );
 }
