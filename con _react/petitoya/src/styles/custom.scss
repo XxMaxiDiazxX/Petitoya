@@ -24,6 +24,24 @@ $custom-colors: (
   bottom: 0;
 }
 
+.MenuDelDia {
+  width: 100%;
+  height: 25%;
+  background-color: #474740;
+  overflow: hidden;
+  margin: 0;
+  color: antiquewhite;
+
+  img {
+    height: 150%;
+    width: 50%;
+    margin-right: 30px;
+    float: left;
+  }
+
+  
+}
+
 // Merge the maps
 $theme-colors: map-merge($theme-colors, $custom-colors);
 
