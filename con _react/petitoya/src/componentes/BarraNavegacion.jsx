@@ -6,10 +6,9 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import React from 'react';
 import { Inicio } from './Product/Inicio';
-import BasicExample from './Home';
-
 
 import { Routes, Route, Link } from 'react-router-dom'
+import { Menu } from './menu/Menu';
 
 
 export const BarraNavegacion = () => {
@@ -50,7 +49,7 @@ export const BarraNavegacion = () => {
 
       <Routes>
         <Route exaxt path="/" Component={Inicio} />
-        <Route path="menu" Component={BasicExample} />
+        <Route path="menu" Component={Menu} />
       </Routes>
 
 
