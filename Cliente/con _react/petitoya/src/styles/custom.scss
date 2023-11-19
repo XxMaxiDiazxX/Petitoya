@@ -1,0 +1,109 @@
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/variables-dark";
+
+
+$bont: #614E3B;
+
+// Create your own map
+$custom-colors: (
+  "Barra": #D0B389,
+  "Barra2": #614E3B
+);
+
+.no-padding {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.custom-height {
+  height: 75%;
+  /* 75% de la altura de la ventana */
+}
+
+.abajo {
+  bottom: 0;
+}
+
+.MenuDelDia {
+  width: 100%;
+  height: 25%;
+  background-color: #474740;
+  overflow: hidden;
+  margin: 0;
+  color: antiquewhite;
+
+  img {
+    height: 150%;
+    width: 50%;
+    margin-right: 30px;
+    float: left;
+  }
+}
+
+// styles.scss
+
+// ... (otros componentes y estilos)
+
+
+main {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  padding: 0 15px;
+
+  h2 {
+    display: block;
+  }
+}
+
+
+.comidas,
+.bebidas {
+  display: flex;
+  flex-direction: column;
+
+  .cartel {
+    display: flex;
+    align-items: center;  // Centra verticalmente los elementos
+  
+    .imagen {
+      border-radius: 50%;
+      height: 80px;
+      width: 80px;
+      margin-right: 15px;
+      flex-shrink: 0;  // Evita que la imagen se reduzca para ajustarse
+        }
+    
+    .card-body {
+      flex: 1;  // Hace que el contenido ocupe todo el espacio restante horizontalmente
+
+      .nombre {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .descripcion {
+        margin-bottom: 1rem;
+      }
+
+      .precio {
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+// ... (resto de estilos)
+
+
+
+// ... (resto de estilos)
+
+
+
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';

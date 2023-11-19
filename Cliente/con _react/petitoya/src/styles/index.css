@@ -1,0 +1,125 @@
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    display: flex;
+    background-color: rgb(253, 228, 113);
+    justify-content: center;
+    align-items: center;
+}
+
+#root {
+    height: 100%;
+    width: 100%;
+
+}
+
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(253, 228, 113);
+    height: 100%;
+    width: 100%;
+
+}
+
+.cont-cont{
+    height: 75%;
+    width: 75%;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    background-color: #614E3B;
+
+}
+
+.contefoto {
+    background-image: url("../img/cafe.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 50%;
+    border-radius: 20px;
+}
+
+.relleno {
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: #614E3B;
+    height: 100%;
+    width: 50%;
+    
+
+    position: relative;
+    
+    justify-content: center;
+    align-items: center;
+}
+
+.relleno h4{
+    color: white;
+}
+
+.mames{
+    height: max-content;
+    flex-direction: column;
+    gap: 15px;
+    display: flex;
+    width: 85%;
+    align-items: center;
+}
+.red{
+    border: red solid 2px;
+}
+.Init{
+    padding: 20px;
+    border: red solid 2px;
+    width: 100%;
+}
+
+.cosa{
+    width: 85%;
+}
+.mames button{
+    width: max-content;
+    height: max-content;
+    padding: 7px 35px 7px 35px;
+    cursor: pointer;
+}
+.usua, .contra {
+    height: 30px;
+    width: 100%;
+    text-align: center;
+}
+
+.botones-inferiores {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+    position: absolute;
+    bottom: 0;
+
+}
+
+.boton-registro, .boton-invitado, .mames button {
+    width: min-content;
+    height: min-content;
+    padding: 7px 35px 7px 35px;
+    cursor: pointer;
+    background-color: #F1BA86;
+    border: #F4EEE2 1px solid;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    border-radius: 3px;
+
+    text-decoration: none;
+    color: black;
+
+}
+
