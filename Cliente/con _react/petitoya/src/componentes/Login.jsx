@@ -1,14 +1,18 @@
-import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import '../styles/index.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 import axios from 'axios';
-
+import { useState } from 'react';
+import { useAuth } from './autenticacion/AuthContext';
 
 export const Login = () => {
 
+  const [error, setError] = useState('');
 
+  const { login: authLogin } = useAuth();
+
+  const navigate = useNavigate();
 
   return (
     <div className="login">
@@ -37,10 +41,14 @@ export const Login = () => {
               axios.post('http://localhost:3001/login', values)
                 .then(response => {
                   console.log('Inicio de sesión exitoso:', response.data);
+                  authLogin(response.data.user); // Cambia a authLogin
                   // Realizar acciones adicionales después del inicio de sesión
+                  navigate('/inicio');
+                  
                 })
                 .catch(error => {
                   console.error('Error de inicio de sesión:', error.response.data);
+                  setError(error.response.data.error);
                 })
                 .finally(() => {
                   setSubmitting(false);
@@ -48,6 +56,7 @@ export const Login = () => {
             }}
           >
             <Form className='container-sm d-grid text-center mb-5'>
+              {error && <div className="text-danger fs-6 lh-1">{error}</div>}
               <div className='form-group mb-4'>
                 <label htmlFor="documento" >Nombre de usuario</label>
                 <Field
@@ -74,9 +83,9 @@ export const Login = () => {
               <button type="submit" className="btn btn-custom-color nuevo ">Iniciar Sesion</button>
             </Form>
           </Formik>
-          <div class="container-sm red">
-            <a class=""><Link to="/inicio">Invitado</Link></a>
-            <a class="">Registro</a>
+          <div className="container-sm red">
+            <Link to="/inicio">Invitado</Link>
+            <Link to="/registro">Registro</Link>
           </div>
         </div>
       </div>

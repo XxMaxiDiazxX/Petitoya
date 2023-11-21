@@ -5,11 +5,14 @@ import ReactDOM from 'react-dom/client'
 import { Webos } from './Webos'
 import { BrowserRouter } from 'react-router-dom'
 //import './styles/custom.scss'
+import { AuthProvider } from './componentes/autenticacion/AuthContext'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Webos />
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Webos />
+      </BrowserRouter>
+    </AuthProvider>
   </React.StrictMode>,
 )

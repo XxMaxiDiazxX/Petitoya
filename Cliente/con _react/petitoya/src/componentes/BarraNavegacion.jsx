@@ -7,11 +7,23 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import React from 'react';
 import { Inicio } from './Product/Inicio';
 
-import { Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route, Link, useNavigate } from 'react-router-dom'
 import { Menu } from './menu/Menu';
+import { useAuth } from './autenticacion/AuthContext';
+
 
 
 export const BarraNavegacion = () => {
+
+  const { isLoggedIn, logout, user} = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
+
   return (
     <>
 
@@ -29,20 +41,27 @@ export const BarraNavegacion = () => {
             />
             <Button variant="outline-success">Search</Button>
           </Form>
-          <NavDropdown title="cuenta" id="basic-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">cuenta</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">configuracion</NavDropdown.Item>
-            <NavDropdown.Item><Link to='/'>cerrar sesion</Link></NavDropdown.Item>
-          </NavDropdown>
+          {isLoggedIn ? (
+            <NavDropdown title="Cuenta" id="basic-nav-dropdown">
+              <NavDropdown.Item href="#action/3.1">Bienvenido, {user.username}</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">Configuración</NavDropdown.Item>
+              <NavDropdown.Item onClick={handleLogout}>Cerrar Sesión</NavDropdown.Item>
+            </NavDropdown>
+          ) : (
+            <NavDropdown title="Cuenta" id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to="/">Iniciar Sesión</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/registro">Registro</NavDropdown.Item>
+            </NavDropdown>
+          )}
         </Container>
       </Navbar>
 
       {/* aca esta la barra de navegacion con las opciones inicio, menu, pedidos */}
 
-      <Navbar expand="lg" className="bg-Barra" data-bs-theme="light" class="">
+      <Navbar expand="lg" className="bg-Barra" data-bs-theme="light" >
         <Container>
-          <Nav.Link><Link to=''>inicio</Link></Nav.Link>
-          <Nav.Link><Link to='menu'>menu</Link></Nav.Link>
+          <Nav.Link as={Link} to=''>inicio</Nav.Link>
+          <Nav.Link as={Link} to='menu'>menu</Nav.Link>
           <Nav.Link href="#link">pedidos</Nav.Link>
         </Container>
       </Navbar>
