@@ -10,7 +10,7 @@ import { Inicio } from './Product/Inicio';
 import { Routes, Route, Link, useNavigate } from 'react-router-dom'
 import { Menu } from './menu/Menu';
 import { useAuth } from './autenticacion/AuthContext';
-
+import {PieDePagina} from './PieDePagina'
 
 
 export const BarraNavegacion = () => {
@@ -26,7 +26,6 @@ export const BarraNavegacion = () => {
 
   return (
     <>
-
       {/* aca esta la barra de menu, con la barra de busqueda, logo y menu del usuario */}
 
       <Navbar expand="lg" className="bg-Barra2" style={{ height: '9%' }}>
@@ -69,37 +68,11 @@ export const BarraNavegacion = () => {
       <Routes>
         <Route exaxt path="/" Component={Inicio} />
         <Route path="menu" Component={Menu} />
+
       </Routes>
 
+      <PieDePagina/>
 
-      <footer className="bg-dark text-light mt-5">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-4">
-              <h2>Redes sociales</h2>
-              <ul>
-                <li><a href="">Nombre_intragram</a></li>
-                <li><a href="">Nombre_intragram</a></li>
-              </ul>
-            </div>
-            <div className="col-md-4">
-              <h2>Contacto</h2>
-              <ul>
-                <li><a href="mailto:johansebastianvelezortiz@gmail.com">johansebastianvelezortiz@gmail.com</a></li>
-                <li><a href="tel:3214140078">3214140078</a></li>
-              </ul>
-            </div>
-            <div className="col-md-4">
-              <h2>Nosotros</h2>
-              <ul>
-                <li><a href="">Misión</a></li>
-                <li><a href="">Visión</a></li>
-                <li><a href="">Términos y condiciones</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </footer>
     </>
   )
 }
