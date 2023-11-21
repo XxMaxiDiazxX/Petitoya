@@ -14,24 +14,35 @@ const db = mysql.createConnection({
     database: 'petitoya'
 });
 
-// app.post("/create", (req, res) =>{
-//     const id = req.body.id;
-//     const nombre = req.body.nombre;
-//     const direccion = req.body.direccion;
-//     const correo_electronico = req.body.correo_electronico;
-//     const telefono = req.body.telefono;
-//     const contrasena = req.body.contrasena;
+app.post("/create", (req, res) => {
+    const documento = req.body.documento;
+    const nombre = req.body.nombre;
+    const correo_electronico = req.body.correo_electronico;
+    const telefono = req.body.telefono;
+    const contrasena = req.body.contrasena;
 
-//     db.query('INSERT INTO CLIENTES (id_cliente,nombre,direccion,correo_electronico,telefono,contrasena) VALUES (?,?,?,?,?,?,Now())', [id, nombre, direccion, correo_electronico, telefono, contrasena],
-//     (err, result) => {
-//         if(err){
-//             console.log(err);
-//         }else{
-//             res.send(result);
-//         }
-//     }
-//     );
-// });
+    db.query('INSERT INTO clientes VALUES (?,?,?,?,?,NOW())', [documento, nombre, correo_electronico, telefono, contrasena],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                res.status(500).json({ error: 'Error interno del servidor' });
+            } else {
+                // Verifica si se insertó correctamente y devuelve información del usuario
+                if (result.affectedRows > 0) {
+                    const user = {
+                        documento: documento,
+                        nombre: nombre,
+                        correo_electronico: correo_electronico,
+                        telefono: telefono,
+                    };
+                    res.status(200).json({ message: 'Registro exitoso', user });
+                } else {
+                    res.status(500).json({ error: 'No se pudo insertar el usuario' });
+                }
+            }
+        }
+    );
+});
 
 app.post("/login", (req, res) => {
     const { documento, contrasena } = req.body;
@@ -57,6 +68,6 @@ app.post("/login", (req, res) => {
 });
 
 
-app.listen(3001,()=>{
+app.listen(3001, () => {
     console.log("Corriendo en el puerto 3001");
 });

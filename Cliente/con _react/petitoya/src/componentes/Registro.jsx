@@ -1,7 +1,12 @@
-import React from 'react';
+import axios from 'axios';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { useState } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+
+
+
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import './RegistroForm.css'; // Este será tu archivo de estilos personalizados
 
@@ -13,6 +18,7 @@ export const Registro = () => {
         correo_electronico: '',
         contrasena: '',
         confirmar_contrasena: '',
+        telefono: '',
     };
 
     const validationSchema = Yup.object().shape({
@@ -20,16 +26,56 @@ export const Registro = () => {
         apellido: Yup.string().matches(/[A-Za-z]+/, 'Ingrese un apellido válido').required('Campo requerido'),
         documento: Yup.number().required('Campo requerido'),
         correo_electronico: Yup.string().email('Ingrese un correo electrónico válido').required('Campo requerido'),
-        contrasena: Yup.string().required('Campo requerido'),
-        confirmar_contrasena: Yup.string()
+        contrasena: Yup
+            .string()
+            .min(6, 'La contrasena debe tener al menos 6 caracteres')
+            .matches(
+                /^(?=.*\d)(?=.*[A-Z])(?=.*[\W_]).*$/,
+                'La contrasena debe contener al menos un numero, una letra mayuscula y un caracter especial'
+            )
+            .required('Campo requerido'),
+        confirmar_contrasena: Yup
+            .string()
             .oneOf([Yup.ref('contrasena'), null], 'Las contraseñas deben coincidir')
             .required('Campo requerido'),
+        telefono: Yup
+            .number()
+            .required('Campo requerido'),
+
     });
 
-    const onSubmit = (values) => {
-        // Aquí puedes manejar la lógica de envío del formulario
-        console.log(values);
+    const [registrationError, setRegistrationError] = useState(null);
+    const navigate = useNavigate();
+
+
+    const onSubmit = (values, { setSubmitting }) => {
+        axios.post('http://localhost:3001/create', values)
+            .then(response => {
+                console.log('Registro exitoso:', response.data);
+                // Realizar acciones adicionales después del registro exitoso
+                handleSuccessfulRegistration(response.data);
+            })
+            .catch(error => {
+                console.error('Error de registro:', error.response?.data);
+                setRegistrationError(error.response?.data?.error || 'Error de registro');
+            })
+            .finally(() => {
+                setSubmitting(false);
+            });
     };
+
+    const handleSuccessfulRegistration = (userData) => {
+        console.log('Acciones después del registro exitoso:', userData);
+
+        // Por ejemplo, puedes actualizar el estado de autenticación
+        // o redirigir a otra página
+        // authLogin(userData);
+
+        // Redirigir a la página de inicio, ajusta esto según tu enrutamiento
+        navigate('/');
+    };
+
+
 
     return (
         <Container className="cont-cont justify-content-center">
@@ -42,6 +88,12 @@ export const Registro = () => {
                 >
 
                     <Form className="mames">
+                        {registrationError && (
+                            <div className="alert alert-danger" role="alert">
+                                {registrationError}
+                            </div>
+                        )}
+
                         <Row className="mb-3">
                             <Col>
                                 <label htmlFor="nombre">Nombre:</label>
@@ -75,6 +127,18 @@ export const Registro = () => {
                                 />
                                 <ErrorMessage name="documento" component="span" className="error" />
                             </Col>
+                            <Col>
+                                <label htmlFor="telefono">Teléfono:</label>
+                                <Field
+                                    type="tel"
+                                    name="telefono"
+                                    className="form-control usua"
+                                    placeholder="Ingrese su teléfono"
+                                />
+                                <ErrorMessage name="telefono" component="span" className="error" />
+                            </Col>
+                        </Row>
+                        <Row className="mb-3">
                             <Col>
                                 <label htmlFor="correo_electronico">Correo Electrónico:</label>
                                 <Field
