@@ -63,8 +63,8 @@ export const BarraNavegacion = () => {
       <Navbar expand="lg" className="bg-Barra" data-bs-theme="light">
         <Container>
           <Nav.Link as={Link} to="/">inicio</Nav.Link>
-          <Nav.Link as={Link} to="/menu">menu</Nav.Link>
-          <Nav.Link href="#link">pedidos</Nav.Link>
+          <Nav.Link as={Link} to="menu">menu</Nav.Link>
+          <Nav.Link as={Link} to="pedidos">pedidos</Nav.Link>
           {isLoggedIn && isAdmin && (
             <Nav.Link as={Link} to='admin'>Ruta Privada Admin</Nav.Link>
           )}
@@ -74,7 +74,7 @@ export const BarraNavegacion = () => {
       <Routes>
         <Route exact path="/" Component={Inicio} />
         <Route path="menu" Component={Menu} />
-        <Route path='Pedidos' Component={Pedidos} />
+        <Route path='pedidos' Component={Pedidos} />
         <Route path="admin" element={<RutaPrivadaAdmin element={<Admin />} />} />
       </Routes>
 
