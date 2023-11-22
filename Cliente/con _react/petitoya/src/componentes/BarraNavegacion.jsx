@@ -62,7 +62,7 @@ export const BarraNavegacion = () => {
 
       <Navbar expand="lg" className="bg-Barra" data-bs-theme="light">
         <Container>
-          <Nav.Link as={Link} to="/">inicio</Nav.Link>
+          <Nav.Link as={Link} to="">inicio</Nav.Link>
           <Nav.Link as={Link} to="menu">menu</Nav.Link>
           <Nav.Link as={Link} to="pedidos">pedidos</Nav.Link>
           {isLoggedIn && isAdmin && (
