@@ -62,7 +62,7 @@ export const BarraNavegacion = () => {
         <Container>
           <Nav.Link as={Link} to=''>inicio</Nav.Link>
           <Nav.Link as={Link} to='menu'>menu</Nav.Link>
-          <Nav.Link href="#link">pedidos</Nav.Link>
+          <Nav.Link as={Link} to='pedidos'>pedidos</Nav.Link>
         </Container>
       </Navbar>
 
