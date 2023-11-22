@@ -28,7 +28,7 @@ const Comidas = ({ productos }) => (
   </>
 );
 
-const Menu = () => {
+export const Menu = () => {
   const [productos, setProductos] = useState([]);
 
   useEffect(() => {
@@ -57,5 +57,3 @@ const Menu = () => {
     </div>
   );
 };
-
-export default Menu;
