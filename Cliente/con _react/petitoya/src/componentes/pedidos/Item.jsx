@@ -13,13 +13,13 @@ const Pedido = ({ id_pedido, id_cliente, estado, fecha_compra }) => (
     </div>
 );
 
-export const Item = () => {
+export const Item = ({id_cliente}) => {
     const [pedidos, setPedidos] = useState([]);
 
     useEffect(() => {
         const fetchPedidos = async () => {
             try {
-                const response = await axios.get('http://localhost:3001/pedidos');
+                const response = await axios.get(`http://localhost:3001/pedidos/${id_cliente}`);
                 setPedidos(response.data);
             } catch (error) {
                 console.error('Error fetching Pedidos:', error);
@@ -27,7 +27,7 @@ export const Item = () => {
         };
 
         fetchPedidos();
-    }, []);
+}, [id_cliente]);
 
     return (
         <div className="sugerencias d-flex">
