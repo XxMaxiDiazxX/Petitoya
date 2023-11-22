@@ -63,6 +63,9 @@ export const BarraNavegacion = () => {
           <Nav.Link as={Link} to=''>inicio</Nav.Link>
           <Nav.Link as={Link} to='menu'>menu</Nav.Link>
           <Nav.Link href="#link">pedidos</Nav.Link>
+          {isLoggedIn && user.isAdmin && (
+            <Nav.Link as={Link} to='ruta-privada-admin'>Ruta Privada Admin</Nav.Link>
+          )}
         </Container>
       </Navbar>
 

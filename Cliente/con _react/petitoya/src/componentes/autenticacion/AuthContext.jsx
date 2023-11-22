@@ -19,16 +19,14 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   
-  const login = (userData) => {
-    setUser(userData);
-    setIsLoggedIn(true);
+const login = (userData) => {
+  const isAdmin = userData.Administrador === 1; // Suponiendo que 1 representa 'true' en tu base de datos
+  setUser({ ...userData, isAdmin });
+  setIsLoggedIn(true);
 
-    setUser({ ...userData, isAdmin: userData.role === 'admin' }); // Suponiendo que tienes una propiedad 'role' que indica el rol del usuario
-
-    localStorage.setItem('user', JSON.stringify(userData));
-    localStorage.setItem('isLoggedIn', JSON.stringify(true));
-
-  };
+  localStorage.setItem('user', JSON.stringify(userData));
+  localStorage.setItem('isLoggedIn', JSON.stringify(true));
+};
 
   const logout = () => {
     setUser(null);

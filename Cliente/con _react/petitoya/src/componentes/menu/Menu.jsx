@@ -13,20 +13,7 @@ const Producto = ({ nombre, descripcion, precio, imagenSrc }) => (
     </div>
   );
   
-// Componente Comidas (puedes tener algo similar para Bebidas)
-const Comidas = ({ productos }) => (
-    <>
-        {productos.map((producto, index) => (
-            <Producto
-                key={index}
-                nombre={producto.nombre}
-                descripcion={producto.descripcion}
-                precio={producto.precio}
-                imagenSrc={producto.imagen_url}
-            />
-        ))}
-    </>
-);
+
 
 export const Menu = () => {
     const [productos, setProductos] = useState([]);
