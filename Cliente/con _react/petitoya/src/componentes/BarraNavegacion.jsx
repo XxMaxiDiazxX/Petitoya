@@ -11,6 +11,7 @@ import { Routes, Route, Link, useNavigate } from 'react-router-dom'
 import { Menu } from './menu/Menu';
 import { useAuth } from './autenticacion/AuthContext';
 import {PieDePagina} from './PieDePagina'
+import {Pedidos} from './pedidos/Pedidos'
 
 
 export const BarraNavegacion = () => {
@@ -61,14 +62,14 @@ export const BarraNavegacion = () => {
         <Container>
           <Nav.Link as={Link} to=''>inicio</Nav.Link>
           <Nav.Link as={Link} to='menu'>menu</Nav.Link>
-          <Nav.Link href="#link">pedidos</Nav.Link>
+          <Nav.Link as={Link} to="Pedidos">pedidos</Nav.Link>
         </Container>
       </Navbar>
 
       <Routes>
         <Route exaxt path="/" Component={Inicio} />
         <Route path="menu" Component={Menu} />
-
+        <Route path='Pedidos' Component={Pedidos} />
       </Routes>
 
       <PieDePagina/>
