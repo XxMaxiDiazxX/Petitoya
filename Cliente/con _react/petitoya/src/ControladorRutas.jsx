@@ -5,7 +5,6 @@ import { Login } from './componentes/Login';
 import { Registro } from './componentes/Registro';
 
 
-
 import { Routes, Route } from 'react-router-dom'
 
 export const ControladorRutas = () => {

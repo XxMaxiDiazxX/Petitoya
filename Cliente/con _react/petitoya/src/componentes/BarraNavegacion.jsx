@@ -68,7 +68,7 @@ export const BarraNavegacion = () => {
 
       <Routes>
         <Route exaxt path="/" Component={Inicio} />
-        <Route path="menu" Component={Menu} />
+        {/* <Route path="menu" Component={} /> */}
 
       </Routes>
 
