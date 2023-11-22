@@ -6,17 +6,19 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import React from 'react';
 import { Inicio } from './Product/Inicio';
+import RutaPrivadaAdmin from './autenticacion/RutaPriavadaAdmin';
 
 
 import { Routes, Route, Link, useNavigate } from 'react-router-dom'
 import { Menu } from './menu/Menu';
 import { useAuth } from './autenticacion/AuthContext';
-import {PieDePagina} from './PieDePagina'
+import { PieDePagina } from './PieDePagina'
 import { Pedidos } from './pedidos/Pedidos';
+import Admin from './AdminSupremo/Admin';
 
 export const BarraNavegacion = () => {
 
-  const { isLoggedIn, logout, user} = useAuth();
+  const { isLoggedIn, logout, isAdmin, user } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -58,22 +60,25 @@ export const BarraNavegacion = () => {
 
       {/* aca esta la barra de navegacion con las opciones inicio, menu, pedidos */}
 
-      <Navbar expand="lg" className="bg-Barra" data-bs-theme="light" >
+      <Navbar expand="lg" className="bg-Barra" data-bs-theme="light">
         <Container>
-          <Nav.Link as={Link} to=''>inicio</Nav.Link>
-          <Nav.Link as={Link} to='menu'>menu</Nav.Link>
+          <Nav.Link as={Link} to="/">inicio</Nav.Link>
+          <Nav.Link as={Link} to="/menu">menu</Nav.Link>
           <Nav.Link href="#link">pedidos</Nav.Link>
+          {isLoggedIn && isAdmin && (
+            <Nav.Link as={Link} to='admin'>Ruta Privada Admin</Nav.Link>
+          )}
         </Container>
       </Navbar>
 
       <Routes>
-        <Route exaxt path="/" Component={Inicio} />
+        <Route exact path="/" Component={Inicio} />
         <Route path="menu" Component={Menu} />
         <Route path='Pedidos' Component={Pedidos} />
-
+        <Route path="admin" element={<RutaPrivadaAdmin element={<Admin />} />} />
       </Routes>
 
-      <PieDePagina/>
+      <PieDePagina />
 
     </>
   )
