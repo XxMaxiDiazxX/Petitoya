@@ -12,8 +12,7 @@ import { Routes, Route, Link, useNavigate } from 'react-router-dom'
 import { Menu } from './menu/Menu';
 import { useAuth } from './autenticacion/AuthContext';
 import {PieDePagina} from './PieDePagina'
-
-import Menu from "./menu/Menu"
+import { Pedidos } from './pedidos/Pedidos';
 
 export const BarraNavegacion = () => {
 

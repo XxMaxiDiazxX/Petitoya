@@ -29,10 +29,7 @@ const Comidas = ({ productos }) => (
 );
 
 export const Menu = () => {
-  const [productos, setProductos] = useState([]);
-const Menu = () => {
     const [productos, setProductos] = useState([]);
-  }
 
     useEffect(() => {
         const fetchProductos = async () => {
