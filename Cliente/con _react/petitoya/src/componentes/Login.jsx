@@ -1,7 +1,7 @@
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import '../styles/index.css';
-import { Link, useNavigate  } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useState } from 'react';
 import { useAuth } from './autenticacion/AuthContext';
@@ -40,14 +40,21 @@ export const Login = () => {
             onSubmit={(values, { setSubmitting }) => {
               axios.post('http://localhost:3001/login', values)
                 .then(response => {
-                  console.log('Inicio de sesión exitoso:', response.data);
-                  authLogin(response.data.user); 
-                  navigate('/inicio');
-                  
+                  if (response.data && response.data.user) {
+                    console.log('Inicio de sesión exitoso:', response.data.user, response.data.user.isAdmin);
+                    authLogin({
+                      user: response.data.user,
+                      isAdmin: response.data.user.isAdmin
+                    });
+                    navigate('/inicio');
+                  } else {
+                    console.error('Error de inicio de sesión: Respuesta incorrecta del servidor');
+                    setError('Error en la respuesta del servidor');
+                  }
                 })
                 .catch(error => {
-                  console.error('Error de inicio de sesión:', error.response.data);
-                  setError(error.response.data.error);
+                  console.error('Error de inicio de sesión:', error.response ? error.response.data : error.message);
+                  setError(error.response ? error.response.data.error : error.message);
                 })
                 .finally(() => {
                   setSubmitting(false);
