@@ -3,16 +3,16 @@ import axios from 'axios';
 
 // Componente de Producto (puedes mantener tu componente existente)
 const Producto = ({ nombre, descripcion, precio, imagenSrc }) => (
-    <div className="card mb-4 box-shadow">
-        <img className="card-img-top" src={imagenSrc} alt={nombre} />
-        <div className="card-body">
-            <h5 className="card-title">{nombre}</h5>
-            <p className="card-text">{descripcion}</p>
-            <p className="card-text">{`Precio: ${precio}`}</p>
-        </div>
+    <div className="card custom-card">
+      <img className="card-img-top" src={imagenSrc} alt={nombre} />
+      <div className="card-body">
+        <h5 className="card-title">{nombre}</h5>
+        <p className="card-text">{descripcion}</p>
+        <p className="card-text">{`Precio: ${precio}`}</p>
+      </div>
     </div>
-);
-
+  );
+  
 // Componente Comidas (puedes tener algo similar para Bebidas)
 const Comidas = ({ productos }) => (
     <>
@@ -53,25 +53,27 @@ export const Menu = () => {
                 <h4>Comidas</h4>
                 {/* Renderiza los productos de comida aquí */}
                 {productosComidas.map(producto => (
-                    <div key={producto.id_producto}>
-                        {/* Muestra la información del producto */}
-                        <p>{producto.nombre}</p>
-                        <p>{producto.descripcion}</p>
-                        <p>{producto.precio}</p>
-                    </div>
-                ))}
+                    <Producto
+                    key={producto.id_producto}
+                    nombre={producto.nombre}
+                    descripcion={producto.descripcion}
+                    precio={producto.precio}
+                    imagenSrc={producto.imagen_url}
+                />
+            ))}
             </div>
-            <div className="bebidas red flex-grow-1 pr-3">
+            <div className="bebidas flex-grow-1 pr-3">
                 <h4>Bebidas</h4>
                 {/* Renderiza los productos de bebida aquí */}
                 {productosBebidas.map(producto => (
-                    <div key={producto.id_producto}>
-                        {/* Muestra la información del producto */}
-                        <p>{producto.nombre}</p>
-                        <p>{producto.descripcion}</p>
-                        <p>{producto.precio}</p>
-                    </div>
-                ))}
+                    <Producto
+                    key={producto.id_producto}
+                    nombre={producto.nombre}
+                    descripcion={producto.descripcion}
+                    precio={producto.precio}
+                    imagenSrc={producto.imagen_url}
+                />
+            ))}
             </div>
         </div>
     );
