@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-// Componente de Producto (puedes mantener tu componente existente)
-const Producto = ({ nombre, descripcion, precio, imagenSrc }) => (
+// Componente de Pedido
+const Pedido = ({ id_pedido, id_cliente, estado, fecha_compra }) => (
     <div className="card custom-card">
-        <img className="card-img-top" src={imagenSrc} alt={nombre} />
         <div className="card-body">
-            <h5 className="card-title">{nombre}</h5>
-            <p className="card-text">{descripcion}</p>
-            <p className="card-text">{`Precio: ${precio}`}</p>
+            <h5 className="card-title">{`Pedido ID: ${id_pedido}`}</h5>
+            <p className="card-text">{`Cliente: ${id_cliente}`}</p>
+            <p className="card-text">{`Estado: ${estado}`}</p>
+            <p className="card-text">{`Fecha de Compra: ${fecha_compra}`}</p>
         </div>
     </div>
 );
 
 export const Item = () => {
-    const [productos, setPedidos] = useState([]);
+    const [pedidos, setPedidos] = useState([]);
 
     useEffect(() => {
-        const fetchProductos = async () => {
+        const fetchPedidos = async () => {
             try {
                 const response = await axios.get('http://localhost:3001/pedidos');
                 setPedidos(response.data);
@@ -26,20 +26,19 @@ export const Item = () => {
             }
         };
 
-        fetchProductos();
+        fetchPedidos();
     }, []);
 
     return (
         <div className="sugerencias d-flex">
-
-            {/* Renderiza los productos de comida aquí */}
-            {productos.map(producto => (
-                <Producto
-                    key={producto.id_pedido}
-                    nombre={producto.id_cliente}
-                    descripcion={producto.estado}
-                    precio={producto.fecha_compra}
-                    imagenSrc={producto.imagen_url}
+            {/* Renderiza los pedidos aquí */}
+            {pedidos.map(pedido => (
+                <Pedido
+                    key={pedido.id_pedido}
+                    id_pedido={pedido.id_pedido}
+                    id_cliente={pedido.id_cliente}
+                    estado={pedido.estado}
+                    fecha_compra={pedido.fecha_compra}
                 />
             ))}
         </div>

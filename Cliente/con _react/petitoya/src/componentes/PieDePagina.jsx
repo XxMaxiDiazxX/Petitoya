@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 
 export const PieDePagina = () => {
   return (
-    <div>
+    <div className='fixed-bottom'>
         <footer className="bg-dark text-light py-4">
           <div className="container">
             <nav className="row justify-content-between">
