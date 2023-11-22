@@ -17,3 +17,9 @@ const RutaPrivadaAdmin = ({ element }) => {
 };
 
 export default RutaPrivadaAdmin;
+
+// {isLoggedIn && user.isAdmin && (
+//     <Nav.Link as={Link} to='ruta-privada-admin'>Ruta Privada Admin</Nav.Link>
+//   )}
+// </Container>
+

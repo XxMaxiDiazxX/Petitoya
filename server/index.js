@@ -79,6 +79,17 @@ app.get("/productos", (req, res) => {
       }
     });
   });
+
+app.get('/pedidos', (req,res) => {
+  db.query('SELECT * FROM pedidos', (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).json({error: 'Error interno del servidor' });
+    } else {
+      res.status(200).json(result);
+    }
+  });
+});
   
   // Ruta para obtener productos por categoría
   app.get("/productos/:categoria", (req, res) => {
