@@ -7,10 +7,12 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import React from 'react';
 import { Inicio } from './Product/Inicio';
 
+
 import { Routes, Route, Link, useNavigate } from 'react-router-dom'
 import { useAuth } from './autenticacion/AuthContext';
 import {PieDePagina} from './PieDePagina'
 
+import Menu from "./menu/Menu"
 
 export const BarraNavegacion = () => {
 
@@ -66,7 +68,7 @@ export const BarraNavegacion = () => {
 
       <Routes>
         <Route exaxt path="/" Component={Inicio} />
-        {/* <Route path="menu" Component={} /> */}
+        <Route path="menu" Component={Menu} />
 
       </Routes>
 
