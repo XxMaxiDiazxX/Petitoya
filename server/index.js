@@ -68,6 +68,48 @@ app.post("/login", (req, res) => {
 });
 
 
+// Ruta para obtener todos los productos
+app.get("/productos", (req, res) => {
+    db.query('SELECT * FROM productos', (err, result) => {
+      if (err) {
+        console.log(err);
+        res.status(500).json({ error: 'Error interno del servidor' });
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  });
+  
+  // Ruta para obtener productos por categoría
+  app.get("/productos/:categoria", (req, res) => {
+    const categoria = req.params.categoria;
+    db.query('SELECT * FROM productos WHERE categoria = ?', [categoria], (err, result) => {
+      if (err) {
+        console.log(err);
+        res.status(500).json({ error: 'Error interno del servidor' });
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  });
+  
+  // Ruta para crear un nuevo producto
+  app.post("/productos", (req, res) => {
+    const { nombre, descripcion, precio, fecha_creacion, fecha_publicacion, categoria } = req.body;
+    db.query('INSERT INTO productos (nombre, descripcion, precio, fecha_creacion, fecha_publicacion, categoria) VALUES (?, ?, ?, ?, ?, ?)',
+      [nombre, descripcion, precio, fecha_creacion, fecha_publicacion, categoria],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+          res.status(500).json({ error: 'Error interno del servidor' });
+        } else {
+          res.status(200).json({ message: 'Producto creado exitosamente' });
+        }
+      }
+    );
+  });
+
+
 app.listen(3001, () => {
     console.log("Corriendo en el puerto 3001");
 });
