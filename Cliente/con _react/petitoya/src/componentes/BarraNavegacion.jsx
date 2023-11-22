@@ -8,7 +8,6 @@ import React from 'react';
 import { Inicio } from './Product/Inicio';
 
 import { Routes, Route, Link, useNavigate } from 'react-router-dom'
-import { Menu } from './menu/Menu';
 import { useAuth } from './autenticacion/AuthContext';
 import {PieDePagina} from './PieDePagina'
 
@@ -67,7 +66,7 @@ export const BarraNavegacion = () => {
 
       <Routes>
         <Route exaxt path="/" Component={Inicio} />
-        <Route path="menu" Component={Menu} />
+        {/* <Route path="menu" Component={} /> */}
 
       </Routes>
 
