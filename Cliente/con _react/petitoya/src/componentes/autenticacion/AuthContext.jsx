@@ -23,6 +23,8 @@ export const AuthProvider = ({ children }) => {
     setUser(userData);
     setIsLoggedIn(true);
 
+    setUser({ ...userData, isAdmin: userData.role === 'admin' }); // Suponiendo que tienes una propiedad 'role' que indica el rol del usuario
+
     localStorage.setItem('user', JSON.stringify(userData));
     localStorage.setItem('isLoggedIn', JSON.stringify(true));
 

@@ -21,7 +21,7 @@ app.post("/create", (req, res) => {
     const telefono = req.body.telefono;
     const contrasena = req.body.contrasena;
 
-    db.query('INSERT INTO clientes VALUES (?,?,?,?,?,NOW())', [documento, nombre, correo_electronico, telefono, contrasena],
+    db.query('INSERT INTO clientes (id_cliente, nombre, correo_electronico, telefono, contrasena, fecha_creacion) VALUES (?,?,?,?,?,NOW())', [documento, nombre, correo_electronico, telefono, contrasena],
         (err, result) => {
             if (err) {
                 console.log(err);

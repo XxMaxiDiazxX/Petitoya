@@ -41,8 +41,7 @@ export const Login = () => {
               axios.post('http://localhost:3001/login', values)
                 .then(response => {
                   console.log('Inicio de sesión exitoso:', response.data);
-                  authLogin(response.data.user); // Cambia a authLogin
-                  // Realizar acciones adicionales después del inicio de sesión
+                  authLogin(response.data.user); 
                   navigate('/inicio');
                   
                 })
