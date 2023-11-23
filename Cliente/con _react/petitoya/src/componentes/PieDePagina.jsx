@@ -1,11 +1,12 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 export const PieDePagina = () => {
   return (
-    <footer className="bg-dark text-light py-4">
+    <footer className="bg-dark text-light py-4 mt-auto">
       <div className="container">
         <nav className="row justify-content-between">
+
           <ul className='col-12 col-md-3 list-unstyled'>
             <li className='text-center text-uppercase font-weight-bold'>ejemplo</li>
             <li className='text-center'><Link to="/" className='text-reset'>Nombre_intragram</Link></li>
@@ -24,8 +25,9 @@ export const PieDePagina = () => {
             <li className='text-center'><Link to="" className='text-reset'>Visión</Link></li>
             <li className='text-center'><Link to="" className='text-reset'>Términos y condicines</Link></li>
           </ul>
+
         </nav>
       </div>
     </footer>
-  );
-};
+  )
+}

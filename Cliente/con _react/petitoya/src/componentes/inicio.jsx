@@ -10,21 +10,17 @@ import Admin from './AdminSupremo/Admin';
 
 export const PaginaPrincipal = () => {
   return (
-    <div>
+    <div className="d-flex flex-column" style={{ minHeight: '100vh' }}>
       <BarraNavegacion />
-      <div className="container">
-        <div className="row">
-          <div className="col-md-12">
-            <Routes>
-              <Route path="/" element={<Inicio />} />
-              <Route path="menu" element={<Menu />} />
-              <Route path="pedidos" element={<Pedidos />} />
-              <Route path="admin" element={<RutaPrivadaAdmin element={<Admin />} />} />
-            </Routes>
-          </div>
-        </div>
+      <div className="container flex-grow-1">
+        <Routes>
+          <Route path="/" element={<Inicio />} />
+          <Route path="menu" element={<Menu />} />
+          <Route path="pedidos" element={<Pedidos />} />
+          <Route path="admin" element={<RutaPrivadaAdmin element={<Admin />} />} />
+        </Routes>
       </div>
-      <PieDePagina className="mt-5" />
+      <PieDePagina />
     </div>
   );
 };
