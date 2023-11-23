@@ -1,5 +1,5 @@
 import React from 'react';
-import { BarraNavegacion } from './componentes/BarraNavegacion';
+import { PaginaPrincipal } from './componentes/inicio';
 import './styles/custom.scss'
 import { Login } from './componentes/Login';
 import { Registro } from './componentes/Registro';
@@ -14,7 +14,7 @@ export const ControladorRutas = () => {
         <Routes>
             <Route exact path="/" Component={Login} />
             <Route path="/registro" Component={Registro} />
-            <Route path="inicio/*" Component={BarraNavegacion} />
+            <Route path="/inicio/*" Component={PaginaPrincipal} />
         </Routes>
     );
 }
