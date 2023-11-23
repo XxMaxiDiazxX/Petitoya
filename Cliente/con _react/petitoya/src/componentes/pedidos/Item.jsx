@@ -19,7 +19,7 @@ export const Item = ({id_cliente}) => {
     useEffect(() => {
         const fetchPedidos = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/pedidos/${id_cliente}`);
+                const response = await axios.get(`http://localhost:3001/pedidos/${id_cliente}pos`);
                 setPedidos(response.data);
             } catch (error) {
                 console.error('Error fetching Pedidos:', error);

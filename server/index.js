@@ -56,7 +56,7 @@ app.post("/login", (req, res) => {
                 const user = {
                     id: result[0].id_cliente,
                     username: result[0].nombre,
-                    isAdmin: result[0].Administrador === 1, 
+                    isAdmin: result[0].Administrador === 1,  
                 };
                 // Inicio de sesión exitoso
                 res.status(200).json({ message: 'Inicio de sesión exitoso', user });
