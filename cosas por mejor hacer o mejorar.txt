@@ -1,0 +1,9 @@
+# Realizar un atributo para la tabla productos, que almacene el numero de compras, de cada producto, con el fin del implementar
+un tipo rating de las comidas mas compradas y tambien lo que menos compren, para implementarlo en el inicio, con el fin de 
+sugerir esas comidas que se estan perdiendo.
+
+#Error: el footer se super pone del contenido
+
+
+
+
