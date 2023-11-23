@@ -7,9 +7,10 @@ import { Registro } from './componentes/Registro';
 
 import { Routes, Route } from 'react-router-dom'
 
+
+
 export const ControladorRutas = () => {
     return (
-
         <Routes>
             <Route exact path="/" Component={Login} />
             <Route path="/registro" Component={Registro} />

@@ -97,6 +97,7 @@ main {
 // Producto.module.scss
 
 .custom-card {
+  display: flex;
   margin: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s;
@@ -106,12 +107,19 @@ main {
   }
 
   .card-img-top {
-    width: 100%;
+    flex-shrink: 0;
+    width: 100px;
     height: auto;
+    margin-right: 15px;
   }
 
   .card-body {
+    flex-grow: 1;
     padding: 15px;
+
+    // Asegúrate de agregar el punto y coma al final de la línea
+    display: flex;
+    flex-direction: column; // Asegura que los elementos dentro de card-body se apilen verticalmente
   }
 
   .card-title {
