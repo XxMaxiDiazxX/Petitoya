@@ -5,16 +5,8 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import React from 'react';
-import { Inicio } from './Product/Inicio';
-import RutaPrivadaAdmin from './autenticacion/RutaPriavadaAdmin';
-
-
-import { Routes, Route, Link, useNavigate } from 'react-router-dom'
-import { Menu } from './menu/Menu';
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from './autenticacion/AuthContext';
-import { PieDePagina } from './PieDePagina'
-import { Pedidos } from './pedidos/Pedidos';
-import Admin from './AdminSupremo/Admin';
 
 export const BarraNavegacion = () => {
 
@@ -70,15 +62,6 @@ export const BarraNavegacion = () => {
           )}
         </Container>
       </Navbar>
-
-      <Routes>
-        <Route exact path="/" Component={Inicio} />
-        <Route path="menu" Component={Menu} />
-        <Route path='pedidos' Component={Pedidos} />
-        <Route path="admin" element={<RutaPrivadaAdmin element={<Admin />} />} />
-      </Routes>
-
-      <PieDePagina />
 
     </>
   )
