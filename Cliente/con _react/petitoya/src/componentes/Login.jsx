@@ -23,9 +23,9 @@ export const Login = () => {
   }, [isLoggedIn, navigate]);
 
   return (
-    <div className="login bg-image">
+    <div className="login">
       <div className="container-sm bg-white p-0 row rounded-4 custom-height">
-        <div className="container-sm bg-Barra2 rounded-4 col d-flex flex-column justify-content-center align-items-center">
+        <div className="conte container-sm bg-Barra2 rounded-4 col d-flex flex-column justify-content-center align-items-center">
           <h4 className="mb-4">Inicio Sesion</h4>
           <Formik
             initialValues={{ documento: '', contrasena: '' }}
