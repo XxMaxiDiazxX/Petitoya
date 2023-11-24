@@ -1,5 +1,3 @@
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -26,9 +24,9 @@ export const BarraNavegacion = () => {
 
       <Navbar expand="lg" className="bg-Barra2" style={{ height: '9%' }}>
         <Container>
-          <Navbar.Brand href="#" className='row red'>
-            <img src={palmeraIco} width="20" height="60" className='col-md red' style={{ width: '20px' }} />
-            <p styles={{}} className='col-md-2'>webos</p>
+          <Navbar.Brand href="#" className='red d-flex align-items-center justify-content-center'>
+            <img src={palmeraIco} height="50" className='col-md' style={{ width: '70px', float: "left" }} />
+            <p>Petitoya</p>
           </Navbar.Brand>
           {isLoggedIn ? (
             <NavDropdown title="Cuenta" id="basic-nav-dropdown">
