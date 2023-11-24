@@ -8,7 +8,7 @@ import { useAuth } from './autenticacion/AuthContext';
 import Cuchillo from '../img/inicioSesion/cuchillo.png';
 import Tenedor from '../img/inicioSesion/tenedor.png';
 
-export const Login = () => {
+ export const Login = () => {
   const [error, setError] = useState('');
 
   // Obtén isLoggedIn del contexto useAuth
