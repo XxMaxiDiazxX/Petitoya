@@ -26,24 +26,6 @@ export const Login = () => {
     <div className="login bg-image">
       <div className="container-sm bg-white p-0 row rounded-4 custom-height">
         <div className="container-sm bg-Barra2 rounded-4 col d-flex flex-column justify-content-center align-items-center">
-          {/*este es el contenedor de la imagen*/}
-          <div className="container">
-            <div className="row">
-              <div className="col-md-6">
-                <h2>Contenido en el lado izquierdo</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              </div>
-              <div className="col-md-6">
-                {/* Aquí colocamos la imagen */}
-                <img
-                  src="../img/inicioSesion/tenedor.png"
-                  alt="Descripción de la imagen"
-                  className="img-fluid float-end"
-                  style={{ maxWidth: '300px', margin: '10px' }}
-                />
-              </div>
-            </div>
-          </div>
           <h4 className="mb-4">Inicio Sesion</h4>
           <Formik
             initialValues={{ documento: '', contrasena: '' }}
