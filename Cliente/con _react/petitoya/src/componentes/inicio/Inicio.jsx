@@ -1,10 +1,11 @@
 
 import { Producto } from "./Producto";
+import palmera from '../../img/inicioSesion/fondo.png';
 
 export const Inicio = () => (
   <>
       <div className="MenuDelDia">
-      <img src="img/cafe.jpg" alt="" />
+      <img src={palmera} alt="" />
       <h1>Comida del Día</h1>
       <p>
         Disfruta de nuestra deliciosa comida del día, cuidadosamente preparada por nuestros chefs para satisfacer tus papilas gustativas. Nuestra comida del día incluye una variedad de opciones frescas y deliciosas que seguramente te encantarán. ¡No te lo pierdas!

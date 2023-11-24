@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import imagen from '../../img/cafe.jpg'
 
 // Componente de Producto (puedes mantener tu componente existente)
 const Producto = ({ nombre, descripcion, precio, imagenSrc }) => (
