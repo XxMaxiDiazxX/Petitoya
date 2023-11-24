@@ -22,6 +22,7 @@ body {
     justify-content: center;
     align-items: center;
     background-color: rgb(253, 228, 113);
+    background-image: url("../img/inicioSesion/fondo.png");
     height: 100%;
     width: 100%;
 
@@ -42,6 +43,7 @@ body {
     display: flex;
     flex-direction: column;
     background-color: #614E3B;
+
     height: 100%;
     width: 50%;
     
