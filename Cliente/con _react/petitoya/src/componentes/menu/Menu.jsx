@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // Componente de Producto (puedes mantener tu componente existente)
 const Producto = ({ nombre, descripcion, precio, imagenSrc }) => (
-    <div className='container'>
+    <div className='container mt-4'>
         <div className="row">
             <div className='col-md-2 d-flex align-items-center justify-content-center red' style={{  minWidth: '120px'}}>
                 <img
