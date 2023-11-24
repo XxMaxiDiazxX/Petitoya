@@ -75,25 +75,30 @@ export const Registro = () => {
         navigate('/');
     };
 
+    const estiloConFondo = {
+        backgroundImage: 'url("../img/")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      };
 
 
     return (
-        <Container className="cont-cont justify-content-center">
-            <Col xs={12} md={8} lg={6} className="red relleno container">
+        <div className="h-100 red">
+            <Col xs={12} md={8} lg={6} className="red d-flex flex-column align-items-center justify-content-center w-100 h-100">
                 <h4 className="text-center mb-4">Registro</h4>
+
                 <Formik
                     initialValues={initialValues}
                     onSubmit={onSubmit}
                     validationSchema={validationSchema}
                 >
 
-                    <Form className="mames">
+                    <Form className="red bg-Barra2" style={estiloConFondo}>
                         {registrationError && (
                             <div className="alert alert-danger" role="alert">
                                 {registrationError}
                             </div>
                         )}
-
                         <Row className="mb-3">
                             <Col>
                                 <label htmlFor="nombre">Nombre:</label>
@@ -176,6 +181,6 @@ export const Registro = () => {
                     </Form>
                 </Formik>
             </Col>
-        </Container>
+        </div>
     );
 };

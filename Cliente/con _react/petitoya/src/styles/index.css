@@ -27,15 +27,6 @@ body {
 
 }
 
-.cont-cont{
-    height: 75%;
-    width: 75%;
-    border-radius: 20px;
-    overflow: hidden;
-    display: flex;
-    background-color: #614E3B;
-
-}
 
 .contefoto {
     background-image: url("../img/cafe.jpg");
@@ -66,7 +57,6 @@ body {
 }
 
 .mames{
-    height: max-content;
     flex-direction: column;
     gap: 15px;
     display: flex;
