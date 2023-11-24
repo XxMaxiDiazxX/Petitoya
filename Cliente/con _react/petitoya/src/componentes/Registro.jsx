@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+// import fondo from '../img/registro/libreta.png'
 
 
 
@@ -75,16 +76,10 @@ export const Registro = () => {
         navigate('/');
     };
 
-    const estiloConFondo = {
-        backgroundImage: 'url("../img/")',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      };
-
 
     return (
-        <div className="h-100 red">
-            <Col xs={12} md={8} lg={6} className="red d-flex flex-column align-items-center justify-content-center w-100 h-100">
+        <div className="h-100">
+            <Col xs={12} md={8} lg={6} className="contenedor d-flex flex-column align-items-center justify-content-center w-100 h-100">
                 <h4 className="text-center mb-4">Registro</h4>
 
                 <Formik
@@ -93,91 +88,94 @@ export const Registro = () => {
                     validationSchema={validationSchema}
                 >
 
-                    <Form className="red bg-Barra2" style={estiloConFondo}>
+                    <Form className="fondito p-4 text-center labe naranj" style={{ width: "65%" , fontSize: "20px"}} >
                         {registrationError && (
                             <div className="alert alert-danger" role="alert">
                                 {registrationError}
                             </div>
                         )}
-                        <Row className="mb-3">
-                            <Col>
+                        <Row className="mb-3 d-flex align-items-center ">
+                            <Col className='mx-4'>
                                 <label htmlFor="nombre">Nombre:</label>
                                 <Field
                                     type="text"
                                     name="nombre"
-                                    className="form-control usua"
+                                    className="form-control bg-input text-white usua"
                                     placeholder="Ingrese su nombre"
                                 />
                                 <ErrorMessage name="nombre" component="span" className="error" />
                             </Col>
-                            <Col>
+                            <Col className='mx-4'>
                                 <label htmlFor="apellido">Apellido:</label>
                                 <Field
                                     type="text"
                                     name="apellido"
-                                    className="form-control usua"
+                                    className="form-control bg-input text-white usua"
                                     placeholder="Ingrese su apellido"
                                 />
                                 <ErrorMessage name="apellido" component="span" className="error" />
                             </Col>
                         </Row>
-                        <Row className="mb-3">
-                            <Col>
+                        <Row className="mb-3 d-flex align-items-center">
+                            <Col className='mx-4'>
                                 <label htmlFor="documento">Documento:</label>
                                 <Field
                                     type="number"
                                     name="documento"
-                                    className="form-control usua"
+                                    className="form-control bg-input text-white usua"
                                     placeholder="Ingrese su documento"
                                 />
                                 <ErrorMessage name="documento" component="span" className="error" />
                             </Col>
-                            <Col>
+                            <Col className='mx-4'>
                                 <label htmlFor="telefono">Teléfono:</label>
                                 <Field
                                     type="tel"
                                     name="telefono"
-                                    className="form-control usua"
+                                    className="form-control bg-input text-white usua"
                                     placeholder="Ingrese su teléfono"
                                 />
                                 <ErrorMessage name="telefono" component="span" className="error" />
                             </Col>
                         </Row>
-                        <Row className="mb-3">
-                            <Col>
+                        <Row className="mb-3 d-flex align-items-center">
+                            <Col className='mx-4'>
+                                <label htmlFor="contrasena">Contraseña:</label>
+                                <Field
+                                    type="password"
+                                    name="contrasena"
+                                    className="form-control bg-input text-white contra"
+                                    placeholder="Ingrese su contraseña"
+                                />
+                                <ErrorMessage name="contrasena" component="span" className="error" />
+                            </Col>
+
+                            <Col className='mx-4'>
                                 <label htmlFor="correo_electronico">Correo Electrónico:</label>
                                 <Field
                                     type="email"
                                     name="correo_electronico"
-                                    className="form-control usua"
+                                    className="form-control bg-input text-white usua"
                                     placeholder="Ingrese su correo electrónico"
                                 />
                                 <ErrorMessage name="correo_electronico" component="span" className="error" />
                             </Col>
                         </Row>
-                        <Row className="mb-3">
-                            <Col>
-                                <label htmlFor="contrasena">Contraseña:</label>
-                                <Field
-                                    type="password"
-                                    name="contrasena"
-                                    className="form-control contra"
-                                    placeholder="Ingrese su contraseña"
-                                />
-                                <ErrorMessage name="contrasena" component="span" className="error" />
-                            </Col>
-                            <Col>
+                        <Row className="mb-3 d-flex align-items-center">
+                            <Col className='mx-4'>
                                 <label htmlFor="confirmar_contrasena">Confirmar Contraseña:</label>
                                 <Field
                                     type="password"
                                     name="confirmar_contrasena"
-                                    className="form-control contra"
+                                    className="form-control bg-input text-white contra"
                                     placeholder="Ingrese su contraseña"
                                 />
                                 <ErrorMessage name="confirmar_contrasena" component="span" className="error" />
                             </Col>
+                            <Col className='mx-4 d-flex align-items-center justify-content-center cuerpo text-uppercase text-uppercase'>
+                                <Button type="submit" className='bg-naranj'>REGISTRARSE</Button>
+                            </Col>
                         </Row>
-                        <Button type="submit">Registrarse</Button>
                     </Form>
                 </Formik>
             </Col>
