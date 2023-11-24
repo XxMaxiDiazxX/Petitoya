@@ -3,9 +3,8 @@ import axios from 'axios';
 
 // Componente de Producto (puedes mantener tu componente existente)
 const Producto = ({ nombre, descripcion, precio, imagenSrc }) => (
-    <div className='container mt-4'>
-        <div className="row">
-            <div className='col-md-2 d-flex align-items-center justify-content-center red' style={{  minWidth: '120px'}}>
+        <div className="row bg-white mt-4 rounded">
+            <div className='col-md-2 d-flex align-items-center justify-content-center' style={{  minWidth: '120px'}}>
                 <img
                     className="rounded-circle red"
                     src={imagenSrc}
@@ -13,13 +12,12 @@ const Producto = ({ nombre, descripcion, precio, imagenSrc }) => (
                     style={{ width: '90px', height: '90px' }}
                 />
             </div>
-            <div className="col-md red">
+            <div className="col-md">
                 <h5 className="card-title">{nombre}</h5>
                 <p className="card-text">{descripcion}</p>
                 <p className="card-text">{`Precio: ${precio}`}</p>
             </div>
         </div>
-    </div>
 );
 
 
@@ -48,6 +46,7 @@ export const Menu = () => {
             <div className="row">
                 <div className="col-md">
                     <h4>Comidas</h4>
+                    <div className='container mt-4'>
                     {/* Renderiza los productos de comida aquí */}
                     {productosComidas.map(producto => (
                         <Producto
@@ -58,10 +57,12 @@ export const Menu = () => {
                             imagenSrc={producto.imagen_url}
                         />
                     ))}
+                    </div>
                 </div>
                 <div className="col-md">
                     <h4>Bebidas</h4>
                     {/* Renderiza los productos de bebida aquí */}
+                    <div className='container mt-4'>
                     {productosBebidas.map(producto => (
                         <Producto
                             key={producto.id_producto}
@@ -71,6 +72,7 @@ export const Menu = () => {
                             imagenSrc={producto.imagen_url}
                         />
                     ))}
+                    </div>
                 </div>
             </div>
         </div>
