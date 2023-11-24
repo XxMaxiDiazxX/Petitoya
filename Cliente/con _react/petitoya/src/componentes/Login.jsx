@@ -3,16 +3,24 @@ import * as Yup from 'yup';
 import '../styles/index.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import { useAuth } from './autenticacion/AuthContext';
 
 export const Login = () => {
 
   const [error, setError] = useState('');
 
-  const { login: authLogin } = useAuth();
+  // Obtén isLoggedIn del contexto useAuth
+  const { login: authLogin, isLoggedIn } = useAuth();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Si el usuario ya está logueado, redirigir a la página de inicio
+    if (isLoggedIn) {
+      navigate('/inicio');
+    }
+  }, [isLoggedIn, navigate]);
 
   return (
     <div className="login">
