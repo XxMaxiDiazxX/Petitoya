@@ -7,7 +7,6 @@ import { useState, useEffect } from 'react';
 import { useAuth } from './autenticacion/AuthContext';
 
 export const Login = () => {
-
   const [error, setError] = useState('');
 
   // Obtén isLoggedIn del contexto useAuth
@@ -26,17 +25,31 @@ export const Login = () => {
     <div className="login">
       <div className="container-sm bg-white p-0 row rounded-4 custom-height">
         <div className="conte container-sm bg-Barra2 rounded-4 col d-flex flex-column justify-content-center align-items-center">
-          <h4 className="mb-4">Inicio Sesion</h4>
+          {/* Agrega las imágenes a la izquierda y derecha del formulario */}
+          <div className="d-flex justify-content-between align-items-center mb-4">
+            <img
+              src="../img/iniciosesion/tenedor.png"
+              alt="Tenedor"
+              className="img-fluid"
+              style={{ width: '48%' }}
+            />
+            <h4 className="mb-0">Inicio Sesion</h4>
+            <img
+              src="../img/iniciosesion/cuchillo.png"
+              alt="Cuchillo"
+              className="img-fluid"
+              style={{ width: '48%' }}
+            />
+          </div>
+
           <Formik
             initialValues={{ documento: '', contrasena: '' }}
             validationSchema={Yup.object({
-              documento: Yup
-                .number()
+              documento: Yup.number()
                 .positive()
                 .integer()
                 .required('Usuario Requerido'),
-              contrasena: Yup
-                .string()
+              contrasena: Yup.string()
                 .min(6, 'La contrasena debe tener al menos 6 caracteres')
                 .matches(
                   /^(?=.*\d)(?=.*[A-Z])(?=.*[\W_]).*$/,
@@ -51,7 +64,7 @@ export const Login = () => {
                     console.log('Inicio de sesión exitoso:', response.data.user, response.data.user.isAdmin);
                     authLogin({
                       user: response.data.user,
-                      isAdmin: response.data.user.isAdmin
+                      isAdmin: response.data.user.isAdmin,
                     });
                     navigate('/inicio');
                   } else {
@@ -68,7 +81,7 @@ export const Login = () => {
                 });
             }}
           >
-            <Form className='container-sm d-grid text-center mb-5'>
+            <Form className='container-sm d-grid text-center'>
               {error && <div className="text-danger fs-6 lh-1">{error}</div>}
               <div className='form-group mb-4'>
                 <label htmlFor="documento" >Nombre de usuario</label>
@@ -104,6 +117,6 @@ export const Login = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Login;
