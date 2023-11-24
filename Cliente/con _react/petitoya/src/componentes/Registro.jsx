@@ -1,9 +1,11 @@
 import axios from 'axios';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { useState } from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import {  Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+
+
 // import fondo from '../img/registro/libreta.png'
 
 
@@ -67,21 +69,19 @@ export const Registro = () => {
 
     const handleSuccessfulRegistration = (userData) => {
         console.log('Acciones después del registro exitoso:', userData);
-
-        // Por ejemplo, puedes actualizar el estado de autenticación
-        // o redirigir a otra página
-        // authLogin(userData);
-
-        // Redirigir a la página de inicio, ajusta esto según tu enrutamiento
         navigate('/');
     };
+
+    const volver = () => {
+        navigate('/');
+    }
 
 
     return (
         <div className="h-100">
             <Col xs={12} md={8} lg={6} className="contenedor d-flex flex-column align-items-center justify-content-center w-100 h-100">
-                
-                <h4 className="text-center reda cuerpo" style={{fontSize: "45px"}}>Registro</h4>
+
+                <h4 className="text-center reda cuerpo" style={{ fontSize: "45px" }}>Registro</h4>
 
                 <Formik
                     initialValues={initialValues}
@@ -89,7 +89,7 @@ export const Registro = () => {
                     validationSchema={validationSchema}
                 >
 
-                    <Form className="fondito p-4 text-center labe naranj" style={{ width: "65%" , fontSize: "20px"}} >
+                    <Form className="fondito p-4 text-center labe naranj" style={{ width: "65%", fontSize: "20px" }} >
                         {registrationError && (
                             <div className="alert alert-danger" role="alert">
                                 {registrationError}
@@ -174,11 +174,14 @@ export const Registro = () => {
                                 <ErrorMessage name="confirmar_contrasena" component="span" className="error" />
                             </Col>
                             <Col className='mx-4 d-flex align-items-center justify-content-center cuerpo text-uppercase text-uppercase'>
-                                <Button type="submit" className='bg-naranj'>REGISTRARSE</Button>
+                                <Button type="submit" className='bg-naranj border-0'>REGISTRARSE</Button>
                             </Col>
                         </Row>
                     </Form>
                 </Formik>
+                <div className='cuerpo'>
+                    <Button onClick={volver} className='bg-naranj border-0'>Volver</Button>
+                </div>
             </Col>
         </div>
     );
