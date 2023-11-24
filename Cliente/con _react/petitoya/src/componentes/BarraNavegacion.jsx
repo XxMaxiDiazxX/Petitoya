@@ -51,7 +51,7 @@ export const BarraNavegacion = () => {
 
       {/* aca esta la barra de navegacion con las opciones inicio, menu, pedidos */}
 
-      <Navbar expand="lg" className="bg-Barra" data-bs-theme="light">
+      <Navbar expand="lg" className="bg-barra3" data-bs-theme="light">
         <Container>
           <Nav.Link as={Link} to="">inicio</Nav.Link>
           <Nav.Link as={Link} to="menu">menu</Nav.Link>
