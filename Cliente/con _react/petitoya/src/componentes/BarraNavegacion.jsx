@@ -1,5 +1,3 @@
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -19,6 +17,11 @@ export const BarraNavegacion = () => {
     navigate('/');
   };
 
+  const EstiloCuenta = {
+    fontWeight: 'bold',
+    fontSize: '20px',
+    color: '#f2eddb'
+  }
 
   return (
     <>
@@ -26,21 +29,22 @@ export const BarraNavegacion = () => {
 
       <Navbar expand="lg" className="bg-Barra2" style={{ height: '9%' }}>
         <Container>
-          <Navbar.Brand href="#" className='row red'>
-            <img src={palmeraIco} width="20" height="60" className='col-md red' style={{ width: '20px' }} />
-            <p styles={{}} className='col-md-2'>webos</p>
+          <Navbar.Brand href="#">
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <img src={palmeraIco} height="50" className='red' style={{ width: '70px' }} alt="Palmera" />
+              <p style={{ margin: 0, marginLeft: '10px', fontSize: '30px', fontWeight: 'bold' }} className='texto-titulo cuerpo'>Petitoya</p>
+            </div>
           </Navbar.Brand>
           {isLoggedIn ? (
-            <NavDropdown title="Cuenta" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Bienvenido, {user.username}</NavDropdown.Item>
+            <NavDropdown title={<span style={EstiloCuenta}>Bienvenido, {user.username}</span>} id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.2">Configuración</NavDropdown.Item>
               <NavDropdown.Item onClick={handleLogout}>Cerrar Sesión</NavDropdown.Item>
             </NavDropdown>
           ) : (
-            <NavDropdown title="Cuenta" id="basic-nav-dropdown">
-              <NavDropdown.Item as={Link} to="/">Iniciar Sesión</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/registro">Registro</NavDropdown.Item>
-            </NavDropdown>
+            <Nav>
+              <Nav.Link as={Link} to="/registro" style={EstiloCuenta}>Registro</Nav.Link>
+              <Nav.Link as={Link} to="/" style={EstiloCuenta}>Iniciar Sesión</Nav.Link>
+            </Nav>
           )}
         </Container>
       </Navbar>

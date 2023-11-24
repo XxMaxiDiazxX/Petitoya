@@ -4,6 +4,7 @@
 
 
 $bont: #614E3B;
+$mostaza: #f2eddb;
 
 // Create your own map
 $custom-colors: (
@@ -132,6 +133,28 @@ main {
     margin-bottom: 0.5rem;
   }
 }
+
+
+.texto-titulo {
+  color: $mostaza;
+}
+
+
+// styles.scss
+
+@font-face {
+  font-family: 'Alfa Slab One';
+  src: url('./fonts/AlfaSlabOne-Regular.woff2') format('woff2'),
+       url('./fonts/AlfaSlabOne-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.cuerpo {
+  font-family: 'Alfa Slab One', sans-serif;
+}
+
+// Otros estilos...
 
 
 // Merge the maps
