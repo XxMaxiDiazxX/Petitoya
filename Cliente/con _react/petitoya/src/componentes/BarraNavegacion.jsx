@@ -7,6 +7,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from './autenticacion/AuthContext';
+import palmeraIco from '../img/palmera.png';
 
 export const BarraNavegacion = () => {
 
@@ -25,16 +26,10 @@ export const BarraNavegacion = () => {
 
       <Navbar expand="lg" className="bg-Barra2" style={{ height: '9%' }}>
         <Container>
-          <Navbar.Brand href="#"><img src="./img/palmera.png" width="auto" height="auto" /></Navbar.Brand>
-          <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Busca Un Producto"
-              className="me-2"
-              aria-label="Search"
-            />
-            <Button variant="outline-success">Search</Button>
-          </Form>
+          <Navbar.Brand href="#" className='row red'>
+            <img src={palmeraIco} width="20" height="60" className='col-md red' style={{ width: '20px' }} />
+            <p styles={{}} className='col-md-2'>webos</p>
+          </Navbar.Brand>
           {isLoggedIn ? (
             <NavDropdown title="Cuenta" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Bienvenido, {user.username}</NavDropdown.Item>
