@@ -8,7 +8,7 @@ import { useAuth } from './autenticacion/AuthContext';
 import Cuchillo from '../img/inicioSesion/cuchillo.png';
 import Tenedor from '../img/inicioSesion/tenedor.png';
 
-const Login = () => {
+export const Login = () => {
   const [error, setError] = useState('');
 
   // Obtén isLoggedIn del contexto useAuth
@@ -120,5 +120,3 @@ const Login = () => {
     </div>
   );
 };
-
-export default Login;
