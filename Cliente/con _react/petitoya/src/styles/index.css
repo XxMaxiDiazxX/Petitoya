@@ -23,6 +23,9 @@ body {
     align-items: center;
     background-color: #f1b985;
     background-image: url("../img/inicioSesion/fondo.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     height: 100%;
     width: 100%;
 

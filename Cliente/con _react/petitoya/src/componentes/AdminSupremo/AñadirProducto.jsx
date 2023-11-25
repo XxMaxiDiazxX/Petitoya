@@ -21,34 +21,41 @@ const AñadirProducto = () => {
   };
 
   return (
-    <div>
-      <h2>Añadir Producto</h2>
+    <div className="container mt-5">
+      <h2 className="mb-4">Añadir Producto</h2>
       <Formik
-        initialValues={{ nombre: '', descripcion: '', precio: '', categoria: '' }}
+        initialValues={{ id_producto: '', nombre: '', descripcion: '', precio: '', categoria: '' }}
         onSubmit={handleSubmit}
       >
         <Form>
-          <div>
-            <label>Nombre:</label>
-            <Field type="text" name="nombre" />
+          <div className="mb-1">
+            <label className="form-label">id:</label>
+            <Field type="text" name="id_producto" className="form-control" />
           </div>
 
-          <div>
-            <label>Descripción:</label>
-            <Field type="text" name="descripcion" />
+          <div className="mb-1">
+            <label className="form-label">Nombre:</label>
+            <Field type="text" name="nombre" className="form-control" />
           </div>
 
-          <div>
-            <label>Precio:</label>
-            <Field type="text" name="precio" />
+          <div className="mb-1">
+            <label className="form-label">Descripción:</label>
+            <Field type="text" name="descripcion" className="form-control" />
           </div>
 
-          <div>
-            <label>Categoría:</label>
-            <Field type="text" name="categoria" />
+          <div className="mb-1">
+            <label className="form-label">Precio:</label>
+            <Field type="text" name="precio" className="form-control" />
           </div>
 
-          <button type="submit">Añadir Producto</button>
+          <div className="mb-1">
+            <label className="form-label">Categoría:</label>
+            <Field type="text" name="categoria" className="form-control" />
+          </div>
+
+          <button type="submit" className="btn btn-primary">
+            Añadir Producto
+          </button>
         </Form>
       </Formik>
     </div>

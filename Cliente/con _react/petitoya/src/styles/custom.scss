@@ -195,6 +195,12 @@ main {
   background-repeat: no-repeat;
 }
 
+.fondoTabla {
+  background-image: url("../img/inicioSesion/tabla.png");
+  background-size: 100% 99%;
+  background-position: center;
+}
+
 .contenedor {
   background-image: url("../img/registro/contenedor.png");
   background-size: cover;

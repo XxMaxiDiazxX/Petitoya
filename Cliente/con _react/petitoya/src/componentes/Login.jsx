@@ -8,10 +8,9 @@ import { useAuth } from './autenticacion/AuthContext';
 import Cuchillo from '../img/inicioSesion/cuchillo.png';
 import Tenedor from '../img/inicioSesion/tenedor.png';
 
- export const Login = () => {
+export const Login = () => {
   const [error, setError] = useState('');
 
-  // Obtén isLoggedIn del contexto useAuth
   const { login: authLogin, isLoggedIn } = useAuth();
 
   const navigate = useNavigate();
@@ -25,13 +24,13 @@ import Tenedor from '../img/inicioSesion/tenedor.png';
 
   return (
     <div className="login">
-      <div className="container-sm bg-white p-0 row rounded-4 custom-height">
-        <div className="conte container-sm bg-Barra2 rounded-4 col d-flex flex-column justify-content-center align-items-center">
+      <div className="container-sm p-0 row rounded-4 custom-height">
+        <div className="conte container-sm rounded-4 col d-flex flex-column justify-content-center align-items-center">
           {/* Agrega las imágenes a la izquierda y derecha del formulario */}
-          <div className="container">
-            <div className="row">
+          <div className="container fondoTabla " style={{ width: "60%", height: "100%", paddingRight: "15%" }}>
+            <div className="row h-100 d-flex justify-content-center align-items-center ">
               {/* Imagen a la izquierda */}
-              <div className="col-md-3">
+              <div className="col-md-3" style={{ maxWidth: "100px" }}>
                 <img
                   src={Tenedor}
                   alt="Tenedor"
@@ -40,8 +39,12 @@ import Tenedor from '../img/inicioSesion/tenedor.png';
                 />
               </div>
               {/* Formulario en el centro */}
-              <div className="col-md-6">
-                <h4>Inicio Sesion</h4>
+              <div className="col-md-6" style={{ height: "100%", padding: "20px" }}>
+
+
+                <h4 className="text-center text-white cuerpo" style={{ fontSize: "45px" }}>Inicio Sesion</h4>
+
+
                 <Formik
                   initialValues={{ documento: '', contrasena: '' }}
                   validationSchema={Yup.object({
@@ -71,10 +74,10 @@ import Tenedor from '../img/inicioSesion/tenedor.png';
                       });
                   }}
                 >
-                  <Form className='container-sm d-grid text-center'>
+                  <Form className='container-sm d-grid text-center labe naranj' style={{ fontWeight: "bold", fontSize: "20px" }}>
                     {error && <div className="text-danger fs-6 lh-1">{error}</div>}
                     <div className='form-group mb-4'>
-                      <label htmlFor="documento">Nombre de usuario</label>
+                      <label htmlFor="documento">Documento</label>
                       <Field
                         type="text"
                         name="documento"
@@ -94,13 +97,19 @@ import Tenedor from '../img/inicioSesion/tenedor.png';
                       />
                       <ErrorMessage name="contrasena" component="div" className="text-danger fs-6 lh-1" />
                     </div>
-
-                    <button type="submit" className="btn btn-custom-color nuevo">Iniciar Sesion</button>
+                    <div className='mx-4 d-flex align-items-center justify-content-center cuerpo text-uppercase text-uppercase mb-5'>
+                      <button type="submit" className="btn text-white bg-naranj border-0">Iniciar Sesion</button>
+                    </div>
                   </Form>
                 </Formik>
+                <div className="container-sm d-flex align-items-center justify-content-center cuerpo" style={{}}>
+                  <Link to="/inicio" className='btn text-white bg-naranj border-0 mx-4'>Invitado</Link>
+                  <Link to="/registro" className='btn text-white bg-naranj border-0 mx-4'>Registro</Link>
+                </div>
+
               </div>
               {/* Imagen a la derecha */}
-              <div className="col-md-3">
+              <div className="col-md-3" style={{ maxWidth: "100px" }}>
                 <img
                   src={Cuchillo}
                   alt="Cuchillo"
@@ -109,12 +118,9 @@ import Tenedor from '../img/inicioSesion/tenedor.png';
                 />
               </div>
             </div>
+
           </div>
 
-          <div className="container-sm red">
-            <Link to="/inicio">Invitado</Link>
-            <Link to="/registro">Registro</Link>
-          </div>
         </div>
       </div>
     </div>

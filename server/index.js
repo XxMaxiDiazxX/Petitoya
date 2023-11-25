@@ -119,9 +119,9 @@ app.get('/pedidos/:id_cliente', (req,res) => {
   
   // Ruta para crear un nuevo producto
   app.post("/productos", (req, res) => {
-    const { nombre, descripcion, precio, fecha_creacion, fecha_publicacion, categoria } = req.body;
-    db.query('INSERT INTO productos (nombre, descripcion, precio, fecha_creacion, fecha_publicacion, categoria) VALUES (?, ?, ?, ?, ?, ?)',
-      [nombre, descripcion, precio, fecha_creacion, fecha_publicacion, categoria],
+    const { id_producto, nombre, descripcion, precio, categoria } = req.body;
+    db.query('INSERT INTO productos (id_producto, nombre, descripcion, precio, fecha_creacion, fecha_publicacion, categoria) VALUES (?, ?, ?, ?, NOW(), NOW(), ?)',
+      [id_producto, nombre, descripcion, precio, categoria],
       (err, result) => {
         if (err) {
           console.log(err);
