@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik, Field, Form } from 'formik';
 import axios from 'axios';
 
-const AñadirProducto = () => {
+const AnadirProducto = () => {
   // Función para manejar el envío del formulario
   const handleSubmit = async (values, { resetForm }) => {
     try {
@@ -62,4 +62,4 @@ const AñadirProducto = () => {
   );
 };
 
-export default AñadirProducto;
+export default AnadirProducto;

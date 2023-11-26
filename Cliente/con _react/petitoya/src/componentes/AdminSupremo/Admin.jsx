@@ -1,4 +1,4 @@
-import AñadirProducto from "./AñadirProducto";
+// import AñadirProducto from "./AñadirProducto";
 import { ListaProductos } from "./ListaPordutctos";
 
 
@@ -8,7 +8,7 @@ const Admin = () => {
     <div>
       {/* Contenido del panel de administrador */}
       <h2 className="text-center">Panel de Administrador</h2>
-      <AñadirProducto />
+      {/* <AñadirProducto /> */}
       <ListaProductos />
 
       {/* ... otros elementos del panel de administrador */}
