@@ -21,13 +21,13 @@ const AnadirProducto = () => {
   };
 
   return (
-    <div className="container mt-5 red text-center" >
+    <div className="container mt-5 text-center mb-5" >
       <h2 className="mb-4">Añadir Producto</h2>
       <Formik
         initialValues={{ id_producto: '', nombre: '', descripcion: '', precio: '', categoria: '' }}
         onSubmit={handleSubmit}
       >
-        <Form className='w-75 container bg-Barra2 text-white rounded justify-content-center'>
+        <Form className='w-75 container bg-Barra2 text-white rounded p-3'>
           <div className='row'>
             <div className="mb-1 col-md-6">
               <label className="form-label">id:</label>
@@ -49,7 +49,7 @@ const AnadirProducto = () => {
               <Field type="text" name="precio" className="form-control" />
             </div>
 
-            <div className="mb-1 col-md-6">
+            <div className="mb-1 col-md-6 mb-4">
               <label className="form-label">Categoría:</label>
               <Field type="text" name="categoria" className="form-control" />
             </div>
