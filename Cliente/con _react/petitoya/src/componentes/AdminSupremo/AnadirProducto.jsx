@@ -21,38 +21,39 @@ const AnadirProducto = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5 red " >
       <h2 className="mb-4">Añadir Producto</h2>
       <Formik
         initialValues={{ id_producto: '', nombre: '', descripcion: '', precio: '', categoria: '' }}
         onSubmit={handleSubmit}
       >
-        <Form>
-          <div className="mb-1">
-            <label className="form-label">id:</label>
-            <Field type="text" name="id_producto" className="form-control" />
-          </div>
+        <Form className='w-75 container bg-Barra2 text-white rounded justify-content-center'>
+          <div className='row'>
+            <div className="mb-1 col-md-6">
+              <label className="form-label">id:</label>
+              <Field type="text" name="id_producto" className="form-control" />
+            </div>
 
-          <div className="mb-1">
-            <label className="form-label">Nombre:</label>
-            <Field type="text" name="nombre" className="form-control" />
+            <div className="mb-1 col-md-6">
+              <label className="form-label">Nombre:</label>
+              <Field type="text" name="nombre" className="form-control" />
+            </div>
           </div>
-
-          <div className="mb-1">
+          <div className="mb-1 col-md">
             <label className="form-label">Descripción:</label>
             <Field type="text" name="descripcion" className="form-control" />
           </div>
+          <div className='row'>
+            <div className="mb-1 col-md-6">
+              <label className="form-label">Precio:</label>
+              <Field type="text" name="precio" className="form-control" />
+            </div>
 
-          <div className="mb-1">
-            <label className="form-label">Precio:</label>
-            <Field type="text" name="precio" className="form-control" />
+            <div className="mb-1 col-md-6">
+              <label className="form-label">Categoría:</label>
+              <Field type="text" name="categoria" className="form-control" />
+            </div>
           </div>
-
-          <div className="mb-1">
-            <label className="form-label">Categoría:</label>
-            <Field type="text" name="categoria" className="form-control" />
-          </div>
-
           <button type="submit" className="btn btn-primary">
             Añadir Producto
           </button>

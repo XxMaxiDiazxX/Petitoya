@@ -1,5 +1,4 @@
 // import AñadirProducto from "./AñadirProducto";
-import { ListaProductos } from "./ListaPordutctos";
 
 
 const Admin = () => {
@@ -9,7 +8,6 @@ const Admin = () => {
       {/* Contenido del panel de administrador */}
       <h2 className="text-center">Panel de Administrador</h2>
       {/* <AñadirProducto /> */}
-      <ListaProductos />
 
       {/* ... otros elementos del panel de administrador */}
     </div>
