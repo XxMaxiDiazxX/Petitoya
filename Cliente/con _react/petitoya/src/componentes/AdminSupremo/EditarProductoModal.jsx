@@ -1,7 +1,6 @@
 // EditarProductoModal.js
-import React from 'react';
 
-const EditarProductoModal = ({ productoSeleccionado, mostrarModal, handleEditarProducto, setMostrarModal }) => {
+const EditarProductoModal = ({ productoSeleccionado, mostrarModal, handleEditarProducto, setMostrarModal, setProductoSeleccionado }) => {
   // Verifica si productoSeleccionado es null o undefined
   if (!productoSeleccionado) {
     return null; // O puedes mostrar un mensaje indicando que no hay producto seleccionado
@@ -30,10 +29,35 @@ const EditarProductoModal = ({ productoSeleccionado, mostrarModal, handleEditarP
               <label>Nombre:</label>
               <input
                 type="text"
-                value={productoSeleccionado.nombre}
+                value={productoSeleccionado.nombre || ''}
                 onChange={(e) => setProductoSeleccionado({ ...productoSeleccionado, nombre: e.target.value })}
               />
+
               {/* Agrega campos similares para otros detalles del producto (descripcion, precio, etc.) */}
+              <label>Descripción:</label>
+              <input
+                type="text"
+                value={productoSeleccionado.descripcion || ''}
+                onChange={(e) => setProductoSeleccionado({ ...productoSeleccionado, descripcion: e.target.value })}
+              />
+
+              <label>Precio:</label>
+              <input
+                type="text"
+                value={productoSeleccionado.precio || ''}
+                onChange={(e) => setProductoSeleccionado({ ...productoSeleccionado, precio: e.target.value })}
+              />
+
+              <label>Categoría:</label>
+              <label>Categoría:</label>
+              <select
+                value={productoSeleccionado.categoria || ''}
+                onChange={(e) => setProductoSeleccionado({ ...productoSeleccionado, categoria: e.target.value })}
+              >
+                <option value="">Selecciona una categoría</option>
+                <option value="Comida">Comida</option>
+                <option value="Bebida">Bebida</option>
+              </select>
 
               {/* Botón para guardar los cambios */}
               <button type="submit" className="btn btn-primary">Guardar Cambios</button>

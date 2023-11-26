@@ -21,7 +21,7 @@ const AnadirProducto = () => {
   };
 
   return (
-    <div className="container mt-5 red " >
+    <div className="container mt-5 red text-center" >
       <h2 className="mb-4">Añadir Producto</h2>
       <Formik
         initialValues={{ id_producto: '', nombre: '', descripcion: '', precio: '', categoria: '' }}
