@@ -7,8 +7,13 @@ import { Pedidos } from './pedidos/Pedidos';
 import { PieDePagina } from './PieDePagina';
 import RutaPrivadaAdmin from './autenticacion/RutaPriavadaAdmin';
 import Admin from './AdminSupremo/Admin';
+import { useAuth } from './autenticacion/AuthContext';
+
 
 export const PaginaPrincipal = () => {
+
+  const { isLoggedIn, logout, isAdmin, user } = useAuth();
+
   return (
     <div className="d-flex flex-column" style={{ minHeight: '100vh' }}>
       <BarraNavegacion />
@@ -16,7 +21,14 @@ export const PaginaPrincipal = () => {
         <Routes>
           <Route path="/" element={<Inicio />} />
           <Route path="menu" element={<Menu />} />
-          <Route path="pedidos" element={<Pedidos />} />
+          <Route path="pedidos" element={
+            isLoggedIn && isAdmin ? (
+              <></>
+            ) : (
+              <Pedidos />
+            )
+          }
+          />
           <Route path="admin" element={<RutaPrivadaAdmin element={<Admin />} />} />
         </Routes>
       </div>

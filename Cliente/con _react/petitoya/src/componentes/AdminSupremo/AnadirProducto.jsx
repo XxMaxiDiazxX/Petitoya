@@ -1,24 +1,46 @@
-import React from 'react';
-import { Formik, Field, Form } from 'formik';
+import React, { useState, useEffect } from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
 import axios from 'axios';
 
-const AnadirProducto = () => {
+const AnadirProducto = ({ setProductos }) => {
+  const [idExistError, setIdExistError] = useState('');
+
   // Función para manejar el envío del formulario
   const handleSubmit = async (values, { resetForm }) => {
     try {
-      // Enviar solicitud POST al servidor
-      await axios.post('http://localhost:3001/productos', values);
+      // Verificar si el ID ya existe
+      const idExistResponse = await axios.get(`http://localhost:3001/productos/${values.id_producto}`);
 
-      // Limpiar los campos después de una inserción exitosa
-      resetForm();
+      if (idExistResponse.data.length > 0) {
+        // Si el ID ya existe, muestra un mensaje de error
+        setIdExistError('El ID ya existe. Por favor, elige otro.');
+      } else {
+        // Si el ID no existe, procede con la inserción
+        setIdExistError('');
 
-      // Puedes hacer algo después de una inserción exitosa, como mostrar un mensaje al usuario
-      console.log('Producto añadido exitosamente');
+        // Enviar solicitud POST al servidor
+        await axios.post('http://localhost:3001/productos', values);
+
+        // Obtener la lista actualizada de productos después de la inserción
+        const response = await axios.get('http://localhost:3001/productos');
+
+        // Actualizar el estado local con la nueva lista de productos
+        setProductos(response.data);
+
+        // Limpiar los campos después de una inserción exitosa
+        resetForm();
+
+        console.log('Producto añadido exitosamente');
+      }
     } catch (error) {
-      // Manejar errores, por ejemplo, mostrar un mensaje de error al usuario
       console.error('Error al añadir el producto', error);
     }
   };
+
+  // Utiliza useEffect para forzar la actualización después de que se establezca el estado
+  useEffect(() => {
+    // Puedes agregar lógica adicional aquí si es necesario
+  }, [idExistError]);
 
   return (
     <div className="container mt-5 text-center mb-5" >
@@ -32,6 +54,7 @@ const AnadirProducto = () => {
             <div className="mb-1 col-md-6">
               <label className="form-label">id:</label>
               <Field type="text" name="id_producto" className="form-control" />
+                {idExistError && <span className="text-danger">{idExistError}</span>}
             </div>
 
             <div className="mb-1 col-md-6">
@@ -51,7 +74,11 @@ const AnadirProducto = () => {
 
             <div className="mb-1 col-md-6 mb-4">
               <label className="form-label">Categoría:</label>
-              <Field type="text" name="categoria" className="form-control" />
+              <Field as="select" name="categoria" className="form-control">
+                <option value="" disabled>Selecciona una categoría</option>
+                <option value="Comida">Comida</option>
+                <option value="Bebida">Bebida</option>
+              </Field>
             </div>
           </div>
           <button type="submit" className="btn btn-primary">

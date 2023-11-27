@@ -6,6 +6,7 @@ import { useAuth } from '../autenticacion/AuthContext';
 import AnadirProducto from '../AdminSupremo/AnadirProducto';
 import Producto from './Producto';
 import EditarProductoModal from '../AdminSupremo/EditarProductoModal';
+import EliminarProducto from '../AdminSupremo/DesactivarProducto';
 
 
 export const Menu = () => {
@@ -43,6 +44,7 @@ export const Menu = () => {
                     precio: productoSeleccionado.precio,
                     categoria: productoSeleccionado.categoria,
                 }
+
             );
 
             // Actualiza la lista de productos después de la edición
@@ -60,7 +62,7 @@ export const Menu = () => {
         <div className='content'>
             <div className="row">
                 {isLoggedIn && isAdmin && (
-                    <AnadirProducto />
+                    <AnadirProducto setProductos={setProductos} />
                 )}
 
                 <div className="col-md">
@@ -76,15 +78,26 @@ export const Menu = () => {
                                     imagenSrc={imagen}
                                 />
                                 {isLoggedIn && isAdmin && (
-                                    <button
-                                        className='btn btn-primary'
-                                        onClick={() => {
-                                            setProductoSeleccionado(producto);
-                                            setMostrarModal(true);
-                                        }}
-                                    >
-                                        Editar Producto
-                                    </button>
+                                    <div className="d-flex">
+                                        <button
+                                            className='btn btn-primary'
+                                            onClick={() => {
+                                                setProductoSeleccionado(producto);
+                                                setMostrarModal(true);
+                                            }}
+                                        >
+                                            Editar Producto
+                                        </button>
+                                        <EliminarProducto
+                                            id_producto={producto.id_producto}
+                                            setProductos={setProductos}  // Asegúrate de pasar setProductos aquí
+                                            onProductoEliminado={(id) => {
+                                                // Lógica para actualizar la lista de productos después de la eliminación
+                                                const updatedProductos = productos.filter(p => p.id_producto !== id);
+                                                setProductos(updatedProductos);
+                                            }}
+                                        />
+                                    </div>
                                 )}
                             </div>
                         ))}
@@ -103,15 +116,26 @@ export const Menu = () => {
                                     imagenSrc={imagen}
                                 />
                                 {isLoggedIn && isAdmin && (
-                                    <button
-                                        className='btn btn-primary'
-                                        onClick={() => {
-                                            setProductoSeleccionado(producto);
-                                            setMostrarModal(true);
-                                        }}
-                                    >
-                                        Editar Producto
-                                    </button>
+                                    <div className="d-flex">
+                                        <button
+                                            className='btn btn-primary'
+                                            onClick={() => {
+                                                setProductoSeleccionado(producto);
+                                                setMostrarModal(true);
+                                            }}
+                                        >
+                                            Editar Producto
+                                        </button>
+                                        <EliminarProducto
+                                            id_producto={producto.id_producto}
+                                            setProductos={setProductos}  // Asegúrate de pasar setProductos aquí
+                                            onProductoEliminado={(id) => {
+                                                // Lógica para actualizar la lista de productos después de la eliminación
+                                                const updatedProductos = productos.filter(p => p.id_producto !== id);
+                                                setProductos(updatedProductos);
+                                            }}
+                                        />
+                                    </div>
                                 )}
                             </div>
                         ))}

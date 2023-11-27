@@ -91,9 +91,10 @@ app.get('/pedidos', (req, res) => {
     }
   });
 });
-
-app.get('/pedidos/:id_cliente', (req, res) => {
+// Agrega una nueva ruta para obtener pedidos de un cliente específico
+app.get('/pedidos/cliente/:id_cliente', (req, res) => {
   const id_cliente = req.params.id_cliente;
+
   db.query('SELECT * FROM pedidos WHERE id_cliente = ?', [id_cliente], (err, result) => {
     if (err) {
       console.log(err);
@@ -103,6 +104,7 @@ app.get('/pedidos/:id_cliente', (req, res) => {
     }
   });
 });
+
 
 // Ruta para obtener productos por categoría
 app.get("/productos/:categoria", (req, res) => {
@@ -152,6 +154,25 @@ app.put("/productos/:id_producto", (req, res) => {
   );
 });
 
+// Ruta para eliminar un producto
+// Ruta para desactivar (eliminar lógicamente) un producto
+app.put("/productos/desactivar/:id_producto", (req, res) => {
+  const id_producto = req.params.id_producto;
+
+  // Actualiza el estado del producto a "inactivo"
+  db.query(
+    'UPDATE productos SET estado = ? WHERE id_producto = ?',
+    ['inactivo', id_producto],
+    (err, result) => {
+      if (err) {
+        console.error('Error al desactivar el producto:', err);
+        res.status(500).json({ error: 'Error interno del servidor' });
+      } else {
+        res.status(200).json({ message: 'Producto desactivado exitosamente' });
+      }
+    }
+  );
+});
 
 
 app.listen(3001, () => {

@@ -98,7 +98,7 @@ export const Login = () => {
                       <ErrorMessage name="contrasena" component="div" className="text-danger fs-6 lh-1" />
                     </div>
                     <div className='mx-4 d-flex align-items-center justify-content-center cuerpo text-uppercase text-uppercase mb-5'>
-                      <button type="submit" className="btn text-white bg-naranj border-0">Iniciar Sesion</button>
+                      <button type="submit" className="btn text-white bg-naranj border-0">Ingresar</button>
                     </div>
                   </Form>
                 </Formik>

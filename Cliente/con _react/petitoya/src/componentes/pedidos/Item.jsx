@@ -6,20 +6,20 @@ const Pedido = ({ id_pedido, id_cliente, estado, fecha_compra }) => (
     <div className="card custom-card">
         <div className="card-body">
             <h5 className="card-title">{`Pedido ID: ${id_pedido}`}</h5>
-            <p className="card-text">{`Cliente: ${id_cliente}`}</p>
             <p className="card-text">{`Estado: ${estado}`}</p>
             <p className="card-text">{`Fecha de Compra: ${fecha_compra}`}</p>
         </div>
     </div>
 );
 
-export const Item = ({id_cliente}) => {
+export const Item = ({ id_cliente }) => {
     const [pedidos, setPedidos] = useState([]);
 
     useEffect(() => {
         const fetchPedidos = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/pedidos`);
+                // Hacer la solicitud solo para los pedidos del cliente específico
+                const response = await axios.get(`http://localhost:3001/pedidos/cliente/${id_cliente}`);
                 setPedidos(response.data);
             } catch (error) {
                 console.error('Error fetching Pedidos:', error);
@@ -27,7 +27,7 @@ export const Item = ({id_cliente}) => {
         };
 
         fetchPedidos();
-}, []);
+    }, [id_cliente]);
 
     return (
         <div className="sugerencias d-flex">
@@ -36,7 +36,6 @@ export const Item = ({id_cliente}) => {
                 <Pedido
                     key={pedido.id_pedido}
                     id_pedido={pedido.id_pedido}
-                    id_cliente={pedido.id_cliente}
                     estado={pedido.estado}
                     fecha_compra={pedido.fecha_compra}
                 />
