@@ -7,13 +7,16 @@ import AnadirProducto from '../AdminSupremo/AnadirProducto';
 import Producto from './Producto';
 import EditarProductoModal from '../AdminSupremo/EditarProductoModal';
 import EliminarProducto from '../AdminSupremo/DesactivarProducto';
-
+import PedidoModal from './PedidoModal';
 
 export const Menu = () => {
     const { isLoggedIn, isAdmin } = useAuth();
     const [productos, setProductos] = useState([]);
     const [productoSeleccionado, setProductoSeleccionado] = useState(null);
     const [mostrarModal, setMostrarModal] = useState(false);
+    const [mostrarPedidoModal, setMostrarPedidoModal] = useState(false);
+
+
 
     useEffect(() => {
         const fetchProductos = async () => {
@@ -58,6 +61,12 @@ export const Menu = () => {
         }
     };
 
+    const handleAbrirPedidoModal = (producto) => {
+        setProductoSeleccionado(producto);
+        setMostrarPedidoModal(true);
+    };
+
+
     return (
         <div className='content'>
             <div className="row">
@@ -77,6 +86,16 @@ export const Menu = () => {
                                     precio={producto.precio}
                                     imagenSrc={imagen}
                                 />
+
+                                {!isLoggedIn || !isAdmin ? (
+                                    <button
+                                        className='btn btn-primary'
+                                        onClick={() => handleAbrirPedidoModal(producto)}
+                                    >
+                                        Realizar Pedido
+                                    </button>
+                                ) : null}
+
                                 {isLoggedIn && isAdmin && (
                                     <div className="d-flex">
                                         <button
@@ -115,6 +134,15 @@ export const Menu = () => {
                                     precio={producto.precio}
                                     imagenSrc={imagen}
                                 />
+
+                                {!isLoggedIn || !isAdmin ? (
+                                    <button
+                                        className='btn btn-primary'
+                                        onClick={() => handleAbrirPedidoModal(producto)}
+                                    >
+                                        Realizar Pedido
+                                    </button>
+                                ) : null}
                                 {isLoggedIn && isAdmin && (
                                     <div className="d-flex">
                                         <button
@@ -150,7 +178,18 @@ export const Menu = () => {
                     setMostrarModal={setMostrarModal}
                     setProductoSeleccionado={setProductoSeleccionado}
                 />
+
             )}
+
+            {mostrarPedidoModal && productoSeleccionado && (
+                <PedidoModal
+                    producto={productoSeleccionado}
+                    mostrarModal={mostrarPedidoModal}
+                    setMostrarModal={setMostrarPedidoModal}
+                />
+            )}
+
+
         </div>
     );
 };
