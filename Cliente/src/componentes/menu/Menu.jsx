@@ -46,6 +46,7 @@ export const Menu = () => {
                     descripcion: productoSeleccionado.descripcion,
                     precio: productoSeleccionado.precio,
                     categoria: productoSeleccionado.categoria,
+                    estado: productoSeleccionado.estado
                 }
 
             );
@@ -79,46 +80,48 @@ export const Menu = () => {
                     <div className='container mt-4'>
                         {/* Renderiza los productos de comida aquí */}
                         {productosComidas.map(producto => (
-                            <div key={producto.id_producto}>
-                                <Producto
-                                    nombre={producto.nombre}
-                                    descripcion={producto.descripcion}
-                                    precio={producto.precio}
-                                    imagenSrc={imagen}
-                                />
+                            (producto.estado !== "inactivo") && (
+                                <div key={producto.id_producto}>
+                                    <Producto
+                                        nombre={producto.nombre}
+                                        descripcion={producto.descripcion}
+                                        precio={producto.precio}
+                                        imagenSrc={imagen}
+                                    />
 
-                                {!isLoggedIn || !isAdmin ? (
-                                    <button
-                                        className='btn btn-primary'
-                                        onClick={() => handleAbrirPedidoModal(producto)}
-                                    >
-                                        Realizar Pedido
-                                    </button>
-                                ) : null}
-
-                                {isLoggedIn && isAdmin && (
-                                    <div className="d-flex">
+                                    {!isLoggedIn || !isAdmin ? (
                                         <button
                                             className='btn btn-primary'
-                                            onClick={() => {
-                                                setProductoSeleccionado(producto);
-                                                setMostrarModal(true);
-                                            }}
+                                            onClick={() => handleAbrirPedidoModal(producto)}
                                         >
-                                            Editar Producto
+                                            Realizar Pedido
                                         </button>
-                                        <EliminarProducto
-                                            id_producto={producto.id_producto}
-                                            setProductos={setProductos}  // Asegúrate de pasar setProductos aquí
-                                            onProductoEliminado={(id) => {
-                                                // Lógica para actualizar la lista de productos después de la eliminación
-                                                const updatedProductos = productos.filter(p => p.id_producto !== id);
-                                                setProductos(updatedProductos);
-                                            }}
-                                        />
-                                    </div>
-                                )}
-                            </div>
+                                    ) : null}
+
+                                    {isLoggedIn && isAdmin && (
+                                        <div className="d-flex">
+                                            <button
+                                                className='btn btn-primary'
+                                                onClick={() => {
+                                                    setProductoSeleccionado(producto);
+                                                    setMostrarModal(true);
+                                                }}
+                                            >
+                                                Editar Producto
+                                            </button>
+                                            <EliminarProducto
+                                                id_producto={producto.id_producto}
+                                                setProductos={setProductos}  // Asegúrate de pasar setProductos aquí
+                                                onProductoEliminado={(id) => {
+                                                    // Lógica para actualizar la lista de productos después de la eliminación
+                                                    const updatedProductos = productos.filter(p => p.id_producto !== id);
+                                                    setProductos(updatedProductos);
+                                                }}
+                                            />
+                                        </div>
+                                    )}
+                                </div>
+                            )
                         ))}
                     </div>
                 </div>
@@ -127,45 +130,48 @@ export const Menu = () => {
                     {/* Renderiza los productos de bebida aquí */}
                     <div className='container mt-4'>
                         {productosBebidas.map(producto => (
-                            <div key={producto.id_producto}>
-                                <Producto
-                                    nombre={producto.nombre}
-                                    descripcion={producto.descripcion}
-                                    precio={producto.precio}
-                                    imagenSrc={imagen}
-                                />
+                            (producto.estado !== "inactivo") && (
 
-                                {!isLoggedIn || !isAdmin ? (
-                                    <button
-                                        className='btn btn-primary'
-                                        onClick={() => handleAbrirPedidoModal(producto)}
-                                    >
-                                        Realizar Pedido
-                                    </button>
-                                ) : null}
-                                {isLoggedIn && isAdmin && (
-                                    <div className="d-flex">
+                                <div key={producto.id_producto}>
+                                    <Producto
+                                        nombre={producto.nombre}
+                                        descripcion={producto.descripcion}
+                                        precio={producto.precio}
+                                        imagenSrc={imagen}
+                                    />
+
+                                    {!isLoggedIn || !isAdmin ? (
                                         <button
                                             className='btn btn-primary'
-                                            onClick={() => {
-                                                setProductoSeleccionado(producto);
-                                                setMostrarModal(true);
-                                            }}
+                                            onClick={() => handleAbrirPedidoModal(producto)}
                                         >
-                                            Editar Producto
+                                            Realizar Pedido
                                         </button>
-                                        <EliminarProducto
-                                            id_producto={producto.id_producto}
-                                            setProductos={setProductos}  // Asegúrate de pasar setProductos aquí
-                                            onProductoEliminado={(id) => {
-                                                // Lógica para actualizar la lista de productos después de la eliminación
-                                                const updatedProductos = productos.filter(p => p.id_producto !== id);
-                                                setProductos(updatedProductos);
-                                            }}
-                                        />
-                                    </div>
-                                )}
-                            </div>
+                                    ) : null}
+                                    {isLoggedIn && isAdmin && (
+                                        <div className="d-flex">
+                                            <button
+                                                className='btn btn-primary'
+                                                onClick={() => {
+                                                    setProductoSeleccionado(producto);
+                                                    setMostrarModal(true);
+                                                }}
+                                            >
+                                                Editar Producto
+                                            </button>
+                                            <EliminarProducto
+                                                id_producto={producto.id_producto}
+                                                setProductos={setProductos}  // Asegúrate de pasar setProductos aquí
+                                                onProductoEliminado={(id) => {
+                                                    // Lógica para actualizar la lista de productos después de la eliminación
+                                                    const updatedProductos = productos.filter(p => p.id_producto !== id);
+                                                    setProductos(updatedProductos);
+                                                }}
+                                            />
+                                        </div>
+                                    )}
+                                </div>
+                            )
                         ))}
                     </div>
                 </div>

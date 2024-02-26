@@ -190,6 +190,7 @@ CREATE TABLE `productos` (
   `precio` int(11) NOT NULL,
   `fecha_creacion` date DEFAULT NULL,
   `categoria` varchar(25) NOT NULL
+  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

@@ -121,9 +121,9 @@ app.get("/productos/:categoria", (req, res) => {
 
 // Ruta para crear un nuevo producto
 app.post("/productos", (req, res) => {
-  const { id_producto, nombre, descripcion, precio, categoria } = req.body;
+  const { id_producto, nombre, descripcion, precio, categoria, estado } = req.body;
   db.query('INSERT INTO productos (id_producto, nombre, descripcion, precio, fecha_creacion, categoria) VALUES (?, ?, ?, ?, NOW(), ?)',
-    [id_producto, nombre, descripcion, precio, categoria],
+    [id_producto, nombre, descripcion, precio, categoria, estado],
     (err, result) => {
       if (err) {
         console.log(err);

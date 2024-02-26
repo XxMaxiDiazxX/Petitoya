@@ -2,7 +2,7 @@
 import { useState } from 'react';
 
 const PedidoModal = ({ producto, mostrarModal, setMostrarModal }) => {
-  const [cantidad, setCantidad] = useState(1);
+  const [cantidad, setCantidad] = useState(0);
 
   const handleModalClick = (e) => {
     // Evita que los clics lleguen a los elementos detrás de la modal
