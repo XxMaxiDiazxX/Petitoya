@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-02-2024 a las 19:18:45
--- Versión del servidor: 10.4.24-MariaDB
--- Versión de PHP: 8.1.6
+-- Tiempo de generación: 26-02-2024 a las 22:16:21
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -35,7 +35,7 @@ CREATE TABLE `clientes` (
   `contrasena` varchar(25) NOT NULL,
   `fecha_creacion` datetime DEFAULT NULL,
   `Administrador` tinyint(1) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `clientes`
@@ -62,7 +62,7 @@ CREATE TABLE `configuracion` (
   `idioma` varchar(50) NOT NULL,
   `moneda` varchar(50) NOT NULL,
   `tiempo_pedido` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `configuracion`
@@ -85,7 +85,7 @@ CREATE TABLE `envios` (
   `fecha_entrega` datetime DEFAULT NULL,
   `direccion_entrega` varchar(255) NOT NULL,
   `persona_recibio` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `envios`
@@ -107,7 +107,7 @@ CREATE TABLE `his_contra` (
   `id_cliente` int(11) NOT NULL,
   `contrasena` varchar(25) NOT NULL,
   `fecha_modifi` datetime DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -121,7 +121,7 @@ CREATE TABLE `pagos` (
   `fecha_pago` datetime DEFAULT NULL,
   `monto_total` int(11) NOT NULL,
   `metodo_pago` varchar(25) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `pagos`
@@ -143,7 +143,7 @@ CREATE TABLE `pedidos` (
   `id_cliente` int(11) NOT NULL,
   `estado` varchar(20) NOT NULL,
   `fecha_compra` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `pedidos`
@@ -165,7 +165,7 @@ CREATE TABLE `pedido_producto` (
   `id_producto` int(11) NOT NULL,
   `precio_compra` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `pedido_producto`
@@ -189,22 +189,22 @@ CREATE TABLE `productos` (
   `descripcion` varchar(255) NOT NULL,
   `precio` int(11) NOT NULL,
   `fecha_creacion` date DEFAULT NULL,
-  `categoria` varchar(25) NOT NULL
-  
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `categoria` varchar(25) NOT NULL,
+  `estado` varchar(25) NOT NULL DEFAULT 'activo'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `productos`
 --
 
-INSERT INTO `productos` (`id_producto`, `nombre`, `descripcion`, `precio`, `fecha_creacion`, `categoria`) VALUES
-(0, 'Producto 4', 'esto es una descripcion ', 20000, NULL, 'Bebida'),
-(1, '1', 'Descripción del Producto 1', 100, '2023-09-17', 'Comida'),
-(2, 'Producto 2', 'Descripción del Producto 2', 50, '2023-09-17', 'Comida'),
-(3, 'Producto 3', 'Descripción del Producto 3', 200, '2023-09-17', 'Bebida'),
-(7, 'rr', 'esto es una descripcion ', 40000, '2023-11-24', 'Comida'),
-(8, 'Produc 4', 'esto es una descripcion ', 20000, '2023-11-24', 'Bebida'),
-(9, 'we', 'esto es una descripcion ', 1, '2023-11-26', 'Comida');
+INSERT INTO `productos` (`id_producto`, `nombre`, `descripcion`, `precio`, `fecha_creacion`, `categoria`, `estado`) VALUES
+(0, 'Producto 4', 'esto es una descripcion ', 20000, NULL, 'Bebida', 'activo'),
+(1, '1', 'Descripción del Producto 1', 100, '2023-09-17', 'Comida', 'activo'),
+(2, 'Producto 2', 'Descripción del Producto 2', 50, '2023-09-17', 'Comida', 'activo'),
+(3, 'Producto 5', 'Descripción del Producto 3', 200, '2023-09-17', 'Bebida', 'activo'),
+(7, 'rr', 'esto es una descripcion ', 40000, '2023-11-24', 'Comida', 'activo'),
+(8, 'Produc 4', 'esto es una descripcion ', 20000, '2023-11-24', 'Bebida', 'activo'),
+(9, 'we', 'esto es una descripcion ', 1, '2023-11-26', 'Comida', 'inactivo');
 
 --
 -- Índices para tablas volcadas

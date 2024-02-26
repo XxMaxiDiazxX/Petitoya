@@ -75,128 +75,132 @@ export const Menu = () => {
                     <AnadirProducto setProductos={setProductos} />
                 )}
 
-                <div className="col-md">
-                    <h4 className='cuerpo'>Comidas</h4>
-                    <div className='container mt-4'>
-                        {/* Renderiza los productos de comida aquí */}
-                        {productosComidas.map(producto => (
-                            (producto.estado !== "inactivo") && (
-                                <div key={producto.id_producto}>
-                                    <Producto
-                                        nombre={producto.nombre}
-                                        descripcion={producto.descripcion}
-                                        precio={producto.precio}
-                                        imagenSrc={imagen}
-                                    />
+            <div className="col-md">
+                <h4 className='cuerpo'>Comidas</h4>
+                <div className='container mt-4'>
+                    {/* Renderiza los productos de comida aquí */}
+                    {productosComidas.map(producto => (
+                        (producto.estado !== "inactivo") && (
+                            <div key={producto.id_producto}>
+                                <Producto
+                                    nombre={producto.nombre}
+                                    descripcion={producto.descripcion}
+                                    precio={producto.precio}
+                                    imagenSrc={imagen}
+                                />
 
-                                    {!isLoggedIn || !isAdmin ? (
+                                {!isLoggedIn || !isAdmin ? (
+                                    <button
+                                        className='btn btn-primary'
+                                        onClick={() => handleAbrirPedidoModal(producto)}
+                                    >
+                                        Realizar Pedido
+                                    </button>
+                                ) : null}
+
+                                {isLoggedIn && isAdmin && (
+                                    <div className="d-flex">
                                         <button
                                             className='btn btn-primary'
-                                            onClick={() => handleAbrirPedidoModal(producto)}
+                                            onClick={() => {
+                                                setProductoSeleccionado(producto);
+                                                setMostrarModal(true);
+                                            }}
                                         >
-                                            Realizar Pedido
+                                            Editar Producto
                                         </button>
-                                    ) : null}
-
-                                    {isLoggedIn && isAdmin && (
-                                        <div className="d-flex">
-                                            <button
-                                                className='btn btn-primary'
-                                                onClick={() => {
-                                                    setProductoSeleccionado(producto);
-                                                    setMostrarModal(true);
-                                                }}
-                                            >
-                                                Editar Producto
-                                            </button>
-                                            <EliminarProducto
-                                                id_producto={producto.id_producto}
-                                                setProductos={setProductos}  // Asegúrate de pasar setProductos aquí
-                                                onProductoEliminado={(id) => {
-                                                    // Lógica para actualizar la lista de productos después de la eliminación
-                                                    const updatedProductos = productos.filter(p => p.id_producto !== id);
-                                                    setProductos(updatedProductos);
-                                                }}
-                                            />
-                                        </div>
-                                    )}
-                                </div>
-                            )
-                        ))}
-                    </div>
-                </div>
-                <div className="col-md">
-                    <h4 className='cuerpo'>Bebidas</h4>
-                    {/* Renderiza los productos de bebida aquí */}
-                    <div className='container mt-4'>
-                        {productosBebidas.map(producto => (
-                            (producto.estado !== "inactivo") && (
-
-                                <div key={producto.id_producto}>
-                                    <Producto
-                                        nombre={producto.nombre}
-                                        descripcion={producto.descripcion}
-                                        precio={producto.precio}
-                                        imagenSrc={imagen}
-                                    />
-
-                                    {!isLoggedIn || !isAdmin ? (
-                                        <button
-                                            className='btn btn-primary'
-                                            onClick={() => handleAbrirPedidoModal(producto)}
-                                        >
-                                            Realizar Pedido
-                                        </button>
-                                    ) : null}
-                                    {isLoggedIn && isAdmin && (
-                                        <div className="d-flex">
-                                            <button
-                                                className='btn btn-primary'
-                                                onClick={() => {
-                                                    setProductoSeleccionado(producto);
-                                                    setMostrarModal(true);
-                                                }}
-                                            >
-                                                Editar Producto
-                                            </button>
-                                            <EliminarProducto
-                                                id_producto={producto.id_producto}
-                                                setProductos={setProductos}  // Asegúrate de pasar setProductos aquí
-                                                onProductoEliminado={(id) => {
-                                                    // Lógica para actualizar la lista de productos después de la eliminación
-                                                    const updatedProductos = productos.filter(p => p.id_producto !== id);
-                                                    setProductos(updatedProductos);
-                                                }}
-                                            />
-                                        </div>
-                                    )}
-                                </div>
-                            )
-                        ))}
-                    </div>
+                                        <EliminarProducto
+                                            id_producto={producto.id_producto}
+                                            setProductos={setProductos}  // Asegúrate de pasar setProductos aquí
+                                            onProductoEliminado={(id) => {
+                                                // Lógica para actualizar la lista de productos después de la eliminación
+                                                const updatedProductos = productos.filter(p => p.id_producto !== id);
+                                                setProductos(updatedProductos);
+                                            }}
+                                        />
+                                    </div>
+                                )}
+                            </div>
+                        )
+                    ))}
                 </div>
             </div>
-            {mostrarModal && productoSeleccionado && (
-                <EditarProductoModal
-                    productoSeleccionado={productoSeleccionado}
-                    mostrarModal={mostrarModal}
-                    handleEditarProducto={handleEditarProducto}
-                    setMostrarModal={setMostrarModal}
-                    setProductoSeleccionado={setProductoSeleccionado}
-                />
+            <div className="col-md">
+                <h4 className='cuerpo'>Bebidas</h4>
+                {/* Renderiza los productos de bebida aquí */}
+                <div className='container mt-4'>
+                    {productosBebidas.map(producto => (
+                        (producto.estado !== "inactivo") && (
 
-            )}
+                            <div key={producto.id_producto}>
+                                <Producto
+                                    nombre={producto.nombre}
+                                    descripcion={producto.descripcion}
+                                    precio={producto.precio}
+                                    imagenSrc={imagen}
+                                />
 
-            {mostrarPedidoModal && productoSeleccionado && (
-                <PedidoModal
-                    producto={productoSeleccionado}
-                    mostrarModal={mostrarPedidoModal}
-                    setMostrarModal={setMostrarPedidoModal}
-                />
-            )}
-
-
+                                {!isLoggedIn || !isAdmin ? (
+                                    <button
+                                        className='btn btn-primary'
+                                        onClick={() => handleAbrirPedidoModal(producto)}
+                                    >
+                                        Realizar Pedido
+                                    </button>
+                                ) : null}
+                                {isLoggedIn && isAdmin && (
+                                    <div className="d-flex">
+                                        <button
+                                            className='btn btn-primary'
+                                            onClick={() => {
+                                                setProductoSeleccionado(producto);
+                                                setMostrarModal(true);
+                                            }}
+                                        >
+                                            Editar Producto
+                                        </button>
+                                        <EliminarProducto
+                                            id_producto={producto.id_producto}
+                                            setProductos={setProductos}  // Asegúrate de pasar setProductos aquí
+                                            onProductoEliminado={(id) => {
+                                                // Lógica para actualizar la lista de productos después de la eliminación
+                                                const updatedProductos = productos.filter(p => p.id_producto !== id);
+                                                setProductos(updatedProductos);
+                                            }}
+                                        />
+                                    </div>
+                                )}
+                            </div>
+                        )
+                    ))}
+                </div>
+            </div>
         </div>
+            {
+        mostrarModal && productoSeleccionado && (
+            <EditarProductoModal
+                productoSeleccionado={productoSeleccionado}
+                mostrarModal={mostrarModal}
+                handleEditarProducto={handleEditarProducto}
+                setMostrarModal={setMostrarModal}
+                setProductoSeleccionado={setProductoSeleccionado}
+            />
+
+        )
+    }
+
+    {
+        mostrarPedidoModal && productoSeleccionado && (
+            <PedidoModal
+                producto={productoSeleccionado}
+                mostrarModal={mostrarPedidoModal}
+                setMostrarModal={setMostrarPedidoModal}
+            />
+        )
+    }
+
+
+        </div >
     );
 };
 

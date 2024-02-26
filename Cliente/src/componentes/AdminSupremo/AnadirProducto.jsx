@@ -42,50 +42,70 @@ const AnadirProducto = ({ setProductos }) => {
     // Puedes agregar lógica adicional aquí si es necesario
   }, [idExistError]);
 
+
+  const [mostrarFormulario, setMostrarFormulario] = useState(false); // Nuevo estado para controlar la visibilidad del formulario de añadir producto
+
+  const handleAgregarProducto = () => {
+    setMostrarFormulario(!mostrarFormulario); // Alternar entre mostrar u ocultar el formulario al hacer clic en el botón
+  };
+
+
   return (
     <div className="container mt-5 text-center mb-5" >
-      <h2 className="mb-4">Añadir Producto</h2>
-      <Formik
-        initialValues={{ id_producto: '', nombre: '', descripcion: '', precio: '', categoria: '' }}
-        onSubmit={handleSubmit}
-      >
-        <Form className='w-75 container bg-Barra2 text-white rounded p-3'>
-          <div className='row'>
-            <div className="mb-1 col-md-6">
-              <label className="form-label">id:</label>
-              <Field type="text" name="id_producto" className="form-control" />
-                {idExistError && <span className="text-danger">{idExistError}</span>}
-            </div>
+      {mostrarFormulario ? (
+        <button className="btn btn-primary" onClick={handleAgregarProducto}>
+          Añadir Produto
+        </button>
+      ) : (
+        <>
+          <h2 className="mb-4">Añadir Producto</h2>
+          <Formik
+            initialValues={{ id_producto: '', nombre: '', descripcion: '', precio: '', categoria: '' }}
+            onSubmit={handleSubmit}
+          >
+            <Form className='w-75 container bg-Barra2 text-white rounded p-3'>
+              <div className='row'>
+                <div className="mb-1 col-md-6">
+                  <label className="form-label">id:</label>
+                  <Field type="text" name="id_producto" className="form-control" />
+                  {idExistError && <span className="text-danger">{idExistError}</span>}
+                </div>
 
-            <div className="mb-1 col-md-6">
-              <label className="form-label">Nombre:</label>
-              <Field type="text" name="nombre" className="form-control" />
-            </div>
-          </div>
-          <div className="mb-1 col-md">
-            <label className="form-label">Descripción:</label>
-            <Field type="text" name="descripcion" className="form-control" />
-          </div>
-          <div className='row'>
-            <div className="mb-1 col-md-6">
-              <label className="form-label">Precio:</label>
-              <Field type="text" name="precio" className="form-control" />
-            </div>
+                <div className="mb-1 col-md-6">
+                  <label className="form-label">Nombre:</label>
+                  <Field type="text" name="nombre" className="form-control" />
+                </div>
+              </div>
+              <div className="mb-1 col-md">
+                <label className="form-label">Descripción:</label>
+                <Field type="text" name="descripcion" className="form-control" />
+              </div>
+              <div className='row'>
+                <div className="mb-1 col-md-6">
+                  <label className="form-label">Precio:</label>
+                  <Field type="text" name="precio" className="form-control" />
+                </div>
 
-            <div className="mb-1 col-md-6 mb-4">
-              <label className="form-label">Categoría:</label>
-              <Field as="select" name="categoria" className="form-control">
-                <option value="" disabled>Selecciona una categoría</option>
-                <option value="Comida">Comida</option>
-                <option value="Bebida">Bebida</option>
-              </Field>
-            </div>
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Añadir Producto
-          </button>
-        </Form>
-      </Formik>
+                <div className="mb-1 col-md-6 mb-4">
+                  <label className="form-label">Categoría:</label>
+                  <Field as="select" name="categoria" className="form-control">
+                    <option value="" disabled>Selecciona una categoría</option>
+                    <option value="Comida">Comida</option>
+                    <option value="Bebida">Bebida</option>
+                  </Field>
+                </div>
+              </div>
+              <button type="submit" className="btn btn-primary">
+                Añadir Producto
+              </button>
+              <button className="btn btn-primary ml-3 mr-3" onClick={handleAgregarProducto}>
+                cerrar
+              </button>
+            </Form>
+          </Formik>
+        </>
+      )}
+
     </div>
   );
 };
