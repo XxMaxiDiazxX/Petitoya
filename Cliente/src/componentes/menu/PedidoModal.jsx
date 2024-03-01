@@ -1,7 +1,7 @@
 // PedidoModal.js
 import { useState } from 'react';
 
-const PedidoModal = ({ producto, mostrarModal, setMostrarModal }) => {
+export const PedidoModal = ({ producto, mostrarModal, setMostrarModal }) => {
   const [cantidad, setCantidad] = useState(0);
 
   const handleModalClick = (e) => {
@@ -67,5 +67,3 @@ const PedidoModal = ({ producto, mostrarModal, setMostrarModal }) => {
     </div>
   );
 };
-
-export default PedidoModal;

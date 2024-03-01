@@ -1,4 +1,4 @@
-const Producto = ({ nombre, descripcion, precio, imagenSrc }) => (
+export const Producto = ({ nombre, descripcion, precio, imagenSrc }) => (
   <div className="row bg-white mt-4 rounded">
     <div className='col-md-2 d-flex align-items-center justify-content-center' style={{ minWidth: '120px' }}>
       <img
@@ -15,5 +15,3 @@ const Producto = ({ nombre, descripcion, precio, imagenSrc }) => (
     </div>
   </div>
 );
-
-export default Producto;
