@@ -53,10 +53,6 @@ const AnadirProducto = ({ setProductos }) => {
   return (
     <div className="container mt-5 text-center mb-5" >
       {mostrarFormulario ? (
-        <button className="btn btn-primary" onClick={handleAgregarProducto}>
-          Añadir Produto
-        </button>
-      ) : (
         <>
           <h2 className="mb-4">Añadir Producto</h2>
           <Formik
@@ -104,6 +100,10 @@ const AnadirProducto = ({ setProductos }) => {
             </Form>
           </Formik>
         </>
+      ) : (
+        <button className="btn btn-primary" onClick={handleAgregarProducto}>
+          Añadir Produto
+        </button>
       )}
 
     </div>

@@ -23,7 +23,9 @@ export const PaginaPrincipal = () => {
           <Route path="menu" element={<Menu />} />
           <Route path="pedidos" element={
             isLoggedIn && isAdmin ? (
-              <></>
+              <>
+                {/* interfaz de pedidos para Admins */}
+              </>
             ) : (
               <Pedidos />
             )
