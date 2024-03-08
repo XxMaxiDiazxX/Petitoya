@@ -15,3 +15,5 @@ export const Producto = ({ nombre, descripcion, precio, imagenSrc }) => (
     </div>
   </div>
 );
+
+export default Producto;

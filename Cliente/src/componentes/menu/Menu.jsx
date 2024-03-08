@@ -9,6 +9,7 @@ import EditarProductoModal from '../AdminSupremo/EditarProductoModal';
 import EliminarProducto from '../AdminSupremo/DesactivarProducto';
 import PedidoModal from './PedidoModal';
 
+
 export const Menu = () => {
     const { isLoggedIn, isAdmin } = useAuth();
     const [productos, setProductos] = useState([]);
@@ -204,3 +205,4 @@ export const Menu = () => {
     );
 };
 
+export default Menu;
