@@ -4,8 +4,4 @@ sugerir esas comidas que se estan perdiendo.
 
 # Realizar apartado de estados de los pedidos, los activos y los inactivos
 
-
-
-
-
-
+# Modificar el diccionario de datos
