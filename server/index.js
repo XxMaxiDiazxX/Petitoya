@@ -2,6 +2,10 @@ const express = require('express');
 const app = express();
 const mysql = require('mysql');
 const cors = require('cors');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' }); // Directorio donde se guardarán los archivos subidos
+const fs = require('fs');
+
 
 app.use(cors());
 
@@ -120,10 +124,19 @@ app.get("/productos/:categoria", (req, res) => {
 });
 
 // Ruta para crear un nuevo producto
-app.post("/productos", (req, res) => {
+app.post("/productos", upload.single('imagen'), (req, res) => {
+  // Acceder al archivo subido
+  const imagen = req.file;
+
+  // Resto de los datos del producto
   const { id_producto, nombre, descripcion, precio, categoria, estado } = req.body;
-  db.query('INSERT INTO productos (id_producto, nombre, descripcion, precio, fecha_creacion, categoria) VALUES (?, ?, ?, ?, NOW(), ?)',
-    [id_producto, nombre, descripcion, precio, categoria, estado],
+
+  // Leer los datos binarios de la imagen
+  const imagenBinaria = fs.readFileSync(imagen.path);
+
+  db.query(
+    'INSERT INTO productos (id_producto, nombre, descripcion, precio, fecha_creacion, categoria, imagen) VALUES (?, ?, ?, ?, NOW(), ?, ?)',
+    [id_producto, nombre, descripcion, precio, categoria, estado, imagenBinaria],
     (err, result) => {
       if (err) {
         console.log(err);
