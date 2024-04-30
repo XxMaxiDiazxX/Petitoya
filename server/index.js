@@ -1,12 +1,41 @@
 const express = require('express');
-const app = express();
 const mysql = require('mysql');
 const cors = require('cors');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' }); // Directorio donde se guardarán los archivos subidos
 const fs = require('fs');
 const bcrypt = require('bcrypt');
+const winston = require('winston');
 
+const app = express();
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.printf(info => {
+      return `${info.timestamp} - ${info.level}: ${info.message}`;
+    })  
+  ),
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: 'server.log'}),
+    new winston.transports.File({ filename: 'error.log', level: 'error' })
+  ]
+});
+
+// Configuración de la base de datos
+const db = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'petitoya'
+});
+
+// Middlewares
+app.use(cors());
+app.use(express.json());
+
+// Funciones auxiliares
 async function encriptarContraseña(contraseña) {
   try {
     const hash = await bcrypt.hash(contraseña, 10); // 10 es el número de rondas de hashing
@@ -16,47 +45,9 @@ async function encriptarContraseña(contraseña) {
   }
 }
 
-app.use(cors());
+// Endpoints
 
-app.use(express.json());
-
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'petitoya'
-});
-
-/*app.post("/create", (req, res) => {
-  const documento = req.body.documento;
-  const nombre = req.body.nombre;
-  const correo_electronico = req.body.correo_electronico;
-  const telefono = req.body.telefono;
-  const contrasena = req.body.contrasena;
-
-  db.query('INSERT INTO clientes (id_cliente, nombre, correo_electronico, telefono, contrasena, fecha_creacion) VALUES (?,?,?,?,?,NOW())', [documento, nombre, correo_electronico, telefono, contrasena],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-        res.status(500).json({ error: 'Error interno del servidor' });
-      } else {
-        // Verifica si se insertó correctamente y devuelve información del usuario
-        if (result.affectedRows > 0) {
-          const user = {
-            documento: documento,
-            nombre: nombre,
-            correo_electronico: correo_electronico,
-            telefono: telefono,
-          };
-          res.status(200).json({ message: 'Registro exitoso', user });
-        } else {
-          res.status(500).json({ error: 'No se pudo insertar el usuario' });
-        }
-      }
-    }
-  );
-});*/
-
+// Endpoint para registrar usuarios
 app.post("/create", async (req, res) => {
   const documento = req.body.documento;
   const nombre = req.body.nombre;
@@ -70,7 +61,7 @@ app.post("/create", async (req, res) => {
     db.query('INSERT INTO clientes (id_cliente, nombre, correo_electronico, telefono, contrasena, fecha_creacion) VALUES (?,?,?,?,?,NOW())', [documento, nombre, correo_electronico, telefono, hashedPassword],
       (err, result) => {
         if (err) {
-          console.log(err);
+          logger.error('Error al insertar usuario en la base de datos:', err);
           res.status(500).json({ error: 'Error interno del servidor' });
         } else {
           // Verifica si se insertó correctamente y devuelve información del usuario
@@ -89,35 +80,12 @@ app.post("/create", async (req, res) => {
       }
     );
   } catch (error) {
-    console.error('Error al encriptar la contraseña:', error);
+    logger.error('Error al encriptar la contraseña:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
 
-/*app.post("/login", (req, res) => {
-  const { documento, contrasena } = req.body;
-
-  db.query('SELECT * FROM CLIENTES WHERE id_cliente = ? AND contrasena = ?', [documento, contrasena], (err, result) => {
-    if (err) {
-      console.log(err);
-      res.status(500).json({ error: 'Error interno del servidor' });
-    } else {
-      if (result.length > 0) {
-        const user = {
-          id: result[0].id_cliente,
-          username: result[0].nombre,
-          isAdmin: result[0].Administrador === 1,
-        };
-        // Inicio de sesión exitoso
-        res.status(200).json({ message: 'Inicio de sesión exitoso', user });
-      } else {
-        // Credenciales incorrectas
-        res.status(401).json({ error: 'Usuario y/o contraseña incorrectas' });
-      }
-    }
-  });
-});*/
-
+// Endpoint para iniciar sesión
 app.post("/login", async (req, res) => {
   const { documento, contrasena } = req.body;
 
@@ -125,7 +93,7 @@ app.post("/login", async (req, res) => {
     // Consulta la base de datos para obtener el hash de la contraseña almacenada
     db.query('SELECT contrasena FROM clientes WHERE id_cliente = ?', [documento], async (err, result) => {
       if (err) {
-        console.error(err);
+        logger.error('Error al consultar la base de datos:', err);
         res.status(500).json({ error: 'Error interno del servidor' });
       } else {
         if (result.length > 0) {
@@ -152,16 +120,16 @@ app.post("/login", async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Error al verificar la contraseña:', error);
+    logger.error('Error al verificar la contraseña:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
 
-// Ruta para obtener todos los productos
+// Endpoint para obtener todos los productos
 app.get("/productos", (req, res) => {
   db.query('SELECT * FROM productos', (err, result) => {
     if (err) {
-      console.log(err);
+      logger.error('Error al consultar la base de datos:', err);
       res.status(500).json({ error: 'Error interno del servidor' });
     } else {
       res.status(200).json(result);
@@ -169,23 +137,25 @@ app.get("/productos", (req, res) => {
   });
 });
 
+// Endpoint para obtener todos los pedidos
 app.get('/pedidos', (req, res) => {
   db.query('SELECT * FROM pedidos', (err, result) => {
     if (err) {
-      console.log(err);
+      logger.error('Error al consultar la base de datos:', err);
       res.status(500).json({ error: 'Error interno del servidor' });
     } else {
       res.status(200).json(result);
     }
   });
 });
-// Agrega una nueva ruta para obtener pedidos de un cliente específico
+
+// Endpoint para obtener pedidos de un cliente específico
 app.get('/pedidos/cliente/:id_cliente', (req, res) => {
   const id_cliente = req.params.id_cliente;
 
   db.query('SELECT * FROM pedidos WHERE id_cliente = ?', [id_cliente], (err, result) => {
     if (err) {
-      console.log(err);
+      logger.error('Error al consultar la base de datos:', err);
       res.status(500).json({ error: 'Error interno del servidor' });
     } else {
       res.status(200).json(result);
@@ -193,13 +163,12 @@ app.get('/pedidos/cliente/:id_cliente', (req, res) => {
   });
 });
 
-
-// Ruta para obtener productos por categoría
+// Endpoint para obtener productos por categoría
 app.get("/productos/:categoria", (req, res) => {
   const categoria = req.params.categoria;
   db.query('SELECT * FROM productos WHERE categoria = ?', [categoria], (err, result) => {
     if (err) {
-      console.log(err);
+      logger.error('Error al consultar la base de datos:', err);
       res.status(500).json({ error: 'Error interno del servidor' });
     } else {
       res.status(200).json(result);
@@ -207,7 +176,7 @@ app.get("/productos/:categoria", (req, res) => {
   });
 });
 
-// Ruta para crear un nuevo producto
+// Endpoint para crear un nuevo producto
 app.post("/productos", upload.single('imagen'), (req, res) => {
   // Acceder al archivo subido
   const imagen = req.file;
@@ -223,7 +192,7 @@ app.post("/productos", upload.single('imagen'), (req, res) => {
     [id_producto, nombre, descripcion, precio, categoria, estado, imagenBinaria],
     (err, result) => {
       if (err) {
-        console.log(err);
+        logger.error('Error al insertar producto en la base de datos:', err);
         res.status(500).json({ error: 'Error interno del servidor' });
       } else {
         res.status(200).json({ message: 'Producto creado exitosamente' });
@@ -232,6 +201,7 @@ app.post("/productos", upload.single('imagen'), (req, res) => {
   );
 });
 
+// Endpoint para actualizar un producto
 app.put("/productos/:id_producto", (req, res) => {
   const id_producto = req.params.id_producto;
   const { nombre, descripcion, precio, categoria } = req.body;
@@ -242,7 +212,7 @@ app.put("/productos/:id_producto", (req, res) => {
     [nombre, descripcion, precio, categoria, id_producto],
     (err, result) => {
       if (err) {
-        console.error('Error al actualizar el producto:', err);
+        logger.error('Error al actualizar el producto:', err);
         res.status(500).json({ error: 'Error interno del servidor' });
       } else {
         res.status(200).json({ message: 'Producto actualizado exitosamente' });
@@ -251,8 +221,7 @@ app.put("/productos/:id_producto", (req, res) => {
   );
 });
 
-// Ruta para eliminar un producto
-// Ruta para desactivar (eliminar lógicamente) un producto
+// Endpoint para desactivar (eliminar lógicamente) un producto
 app.put("/productos/desactivar/:id_producto", (req, res) => {
   const id_producto = req.params.id_producto;
 
@@ -262,7 +231,7 @@ app.put("/productos/desactivar/:id_producto", (req, res) => {
     ['inactivo', id_producto],
     (err, result) => {
       if (err) {
-        console.error('Error al desactivar el producto:', err);
+        logger.error('Error al desactivar el producto:', err);
         res.status(500).json({ error: 'Error interno del servidor' });
       } else {
         res.status(200).json({ message: 'Producto desactivado exitosamente' });
@@ -271,7 +240,8 @@ app.put("/productos/desactivar/:id_producto", (req, res) => {
   );
 });
 
-
-app.listen(3001, () => {
-  console.log("Corriendo en el puerto 3001");
+// Iniciar el servidor
+const PORT = 3001;
+app.listen(PORT, () => {
+  console.log(`Corriendo en el puerto ${PORT}`);
 });
