@@ -13,14 +13,18 @@ export const AuthProvider = ({ children }) => {
     const storedUser = localStorage.getItem('user');
     const storedIsAdmin = localStorage.getItem('isAdmin');
     const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
-
+  
     if (storedUser && storedIsAdmin && storedIsLoggedIn) {
       setUser(JSON.parse(storedUser));
       setIsAdmin(JSON.parse(storedIsAdmin));
       setIsLoggedIn(JSON.parse(storedIsLoggedIn));
+    } else {
+      // Si alguno de los valores está indefinido, no hagas nada o maneja la situación según sea necesario
+      console.error('Alguno de los valores recuperados del localStorage está indefinido.');
     }
   }, []);
   
+
 const login = (userData) => {
     setUser(userData.user);
     setIsAdmin(userData.isAdmin);

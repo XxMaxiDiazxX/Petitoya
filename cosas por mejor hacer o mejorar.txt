@@ -5,3 +5,7 @@ sugerir esas comidas que se estan perdiendo.
 # Realizar apartado de estados de los pedidos, los activos y los inactivos
 
 # Modificar el diccionario de datos
+
+#oraganizar el index.js por jerarquias:
+    carpetas para los productos, lo usuarios, admins, etc tec,
+    con sus logicas

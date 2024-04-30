@@ -1,0 +1,1 @@
+2024-04-30T20:05:59.594Z - error: Error al encriptar la contraseña: Invalid salt. Salt must be in the form of: $Vers$log2(NumRounds)$saltvalue

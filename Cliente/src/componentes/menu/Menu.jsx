@@ -72,9 +72,13 @@ export const Menu = () => {
     return (
         <div className='content'>
             <div className="row">
-                {isLoggedIn && isAdmin && (
+
+{/* RECUERDA ESTO */}
+
+
+                {/* {isLoggedIn && isAdmin && ( */}
                     <AnadirProducto setProductos={setProductos} />
-                )}
+                {/* )} */}
 
             <div className="col-md">
                 <h4 className='cuerpo'>Comidas</h4>
@@ -87,9 +91,8 @@ export const Menu = () => {
                                     nombre={producto.nombre}
                                     descripcion={producto.descripcion}
                                     precio={producto.precio}
-                                    imagenSrc={imagen}
+                                    imagenSrc={`data:image/jpeg;base64,${producto.imagenBase64}`}
                                 />
-
                                 {!isLoggedIn || !isAdmin ? (
                                     <button
                                         className='btn btn-primary'

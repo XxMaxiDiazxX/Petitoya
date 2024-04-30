@@ -101,7 +101,7 @@ export const Registro = () => {
                                 <Field
                                     type="text"
                                     name="nombre"
-                                    className="form-control bg-input text-white usua"
+                                    className="form-control bg-input usua"
                                     placeholder="Ingrese su nombre"
                                 />
                                 <ErrorMessage name="nombre" component="span" className="error" />
@@ -111,7 +111,7 @@ export const Registro = () => {
                                 <Field
                                     type="text"
                                     name="apellido"
-                                    className="form-control bg-input text-white usua"
+                                    className="form-control bg-input usua"
                                     placeholder="Ingrese su apellido"
                                 />
                                 <ErrorMessage name="apellido" component="span" className="error" />
@@ -123,7 +123,7 @@ export const Registro = () => {
                                 <Field
                                     type="number"
                                     name="documento"
-                                    className="form-control bg-input text-white usua"
+                                    className="form-control bg-input usua"
                                     placeholder="Ingrese su documento"
                                 />
                                 <ErrorMessage name="documento" component="span" className="error" />
@@ -133,7 +133,7 @@ export const Registro = () => {
                                 <Field
                                     type="tel"
                                     name="telefono"
-                                    className="form-control bg-input text-white usua"
+                                    className="form-control bg-input usua"
                                     placeholder="Ingrese su teléfono"
                                 />
                                 <ErrorMessage name="telefono" component="span" className="error" />
@@ -145,7 +145,7 @@ export const Registro = () => {
                                 <Field
                                     type="password"
                                     name="contrasena"
-                                    className="form-control bg-input text-white contra"
+                                    className="form-control bg-input contra"
                                     placeholder="Ingrese su contraseña"
                                 />
                                 <ErrorMessage name="contrasena" component="span" className="error" />
@@ -156,7 +156,7 @@ export const Registro = () => {
                                 <Field
                                     type="email"
                                     name="correo_electronico"
-                                    className="form-control bg-input text-white usua"
+                                    className="form-control bg-input usua"
                                     placeholder="Ingrese su correo electrónico"
                                 />
                                 <ErrorMessage name="correo_electronico" component="span" className="error" />
@@ -168,7 +168,7 @@ export const Registro = () => {
                                 <Field
                                     type="password"
                                     name="confirmar_contrasena"
-                                    className="form-control bg-input text-white contra"
+                                    className="form-control bg-input contra"
                                     placeholder="Ingrese su contraseña"
                                 />
                                 <ErrorMessage name="confirmar_contrasena" component="span" className="error" />

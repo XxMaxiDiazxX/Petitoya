@@ -1,19 +1,27 @@
-export const Producto = ({ nombre, descripcion, precio, imagenSrc }) => (
-  <div className="row bg-white mt-4 rounded">
-    <div className='col-md-2 d-flex align-items-center justify-content-center' style={{ minWidth: '120px' }}>
-      <img
-        className="rounded-circle"
-        src={imagenSrc}
-        alt={nombre}
-        style={{ width: '90px', height: '90px' }}
-      />
+const convertirImagenABase64 = (imagenBinaria) => {
+  if (imagenBinaria) {
+    const base64String = btoa(
+      new Uint8Array(imagenBinaria).reduce(
+        (datos, byte) => datos + String.fromCharCode(byte),
+        ''
+      )
+    );
+    return `data:image/jpeg;base64,${base64String}`;
+  }
+  return null;
+};
+
+const Producto = ({ nombre, descripcion, precio, imagenBinaria }) => {
+  const imagenSrc = convertirImagenABase64(imagenBinaria);
+
+  return (
+    <div className="producto">
+      <img src={imagenSrc} alt={nombre} />
+      <h3>{nombre}</h3>
+      <p>{descripcion}</p>
+      <p>Precio: ${precio}</p>
     </div>
-    <div className="col-md">
-      <h5 className="card-title">{nombre}</h5>
-      <p className="card-text">{descripcion}</p>
-      <p className="card-text">{`Precio: ${precio}`}</p>
-    </div>
-  </div>
-);
+  );
+};
 
 export default Producto;

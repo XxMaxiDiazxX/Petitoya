@@ -14,11 +14,11 @@ const logger = winston.createLogger({
     winston.format.timestamp(),
     winston.format.printf(info => {
       return `${info.timestamp} - ${info.level}: ${info.message}`;
-    })  
+    })
   ),
   transports: [
     new winston.transports.Console(),
-    new winston.transports.File({ filename: 'server.log'}),
+    new winston.transports.File({ filename: 'server.log' }),
     new winston.transports.File({ filename: 'error.log', level: 'error' })
   ]
 });
@@ -36,15 +36,30 @@ app.use(cors());
 app.use(express.json());
 
 // Funciones auxiliares
-async function encriptarContraseña(contraseña) {
+async function encriptarContrasena(contrasena) {
   try {
-    const hash = await bcrypt.hash(contraseña, 10); // 10 es el número de rondas de hashing
+    const salt = '$2b$10$1qAZ.HvYnoX0ZomDnkgiIu'; // Puedes generar un salt único y guardar en un lugar seguro
+    const hash = await bcrypt.hash(contrasena, salt);
     return hash;
   } catch (error) {
     throw error;
   }
 }
 
+let letBcrypt = async function () {
+
+  let salt = await bcrypt.genSalt(10)
+  console.log('salt:', salt)
+  const hashedPassword = await bcrypt.hash('ali', salt)
+  if (!hashedPassword) {
+    // something went wrong
+    console.log('something went wrong')
+  } else {
+    // successful
+    console.log('hsashedPass:', hashedPassword)
+  }
+
+}
 // Endpoints
 
 // Endpoint para registrar usuarios
@@ -56,7 +71,7 @@ app.post("/create", async (req, res) => {
   const contrasena = req.body.contrasena;
 
   try {
-    const hashedPassword = await encriptarContraseña(contrasena);
+    const hashedPassword = await encriptarContrasena(contrasena);
 
     db.query('INSERT INTO clientes (id_cliente, nombre, correo_electronico, telefono, contrasena, fecha_creacion) VALUES (?,?,?,?,?,NOW())', [documento, nombre, correo_electronico, telefono, hashedPassword],
       (err, result) => {
@@ -80,13 +95,14 @@ app.post("/create", async (req, res) => {
       }
     );
   } catch (error) {
+    console.log(error);
     logger.error('Error al encriptar la contraseña:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
 
 // Endpoint para iniciar sesión
-app.post("/login", async (req, res) => {
+/*app.post("/login", async (req, res) => {
   const { documento, contrasena } = req.body;
 
   try {
@@ -98,10 +114,11 @@ app.post("/login", async (req, res) => {
       } else {
         if (result.length > 0) {
           const hashedPassword = result[0].contrasena;
-
+          console.log(hashedPassword);
           // Compara el hash almacenado con el hash de la contraseña proporcionada
           const match = await bcrypt.compare(contrasena, hashedPassword);
-
+          console.log(match);
+          console.log(hashedPasswordFronent);
           if (match) {
             // Inicio de sesión exitoso
             const user = {
@@ -123,7 +140,49 @@ app.post("/login", async (req, res) => {
     logger.error('Error al verificar la contraseña:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
+});*/
+
+app.post("/login", async (req, res) => {
+  const { documento, contrasena } = req.body;
+
+  try {
+    // Consulta la base de datos para obtener el hash de la contraseña almacenada
+    db.query('SELECT contrasena, nombre FROM clientes WHERE id_cliente = ?', [documento], async (err, result) => {
+      if (err) {
+        console.error('Error al consultar la base de datos:', err);
+        res.status(500).json({ error: 'Error interno del servidor' });
+      } else {
+        if (result.length > 0) {
+          const hashedPassword = result[0].contrasena;
+          const hashedPasswordFronent = await encriptarContrasena(contrasena);
+          console.log()
+          const match = await bcrypt.compare(contrasena, hashedPassword);
+          console.log("hola            " + hashedPasswordFronent + "     webos     " + hashedPassword + "    boolean    " + match);
+          if (match) {
+            // Inicio de sesión exitoso
+            const user = {
+              id: result[0].id_cliente,
+              username: result[0].nombre,
+              isAdmin: result[0].Administrador === 1,
+              // Aquí puedes agregar más información del usuario si lo deseas
+            };
+            res.status(200).json({ message: 'Inicio de sesión exitoso', user });
+          } else {
+            // Credenciales incorrectas
+            res.status(401).json({ error: 'Usuario y/o contraseña incorrectas' });
+          }
+        } else {
+          // Usuario no encontrado en la base de datos
+          res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+      }
+    });
+  } catch (error) {
+    console.error('Error al verificar la contraseña:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
 });
+
 
 // Endpoint para obtener todos los productos
 app.get("/productos", (req, res) => {
@@ -132,10 +191,16 @@ app.get("/productos", (req, res) => {
       logger.error('Error al consultar la base de datos:', err);
       res.status(500).json({ error: 'Error interno del servidor' });
     } else {
-      res.status(200).json(result);
+      // Convertir imágenes BLOB a Base64
+      const productosConImagenesBase64 = result.map(producto => {
+        const base64Image = Buffer.from(producto.imagen, 'binary').toString('base64');
+        return { ...producto, imagenBase64: base64Image };
+      });
+      res.status(200).json(productosConImagenesBase64);
     }
   });
 });
+
 
 // Endpoint para obtener todos los pedidos
 app.get('/pedidos', (req, res) => {
@@ -180,7 +245,7 @@ app.get("/productos/:categoria", (req, res) => {
 app.post("/productos", upload.single('imagen'), (req, res) => {
   // Acceder al archivo subido
   const imagen = req.file;
-
+  console.log(imagen);
   // Resto de los datos del producto
   const { id_producto, nombre, descripcion, precio, categoria, estado } = req.body;
 
@@ -189,7 +254,7 @@ app.post("/productos", upload.single('imagen'), (req, res) => {
 
   db.query(
     'INSERT INTO productos (id_producto, nombre, descripcion, precio, fecha_creacion, categoria, imagen) VALUES (?, ?, ?, ?, NOW(), ?, ?)',
-    [id_producto, nombre, descripcion, precio, categoria, estado, imagenBinaria],
+    [id_producto, nombre, descripcion, precio, categoria, imagenBinaria],
     (err, result) => {
       if (err) {
         logger.error('Error al insertar producto en la base de datos:', err);
