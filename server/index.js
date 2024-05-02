@@ -174,15 +174,11 @@ app.get("/productos", (req, res) => {
       logger.error('Error al consultar la base de datos:', err);
       res.status(500).json({ error: 'Error interno del servidor' });
     } else {
-      // Convertir imágenes BLOB a Base64
-      const productosConImagenesBase64 = result.map(producto => {
-        const base64Image = Buffer.from(producto.imagen, 'binary').toString('base64');
-        return { ...producto, imagenBase64: base64Image };
-      });
-      res.status(200).json(productosConImagenesBase64);
+      res.status(200).json(result);
     }
   });
 });
+
 
 
 // Endpoint para obtener todos los pedidos

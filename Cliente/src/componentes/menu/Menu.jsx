@@ -76,9 +76,9 @@ export const Menu = () => {
 {/* RECUERDA ESTO */}
 
 
-                {/* {isLoggedIn && isAdmin && ( */}
+                {isLoggedIn && isAdmin && (
                     <AnadirProducto setProductos={setProductos} />
-                {/* )} */}
+                )}
 
             <div className="col-md">
                 <h4 className='cuerpo'>Comidas</h4>
