@@ -45,21 +45,6 @@ async function encriptarContrasena(contrasena) {
     throw error;
   }
 }
-
-let letBcrypt = async function () {
-
-  let salt = await bcrypt.genSalt(10)
-  console.log('salt:', salt)
-  const hashedPassword = await bcrypt.hash('ali', salt)
-  if (!hashedPassword) {
-    // something went wrong
-    console.log('something went wrong')
-  } else {
-    // successful
-    console.log('hsashedPass:', hashedPassword)
-  }
-
-}
 // Endpoints
 
 // Endpoint para registrar usuarios
@@ -154,10 +139,8 @@ app.post("/login", async (req, res) => {
       } else {
         if (result.length > 0) {
           const hashedPassword = result[0].contrasena;
-          const hashedPasswordFronent = await encriptarContrasena(contrasena);
           console.log()
           const match = await bcrypt.compare(contrasena, hashedPassword);
-          console.log("hola            " + hashedPasswordFronent + "     webos     " + hashedPassword + "    boolean    " + match);
           if (match) {
             // Inicio de sesión exitoso
             const user = {
