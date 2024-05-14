@@ -52,7 +52,7 @@ export const Registro = () => {
 
 
     const onSubmit = (values, { setSubmitting }) => {
-        axios.post('http://localhost:3001/create', values)
+        axios.post('http://localhost:3001/auth/register', values)
             .then(response => {
                 console.log('Registro exitoso:', response.data);
                 // Realizar acciones adicionales después del registro exitoso

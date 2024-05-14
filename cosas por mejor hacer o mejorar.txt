@@ -6,6 +6,8 @@ sugerir esas comidas que se estan perdiendo.
 
 # Modificar el diccionario de datos
 
-#oraganizar el index.js por jerarquias:
-    carpetas para los productos, lo usuarios, admins, etc tec,
-    con sus logicas
+# realizar el feellback
+de la pagina de error
+
+
+# validar la actualizacion de el usuario, y que el admin solo ponga cuando en la creacion de ese usuario, que no se pueda cambiar el estado

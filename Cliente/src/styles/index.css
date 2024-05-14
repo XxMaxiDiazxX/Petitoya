@@ -118,3 +118,102 @@ body {
 
 }
 
+
+.u-clearfix::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+  
+  .u-container-align-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* .u-image {
+    background-size:auto;
+    background-repeat: no-repeat;
+    background-image: url("../img/error/Fondo.jpg");
+    background-position: 50% 50%;
+  } */
+  
+  .u-sheet {
+    width: 100%;
+  }
+  
+  .u-group {
+    position: relative;
+  }
+  
+  .u-radius-39 {
+    border-radius: 39px;
+  }
+  
+  .u-shape-round {
+    border-radius: 50%;
+  }
+  
+  .u-grey-80 {
+    background-color: rgba(128, 128, 128, 0.8);
+  }
+  
+  .u-valign-middle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;  
+  }
+  
+  .u-align-center {
+    text-align: center;
+  }
+  
+  .u-text-palette-1-dark-1 {
+    color: #333;
+  }
+  
+  .u-custom-font {
+    font-family: 'Lato', sans-serif;
+  }
+  
+  .u-expanded-width-md,
+  .u-expanded-width-sm,
+  .u-expanded-width-xs {
+    width: 100%;
+  }
+  
+  .u-container-style {
+    box-sizing: border-box;
+  }
+  
+  .u-button-style {
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  .u-btn {
+    cursor: pointer;
+    outline: none;
+    text-align: center;
+  }
+  
+  .u-radius-41 {
+    border-radius: 41px;
+  }
+  
+  .u-text-body-alt-color {
+    color: #fff;
+  }
+  
+  .u-active-white:active,
+  .u-hover-white:hover {
+    background-color: #fff !important;
+    color: #000 !important;
+  }
+  
+  .u-hover-feature:hover {
+    transform: translateY(-5px) !important;
+  }
+  
+
+  

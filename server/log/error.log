@@ -1,1 +1,2 @@
 2024-04-30T20:05:59.594Z - error: Error al encriptar la contraseña: Invalid salt. Salt must be in the form of: $Vers$log2(NumRounds)$saltvalue
+2024-05-14T17:59:29.839Z - error: Error al insertar producto en la base de datos: ER_DUP_ENTRY: Duplicate entry '20' for key 'PRIMARY'

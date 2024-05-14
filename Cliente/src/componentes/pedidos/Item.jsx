@@ -19,7 +19,7 @@ export const Item = ({ id_cliente }) => {
         const fetchPedidos = async () => {
             try {
                 // Hacer la solicitud solo para los pedidos del cliente específico
-                const response = await axios.get(`http://localhost:3001/pedidos/cliente/${id_cliente}`);
+                const response = await axios.get(`http://localhost:3001/orders/client/${id_cliente}`);
                 setPedidos(response.data);
             } catch (error) {
                 console.error('Error fetching Pedidos:', error);

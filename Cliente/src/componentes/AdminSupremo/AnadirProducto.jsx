@@ -10,7 +10,7 @@ const AnadirProducto = ({ setProductos }) => {
   const handleSubmit = async (values, { resetForm }) => {
     try {
       // Verificar si el ID ya existe
-      const idExistResponse = await axios.get(`http://localhost:3001/productos/${values.id_producto}`);
+      const idExistResponse = await axios.get(`http://localhost:3001/products/${values.id_producto}`);
 
       if (idExistResponse.data.length > 0) {
         // Si el ID ya existe, muestra un mensaje de error
@@ -29,14 +29,14 @@ const AnadirProducto = ({ setProductos }) => {
         formData.append('imagen', selectedFile); // Utilizamos el archivo seleccionado almacenado en el estado
 
         // Enviar solicitud POST al servidor
-        await axios.post('http://localhost:3001/productos', formData, {
+        await axios.post('http://localhost:3001/products', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         });
 
         // Obtener la lista actualizada de productos después de la inserción
-        const response = await axios.get('http://localhost:3001/productos');
+        const response = await axios.get('http://localhost:3001/products');
 
         // Actualizar el estado local con la nueva lista de productos
         setProductos(response.data);

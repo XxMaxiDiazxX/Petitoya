@@ -51,7 +51,7 @@ export const Login = () => {
                     // Esquema de validación
                   })}
                   onSubmit={(values, { setSubmitting }) => {
-                    axios.post('http://localhost:3001/login', values)
+                    axios.post('http://localhost:3001/auth/login', values)
                       .then(response => {
                         if (response.data && response.data.user) {
                           console.log('Inicio de sesión exitoso:', response.data.user, response.data.user.isAdmin);

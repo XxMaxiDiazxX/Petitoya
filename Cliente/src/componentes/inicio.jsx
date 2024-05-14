@@ -8,6 +8,7 @@ import { PieDePagina } from './PieDePagina';
 import RutaPrivadaAdmin from './autenticacion/RutaPriavadaAdmin';
 import Admin from './AdminSupremo/Admin';
 import { useAuth } from './autenticacion/AuthContext';
+import PageNotFound from './error/NotFoundPage';
 
 
 export const PaginaPrincipal = () => {
@@ -17,7 +18,10 @@ export const PaginaPrincipal = () => {
   return (
     <div className="d-flex flex-column" style={{ minHeight: '100vh' }}>
       <BarraNavegacion />
-      <div className="container flex-grow-1">
+      <div
+        className="container flex-grow-1"
+        >
+
         <Routes>
           <Route path="/" element={<Inicio />} />
           <Route path="menu" element={<Menu />} />
@@ -32,6 +36,7 @@ export const PaginaPrincipal = () => {
           }
           />
           <Route path="admin" element={<RutaPrivadaAdmin element={<Admin />} />} />
+          <Route path='*' element={<PageNotFound />} />
         </Routes>
       </div>
       <PieDePagina />
