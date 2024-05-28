@@ -11,3 +11,7 @@ de la pagina de error
 
 
 # validar la actualizacion de el usuario, y que el admin solo ponga cuando en la creacion de ese usuario, que no se pueda cambiar el estado
+
+# eliminar el boton de "Realzar pedido", para que solo aparesca si se realiza el click en el mismo cuadro
+
+# FALTA MOSTRAR LOS PRODUCTOS POR ESTADISTICA PERO SE NECESITA MODIFICAR LA BASE DE DATOS

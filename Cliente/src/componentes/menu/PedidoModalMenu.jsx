@@ -2,7 +2,7 @@
 import { useState } from 'react';
 
 
-export const PedidoModal = ({ producto, mostrarModal, setMostrarModal }) => {
+export const PedidoModalMenu = ({ producto, mostrarModal, setMostrarModal }) => {
   const [cantidad, setCantidad] = useState(0);
 
   const handleModalClick = (e) => {
@@ -69,4 +69,4 @@ export const PedidoModal = ({ producto, mostrarModal, setMostrarModal }) => {
   );
 };
 
-export default PedidoModal;
+export default PedidoModalMenu;

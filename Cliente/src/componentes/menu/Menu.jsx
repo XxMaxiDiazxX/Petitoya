@@ -6,7 +6,7 @@ import AnadirProducto from '../AdminSupremo/AnadirProducto';
 import Producto from './Producto';
 import EditarProductoModal from '../AdminSupremo/EditarProductoModal';
 import EliminarProducto from '../AdminSupremo/DesactivarProducto';
-import PedidoModal from './PedidoModal';
+import PedidoModalMenu from './PedidoModalMenu';
 
 export const Menu = () => {
     const { isLoggedIn, isAdmin } = useAuth();
@@ -65,22 +65,15 @@ export const Menu = () => {
                                         descripcion={producto.descripcion}
                                         precio={producto.precio}
                                         imagenSrc={`data:image/jpeg;base64,${producto.imagenBase64}`}
+                                        onClick={() => handleAbrirPedidoModal(producto)}
                                     />
-                                    {!isLoggedIn || !isAdmin ? (
-                                        <button
-                                            className='btn btn-primary'
-                                            onClick={() => handleAbrirPedidoModal(producto)}
-                                        >
-                                            Realizar Pedido
-                                        </button>
-                                    ) : (
+                                    {isLoggedIn && isAdmin && (
                                         <div className="d-flex">
                                             <button
                                                 className='btn btn-primary'
-                                                onClick={() => {
-                                                    setProductoSeleccionado(producto);
-                                                    setMostrarModal(true);
-                                                }}
+                                                onClick={() =>
+                                                    handleAbrirPedidoModal(producto)
+                                                }
                                             >
                                                 Editar Producto
                                             </button>
@@ -110,15 +103,9 @@ export const Menu = () => {
                                         descripcion={producto.descripcion}
                                         precio={producto.precio}
                                         imagenSrc={imagen}
+                                        onClick={() => handleAbrirPedidoModal(producto)}
                                     />
-                                    {!isLoggedIn || !isAdmin ? (
-                                        <button
-                                            className='btn btn-primary'
-                                            onClick={() => handleAbrirPedidoModal(producto)}
-                                        >
-                                            Realizar Pedido
-                                        </button>
-                                    ) : (
+                                    {isLoggedIn && isAdmin && (
                                         <div className="d-flex">
                                             <button
                                                 className='btn btn-primary'
@@ -157,7 +144,7 @@ export const Menu = () => {
             )}
 
             {mostrarPedidoModal && productoSeleccionado && (
-                <PedidoModal
+                <PedidoModalMenu
                     producto={productoSeleccionado}
                     mostrarModal={mostrarPedidoModal}
                     setMostrarModal={setMostrarPedidoModal}

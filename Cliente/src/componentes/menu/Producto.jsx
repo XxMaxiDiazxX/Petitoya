@@ -1,5 +1,9 @@
-export const Producto = ({ nombre, descripcion, precio, imagenSrc }) => (
-  <div className="row bg-white mt-4 rounded">
+export const Producto = ({ nombre, descripcion, precio, imagenSrc, onClick }) => (
+  <div
+    className="row bg-white mt-4 rounded"
+    onClick={onClick}
+    style={{ cursor: 'pointer' }}
+  >
     <div className='col-md-2 d-flex align-items-center justify-content-center' style={{ minWidth: '120px' }}>
       <img
         className="rounded-circle"
