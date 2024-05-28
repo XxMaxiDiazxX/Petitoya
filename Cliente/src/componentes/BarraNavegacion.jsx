@@ -31,7 +31,7 @@ export const BarraNavegacion = () => {
         <Container>
           <Navbar.Brand href="#">
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <img src={palmeraIco} height="50"  style={{ width: '70px' }} alt="Palmera" />
+              <img src={palmeraIco} height="50" style={{ width: '70px' }} alt="Palmera" />
               <p style={{ margin: 0, marginLeft: '10px', fontSize: '30px', fontWeight: 'bold' }} className='texto-titulo cuerpo'>Petitoya</p>
             </div>
           </Navbar.Brand>
@@ -55,7 +55,9 @@ export const BarraNavegacion = () => {
         <Container>
           <Nav.Link as={Link} to="">Inicio</Nav.Link>
           <Nav.Link as={Link} to="menu">Menú</Nav.Link>
-          <Nav.Link as={Link} to="pedidos">Pedidos</Nav.Link>
+          {isLoggedIn && (
+            <Nav.Link as={Link} to="pedidos">Pedidos</Nav.Link>
+          )}
           {isLoggedIn && isAdmin && (
             <Nav.Link as={Link} to='admin'>Ruta Privada Admin</Nav.Link>
           )}

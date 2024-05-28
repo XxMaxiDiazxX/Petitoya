@@ -7,12 +7,14 @@ export const Inicio = () => {
 
   const [mostrarPedidoModal, setMostrarPedidoModal] = useState(false);
   const [productos, setProductos] = useState([]);
+  const [productoSeleccionado, setProductoSeleccionado] = useState(null);
 
 
   // FALTA MOSTRAR LOS PRODUCTOS POR ESTADISTICA PERO SE NECESITA MODIFICAR LA BASE DE DATOS
 
   const handleAbrirPedidoModal = (producto) => {
     setMostrarPedidoModal(true);
+    setProductoSeleccionado(producto);
   };
 
   return (
@@ -49,8 +51,8 @@ export const Inicio = () => {
           <div className="comidas col-md-6">
             <h4 className="cuerpo">Bebidas</h4>
             <div className="row">
-              <Producto imgSrc={palmera} description="Café gourmet El mejor café 250g" price="$ 12.000" />
-              <Producto imgSrc={palmera} description="Té verde Fuente de antioxidantes 100g" price="$ 10.000" />
+              <Producto imagenSrc={palmera} descripcion="Café gourmet El mejor café 250g" precio="$ 12.000" onClick={() => handleAbrirPedidoModal(producto)} />
+              <Producto imagenSrc={palmera} descripcion="Té verde Fuente de antioxidantes 100g" precio="$ 10.000" onClick={() => handleAbrirPedidoModal(prodcuto)}/>
               {/* Agrega más productos según sea necesario */}
             </div>
           </div>
