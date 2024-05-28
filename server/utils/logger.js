@@ -22,7 +22,7 @@ const customLevels = {
 const logger = createLogger({
   levels: customLevels.levels,
   format: format.combine(
-    format.colorize(),
+    format.colorize({ all: true }), // Habilitar colorize para todos los niveles
     format.timestamp(),
     format.printf(info => `${info.timestamp} - ${info.level.toUpperCase()}: ${info.message}`)
   ),
@@ -44,8 +44,5 @@ const logger = createLogger({
     })
   ]
 });
-
-// Asignamos los colores personalizados
-logger.addColors(customLevels.colors);
 
 module.exports = logger;

@@ -3,7 +3,6 @@ const cors = require('cors');
 const authRoutes = require('./routes/authroutes');
 const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
-const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 
@@ -15,7 +14,6 @@ app.use(express.json());
 app.use('/auth', authRoutes);
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
-app.use('/users', userRoutes);
 
 // Iniciar el servidor
 const PORT = 3001;
