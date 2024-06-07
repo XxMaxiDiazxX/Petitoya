@@ -76,7 +76,44 @@ CREATE TABLE IF NOT EXISTS `historial_cambios` (
     FOREIGN KEY (`realizado_por`) REFERENCES `clientes`(`id_cliente`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
+-- crear informe de pedido
+CREATE TABLE informe_pedidos_auditoria (
+    id_auditoria INT AUTO_INCREMENT PRIMARY KEY,
+    id_pedido INT,
+    cliente VARCHAR(255),
+    correo_electronico VARCHAR(255),
+    fecha_compra DATETIME,
+    producto VARCHAR(255),
+    precio_compra DECIMAL(10,2),
+    cantidad INT,
+    total_producto DECIMAL(10,2),
+    fecha_informe DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+
 DELIMITER //
+
+-- Trigger para generar el informe de pedidos automáticamente
+CREATE TRIGGER after_insert_pedido_producto
+AFTER INSERT ON pedido_producto
+FOR EACH ROW
+BEGIN
+    INSERT INTO informe_pedidos_auditoria (id_pedido, cliente, correo_electronico, fecha_compra, producto, precio_compra, cantidad, total_producto)
+    SELECT 
+        p.id_pedido,
+        c.nombre AS cliente,
+        c.correo_electronico,
+        p.fecha_compra,
+        prod.nombre AS producto,
+        NEW.precio_compra,
+        NEW.cantidad,
+        (NEW.precio_compra * NEW.cantidad) AS total_producto
+    FROM pedidos p
+    JOIN clientes c ON p.id_cliente = c.id_cliente
+    JOIN productos prod ON NEW.id_producto = prod.id_producto
+    WHERE p.id_pedido = NEW.id_pedido;
+END //
+
 
 -- Procedimiento para crear un usuario
 CREATE PROCEDURE CrearUsuario(
@@ -106,6 +143,38 @@ BEGIN
     );
 END //
 
+-- procedimiento iniciar sesion
+CREATE PROCEDURE IniciarSesion(
+    IN p_documento VARCHAR(20),
+    IN p_contrasena VARCHAR(255),
+    OUT p_mensaje VARCHAR(255)
+)
+BEGIN
+    DECLARE v_hashed_password VARCHAR(255);
+    DECLARE v_username VARCHAR(50);
+    DECLARE v_administrador INT;
+    
+    -- Obtener la contraseña almacenada y otros detalles del usuario
+    SELECT contrasena, nombre, Administrador INTO v_hashed_password, v_username, v_administrador
+    FROM clientes
+    WHERE id_cliente = p_documento;
+    
+    -- Verificar si se encontró un usuario con el documento proporcionado
+    IF FOUND_ROWS() > 0 THEN
+        -- Verificar si la contraseña es correcta
+        IF bcrypt.compare(p_contrasena, v_hashed_password) THEN
+            -- Devolver mensaje de éxito y detalles del usuario
+            SET p_mensaje = CONCAT('Inicio de sesión exitoso. Bienvenido, ', v_username);
+        ELSE
+            -- Contraseña incorrecta
+            SET p_mensaje = 'Contraseña incorrecta. Por favor, inténtalo de nuevo.';
+        END IF;
+    ELSE
+        -- No se encontró ningún usuario con el documento proporcionado
+        SET p_mensaje = 'No se encontró ningún usuario con el documento proporcionado.';
+    END IF;
+END //
+
 -- Procedimiento para modificar un usuario
 CREATE PROCEDURE ModificarUsuario(
     IN p_id_cliente VARCHAR(20),
@@ -130,6 +199,14 @@ CREATE PROCEDURE InhabilitarUsuario(IN p_id_cliente VARCHAR(20))
 BEGIN
     UPDATE clientes
     SET estado = 'inactivo'
+    WHERE id_cliente = p_id_cliente;
+END //
+
+-- Procedimiento para habilitar un usuario
+CREATE PROCEDURE HabilitarUsuario(IN p_id_cliente VARCHAR(20))
+BEGIN
+    UPDATE clientes
+    SET estado = 'activo'
     WHERE id_cliente = p_id_cliente;
 END //
 
@@ -172,27 +249,6 @@ BEGIN
         p_precio_compra,
         p_cantidad
     );
-END //
-
--- Procedimiento para generar un informe de un pedido específico
-CREATE PROCEDURE GenerarInformePedido(IN p_id_pedido INT)
-BEGIN
-    SELECT
-        p.id_pedido,
-        c.nombre AS cliente,
-        c.correo_electronico,
-        p.fecha_compra,
-        prod.nombre AS producto,
-        pp.precio_compra,
-        pp.cantidad,
-        (pp.precio_compra * pp.cantidad) AS total_producto
-    FROM
-        pedidos p
-        JOIN clientes c ON p.id_cliente = c.id_cliente
-        JOIN pedido_producto pp ON p.id_pedido = pp.id_pedido
-        JOIN productos prod ON pp.id_producto = prod.id_producto
-    WHERE
-        p.id_pedido = p_id_pedido;
 END //
 
 -- Procedimiento para cambiar la contraseña del usuario

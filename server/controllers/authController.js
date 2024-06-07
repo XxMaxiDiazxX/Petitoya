@@ -3,35 +3,25 @@ const db = require('../models/db');
 const logger = require('../utils/logger');
 
 async function encriptarContrasena(contrasena) {
-  const salt = '$2b$10$1qAZ.HvYnoX0ZomDnkgiIu'; // Cambia esto por un salt único y seguro
-  const hash = await bcrypt.hash(contrasena, salt);
-  return hash;
+  try {
+    const salt = '$2b$10$1qAZ.HvYnoX0ZomDnkgiIu'; // Cambia esto por un salt único y seguro
+    const hash = await bcrypt.hash(contrasena, salt);
+    return hash;
+
+  } catch (error) {
+    throw new Error('Error al encriptar la contraseña');
 }
+};
 
 exports.register = async (req, res) => {
   const { documento, nombre, correo_electronico, telefono, contrasena } = req.body;
 
   try {
     const hashedPassword = await encriptarContrasena(contrasena);
-
-    db.query('INSERT INTO clientes (id_cliente, nombre, correo_electronico, telefono, contrasena, fecha_creacion) VALUES (?,?,?,?,?,NOW())', 
-      [documento, nombre, correo_electronico, telefono, hashedPassword],
-      (err, result) => {
-        if (err) {
-          logger.error('Error al insertar usuario en la base de datos:', err);
-          res.status(500).json({ error: 'Error interno del servidor' });
-        } else {
-          if (result.affectedRows > 0) {
-            const user = { documento, nombre, correo_electronico, telefono };
-            res.status(200).json({ message: 'Registro exitoso', user });
-          } else {
-            res.status(500).json({ error: 'No se pudo insertar el usuario' });
-          }
-        }
-      }
-    );
+    await db.query('CALL CrearUsuario(?, ?, ?, ?, ?, 1)', [documento, nombre, correo_electronico, telefono, hashedPassword]);
+    res.status(200).json({ message: 'Registro exitoso' });
   } catch (error) {
-    logger.error('Error al encriptar la contraseña:', error);
+    logger.error('Error al registrar usuario:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
