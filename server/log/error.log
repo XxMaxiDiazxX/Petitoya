@@ -1,2 +1,6 @@
 2024-04-30T20:05:59.594Z - error: Error al encriptar la contraseña: Invalid salt. Salt must be in the form of: $Vers$log2(NumRounds)$saltvalue
 2024-05-14T17:59:29.839Z - error: Error al insertar producto en la base de datos: ER_DUP_ENTRY: Duplicate entry '20' for key 'PRIMARY'
+2024-06-10T20:08:59.315Z - [31MERROR[39M: [31mError al cambiar la contraseña: object is not iterable (cannot read property Symbol(Symbol.iterator))[39m
+2024-06-10T20:10:42.542Z - [31MERROR[39M: [31mError al cambiar la contraseña: object is not iterable (cannot read property Symbol(Symbol.iterator))[39m
+2024-06-10T20:12:39.769Z - [31MERROR[39M: [31mError al cambiar la contraseña: (intermediate value) is not iterable[39m
+2024-06-10T20:17:28.890Z - [31MERROR[39M: [31mError al cambiar la contraseña: (intermediate value) is not iterable[39m

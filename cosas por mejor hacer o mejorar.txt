@@ -1,3 +1,6 @@
+
+------------------------- FALTANTE EN LO QUE SABEMOS XD --------------------------------
+
 # Realizar un atributo para la tabla productos, que almacene el numero de compras, de cada producto, con el fin del implementar
 un tipo rating de las comidas mas compradas y tambien lo que menos compren, para implementarlo en el inicio, con el fin de 
 sugerir esas comidas que se estan perdiendo.
@@ -26,4 +29,11 @@ creacion de procedures
 creacion de un trigger para generar un informe del monto del pedido automaticamente
 modifcacion de las apis para uso de los procedures
 modificacion del archivo del authContext por la creacion de la tabla de roles como foranea de la tabla de clientes
+la libreria de envio del correo para recuperacion de contraseñas es nodemailer
+cree la carpeta Usuarios en cliente que va a reunir todos los componenetes que van realacionados a la gestion de usuarios
 
+
+
+---------------------- LO QUE ESTA PERO AUN NO FUNIONA ------------------------
+
+esnta los archivos, el contrlador y la utilidad del cambio de contraseña para aun necesito mirar como hacer que funcione hajhajajaja

@@ -79,3 +79,20 @@ exports.deactivateProduct = (req, res) => {
     }
   );
 };
+
+exports.activateProduct = (req, res) => {
+  const id_producto = req.params.id_producto;
+
+  db.query(
+    'CALL HabilitarProducto(?)',
+    [id_producto],
+    (err, result) => {
+      if (err) {
+        logger.error('Error al habilitar el producto:', err);
+        res.status(500).json({ error: 'Error interno del servidor' });
+      } else {
+        res.status(200).json({ message: 'Producto habilitado exitosamente' });
+      }
+    }
+  );
+};

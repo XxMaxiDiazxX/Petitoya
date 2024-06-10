@@ -1,12 +1,12 @@
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import '../styles/index.css';
+import '../../styles/index.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useAuth } from './autenticacion/AuthContext';
-import Cuchillo from '../img/inicioSesion/cuchillo.png';
-import Tenedor from '../img/inicioSesion/tenedor.png';
+import { useAuth } from '../autenticacion/AuthContext';
+import Cuchillo from '../../img/inicioSesion/cuchillo.png';
+import Tenedor from '../../img/inicioSesion/tenedor.png';
 
 export const Login = () => {
   const [error, setError] = useState('');
@@ -106,7 +106,9 @@ export const Login = () => {
                   <Link to="/inicio" className='btn text-white bg-naranj border-0 mx-4'>Invitado</Link>
                   <Link to="/registro" className='btn text-white bg-naranj border-0 mx-4'>Registro</Link>
                 </div>
-
+                <div className="text-center mt-3">
+                  <Link to="/reset-password" className="text-white">¿Olvidaste tu contraseña?</Link>
+                </div>
               </div>
               {/* Imagen a la derecha */}
               <div className="col-md-3" style={{ maxWidth: "100px" }}>

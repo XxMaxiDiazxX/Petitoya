@@ -52,7 +52,7 @@ export const Menu = () => {
     return (
         <div className='content'>
             <div className="row">
-                {isLoggedIn && role === 2 && role === 3 && <AnadirProducto setProductos={setProductos} />}
+                {isLoggedIn && (role === 2 || role === 3) && <AnadirProducto setProductos={setProductos} />}
 
                 <div className="col-md">
                     <h4 className='cuerpo'>Comidas</h4>

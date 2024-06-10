@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const db = require('../models/db');
 const logger = require('../utils/logger');
+const sendPasswordChangeEmail = require('../utils/emailService');
 
 async function encriptarContrasena(contrasena) {
   try {
@@ -26,34 +27,7 @@ exports.register = async (req, res) => {
   }
 };
 
-// exports.login = async (req, res) => {
-//   const { documento, contrasena } = req.body;
 
-//   try {
-//     db.query('SELECT contrasena, nombre, Administrador FROM clientes WHERE id_cliente = ?', [documento], async (err, result) => {
-//       if (err) {
-//         logger.error('Error al consultar la base de datos:', err);
-//         res.status(500).json({ error: 'Error interno del servidor' });
-//       } else {
-//         if (result.length > 0) {
-//           const hashedPassword = result[0].contrasena;
-//           const match = await bcrypt.compare(contrasena, hashedPassword);
-//           if (match) {
-//             const user = { id: documento, username: result[0].nombre, isAdmin: result[0].Administrador === 1 };
-//             res.status(200).json({ message: 'Inicio de sesión exitoso', user });
-//           } else {
-//             res.status(401).json({ error: 'Usuario y/o contraseña incorrectas' });
-//           }
-//         } else {
-//           res.status(404).json({ error: 'Usuario no encontrado' });
-//         }
-//       }
-//     });
-//   } catch (error) {
-//     logger.error('Error al verificar la contraseña:', error);
-//     res.status(500).json({ error: 'Error interno del servidor' });
-//   }
-// };
 
 exports.login = async (req, res) => {
   const { documento, contrasena } = req.body;
@@ -97,3 +71,32 @@ exports.login = async (req, res) => {
     return res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
+
+
+exports.changePassword = async (req, res) => {
+  const { id_cliente, nueva_contrasena } = req.body;
+
+  try {
+    // Obtener los datos del cliente
+    const [cliente] = await db.query('SELECT nombre, correo_electronico FROM clientes WHERE id_cliente = ?', [id_cliente]);
+
+    if (!cliente) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+
+    const { nombre, correo_electronico } = cliente;
+
+    // Cambia la contraseña en la base de datos usando tu procedimiento almacenado
+    await db.query('CALL CambiarContrasena(?, ?)', [id_cliente, nueva_contrasena]);
+
+    // Enviar el correo de notificación
+    sendPasswordChangeEmail(correo_electronico, nombre);
+
+    res.status(200).json({ message: 'Contraseña cambiada exitosamente' });
+  } catch (error) {
+    logger.error('Error al cambiar la contraseña:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+
