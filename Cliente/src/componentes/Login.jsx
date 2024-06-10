@@ -57,7 +57,7 @@ export const Login = () => {
                           console.log('Inicio de sesión exitoso:', response.data.user, response.data.user.isAdmin);
                           authLogin({
                             user: response.data.user,
-                            isAdmin: response.data.user.isAdmin,
+                            role: response.data.user.role,
                           });
                           navigate('/inicio');
                         } else {

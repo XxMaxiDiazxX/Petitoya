@@ -9,7 +9,7 @@ import EliminarProducto from '../AdminSupremo/DesactivarProducto';
 import PedidoModalMenu from './PedidoModalMenu';
 
 export const Menu = () => {
-    const { isLoggedIn, isAdmin } = useAuth();
+    const { isLoggedIn, role } = useAuth();
     const [productos, setProductos] = useState([]);
     const [productoSeleccionado, setProductoSeleccionado] = useState(null);
     const [mostrarModal, setMostrarModal] = useState(false);
@@ -52,7 +52,7 @@ export const Menu = () => {
     return (
         <div className='content'>
             <div className="row">
-                {isLoggedIn && isAdmin && <AnadirProducto setProductos={setProductos} />}
+                {isLoggedIn && role === 2 && role === 3 && <AnadirProducto setProductos={setProductos} />}
 
                 <div className="col-md">
                     <h4 className='cuerpo'>Comidas</h4>
@@ -67,7 +67,7 @@ export const Menu = () => {
                                         imagenSrc={`data:image/jpeg;base64,${producto.imagenBase64}`}
                                         onClick={() => handleAbrirPedidoModal(producto)}
                                     />
-                                    {isLoggedIn && isAdmin && (
+                                    {isLoggedIn && role === 2 && role === 3  && (
                                         <div className="d-flex">
                                             <button
                                                 className='btn btn-primary'
@@ -105,7 +105,7 @@ export const Menu = () => {
                                         imagenSrc={imagen}
                                         onClick={() => handleAbrirPedidoModal(producto)}
                                     />
-                                    {isLoggedIn && isAdmin && (
+                                    {isLoggedIn && role === 2 && role === 3 && (
                                         <div className="d-flex">
                                             <button
                                                 className='btn btn-primary'

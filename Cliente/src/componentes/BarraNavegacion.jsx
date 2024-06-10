@@ -9,7 +9,7 @@ import palmeraIco from '../img/palmera.png';
 
 export const BarraNavegacion = () => {
 
-  const { isLoggedIn, logout, isAdmin, user } = useAuth();
+  const { isLoggedIn, logout, role, user } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -58,8 +58,11 @@ export const BarraNavegacion = () => {
           {isLoggedIn && (
             <Nav.Link as={Link} to="pedidos">Pedidos</Nav.Link>
           )}
-          {isLoggedIn && isAdmin && (
-            <Nav.Link as={Link} to='admin'>Ruta Privada Admin</Nav.Link>
+          {isLoggedIn && role === 2 && (
+            <Nav.Link as={Link} to="/admin">Ruta Privada Admin</Nav.Link>
+          )}
+          {isLoggedIn && role === 3 && (
+            <Nav.Link as={Link} to="/superusuario">Ruta Privada Superusuario</Nav.Link>
           )}
         </Container>
       </Navbar>

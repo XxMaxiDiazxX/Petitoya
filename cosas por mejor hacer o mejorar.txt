@@ -15,3 +15,15 @@ de la pagina de error
 # eliminar el boton de "Realzar pedido", para que solo aparesca si se realiza el click en el mismo cuadro
 
 # FALTA MOSTRAR LOS PRODUCTOS POR ESTADISTICA PERO SE NECESITA MODIFICAR LA BASE DE DATOS
+
+
+
+
+
+------------------- CAMBIOS JOHANSHITO --------------------------------
+
+creacion de procedures
+creacion de un trigger para generar un informe del monto del pedido automaticamente
+modifcacion de las apis para uso de los procedures
+modificacion del archivo del authContext por la creacion de la tabla de roles como foranea de la tabla de clientes
+

@@ -32,7 +32,7 @@ exports.createProduct = (req, res) => {
   const imagenBinaria = fs.readFileSync(imagen.path);
 
   db.query(
-    'INSERT INTO productos (id_producto, nombre, descripcion, precio, fecha_creacion, categoria, imagen) VALUES (?, ?, ?, ?, NOW(), ?, ?)',
+    'CALL CrearProducto(?, ?, ?, ?, ?, ?)',
     [id_producto, nombre, descripcion, precio, categoria, imagenBinaria],
     (err, result) => {
       if (err) {
@@ -50,8 +50,8 @@ exports.updateProduct = (req, res) => {
   const { nombre, descripcion, precio, categoria } = req.body;
 
   db.query(
-    'UPDATE productos SET nombre = ?, descripcion = ?, precio = ?, categoria = ? WHERE id_producto = ?',
-    [nombre, descripcion, precio, categoria, id_producto],
+    'CALL ModificarProducto(?, ?, ?, ?, ?)',
+    [id_producto, nombre, descripcion, precio, categoria],
     (err, result) => {
       if (err) {
         logger.error('Error al actualizar el producto:', err);
@@ -67,8 +67,8 @@ exports.deactivateProduct = (req, res) => {
   const id_producto = req.params.id_producto;
 
   db.query(
-    'UPDATE productos SET estado = ? WHERE id_producto = ?',
-    ['inactivo', id_producto],
+    'CALL DesactivarProducto(?)',
+    [id_producto],
     (err, result) => {
       if (err) {
         logger.error('Error al desactivar el producto:', err);

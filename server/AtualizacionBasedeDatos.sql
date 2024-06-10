@@ -143,36 +143,18 @@ BEGIN
     );
 END //
 
--- procedimiento iniciar sesion
-CREATE PROCEDURE IniciarSesion(
-    IN p_documento VARCHAR(20),
-    IN p_contrasena VARCHAR(255),
-    OUT p_mensaje VARCHAR(255)
+-- Procedimiento para autenticar al usuario
+CREATE PROCEDURE AutenticarUsuario(
+    IN p_id_cliente VARCHAR(20),
+    OUT p_contrasena VARCHAR(255),
+    OUT p_nombre VARCHAR(50),
+    OUT p_id_rol INT
 )
 BEGIN
-    DECLARE v_hashed_password VARCHAR(255);
-    DECLARE v_username VARCHAR(50);
-    DECLARE v_administrador INT;
-    
-    -- Obtener la contraseña almacenada y otros detalles del usuario
-    SELECT contrasena, nombre, Administrador INTO v_hashed_password, v_username, v_administrador
+    SELECT contrasena, nombre, id_rol
+    INTO p_contrasena, p_nombre, p_id_rol
     FROM clientes
-    WHERE id_cliente = p_documento;
-    
-    -- Verificar si se encontró un usuario con el documento proporcionado
-    IF FOUND_ROWS() > 0 THEN
-        -- Verificar si la contraseña es correcta
-        IF bcrypt.compare(p_contrasena, v_hashed_password) THEN
-            -- Devolver mensaje de éxito y detalles del usuario
-            SET p_mensaje = CONCAT('Inicio de sesión exitoso. Bienvenido, ', v_username);
-        ELSE
-            -- Contraseña incorrecta
-            SET p_mensaje = 'Contraseña incorrecta. Por favor, inténtalo de nuevo.';
-        END IF;
-    ELSE
-        -- No se encontró ningún usuario con el documento proporcionado
-        SET p_mensaje = 'No se encontró ningún usuario con el documento proporcionado.';
-    END IF;
+    WHERE id_cliente = p_id_cliente;
 END //
 
 -- Procedimiento para modificar un usuario
@@ -222,6 +204,43 @@ BEGIN
         estado,
         id_rol
     FROM clientes;
+END //
+
+
+-- Procedimiento para crear un nuevo producto
+CREATE PROCEDURE CrearProducto(
+    IN p_id_producto VARCHAR(20),
+    IN p_nombre VARCHAR(50),
+    IN p_descripcion TEXT,
+    IN p_precio DECIMAL(10, 2),
+    IN p_categoria VARCHAR(50),
+    IN p_imagen LONGBLOB
+)
+BEGIN
+    INSERT INTO productos (id_producto, nombre, descripcion, precio, fecha_creacion, categoria, imagen)
+    VALUES (p_id_producto, p_nombre, p_descripcion, p_precio, NOW(), p_categoria, p_imagen);
+END //
+
+-- Procedimiento para modificar un producto
+CREATE PROCEDURE ModificarProducto(
+    IN p_id_producto VARCHAR(20),
+    IN p_nombre VARCHAR(50),
+    IN p_descripcion TEXT,
+    IN p_precio DECIMAL(10, 2),
+    IN p_categoria VARCHAR(50)
+)
+BEGIN
+    UPDATE productos
+    SET nombre = p_nombre, descripcion = p_descripcion, precio = p_precio, categoria = p_categoria
+    WHERE id_producto = p_id_producto;
+END //
+
+-- Procedimiento para desactivar un producto
+CREATE PROCEDURE DesactivarProducto(IN p_id_producto VARCHAR(20))
+BEGIN
+    UPDATE productos
+    SET estado = 'inactivo'
+    WHERE id_producto = p_id_producto;
 END //
 
 -- Procedimiento para crear un pedido
