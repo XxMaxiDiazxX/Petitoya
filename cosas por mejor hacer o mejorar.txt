@@ -19,7 +19,8 @@ de la pagina de error
 
 # FALTA MOSTRAR LOS PRODUCTOS POR ESTADISTICA PERO SE NECESITA MODIFICAR LA BASE DE DATOS
 
-
+# realizar que solo aparesca la validacion del codigo de cambio de contraseña, cuando sea valido ya aparesca la creacion de la nueva contraseña
+ademas de tambien darle diseño
 
 
 
@@ -31,9 +32,13 @@ modifcacion de las apis para uso de los procedures
 modificacion del archivo del authContext por la creacion de la tabla de roles como foranea de la tabla de clientes
 la libreria de envio del correo para recuperacion de contraseñas es nodemailer
 cree la carpeta Usuarios en cliente que va a reunir todos los componenetes que van realacionados a la gestion de usuarios
+instale una nueva libreria llamada crypto que me genera contraseka o tokens para usar en el cambio de contraseña
+JUEMADRE aver, cree una nueva cuenta de correo ya para petitoya para enviar correo para la recuperadcion de contraseña
+cree 2 paginas nuevas una para validacion del codigo que envie para cambiar la contraseña, y para enviar el correo
+
 
 
 
 ---------------------- LO QUE ESTA PERO AUN NO FUNIONA ------------------------
 
-esnta los archivos, el contrlador y la utilidad del cambio de contraseña para aun necesito mirar como hacer que funcione hajhajajaja
+

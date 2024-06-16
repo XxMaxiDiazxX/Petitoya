@@ -3,17 +3,17 @@ const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
   service: 'gmail', // o tu servicio de correo
   auth: {
-    user: 'your-email@gmail.com', // tu correo electrónico
-    pass: 'your-email-password', // tu contraseña de correo electrónico o contraseña de aplicación
+    user: 'petitoyaservice@gmail.com', // tu correo electrónico
+    pass: 'wksn pnad uquy gggu', // tu contraseña de correo electrónico o contraseña de aplicación
   },
 });
 
-const sendPasswordChangeEmail = (to, nombre) => {
+const sendPasswordChangeEmail = (to, nombre, codigo) => {
   const mailOptions = {
-    from: 'your-email@gmail.com',
+    from: 'petitoyaservice@gmail.com',
     to: to,
-    subject: 'Cambio de Contraseña',
-    text: `Hola ${nombre},\n\nTu contraseña ha sido cambiada exitosamente.\n\nSi no realizaste este cambio, por favor contacta a soporte de inmediato.\n\nGracias,\nTu equipo de soporte.`,
+    subject: 'Código de Verificación para Restablecer Contraseña',
+    text: `Hola ${nombre},\n\nTu código de verificación es: ${codigo}\n\nSi no solicitaste este cambio, por favor contacta a soporte de inmediato.\n\nGracias,\nTu equipo de soporte.`,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {

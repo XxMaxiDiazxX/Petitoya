@@ -5,6 +5,8 @@ const router = express.Router();
 
 router.post('/register', authController.register);
 router.post('/login', authController.login);
-router.put('/cambiar-contrasena', authController.changePassword);
+router.post('/request-password-reset', authController.requestPasswordReset);
+router.post('/verify-code-and-reset-password', authController.verifyCodeAndResetPassword)
+
 
 module.exports = router;

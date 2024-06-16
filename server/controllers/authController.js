@@ -1,7 +1,8 @@
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 const db = require('../models/db');
 const logger = require('../utils/logger');
-const sendPasswordChangeEmail = require('../utils/emailService');
+const { sendPasswordChangeEmail } = require('../utils/emailService');
 
 async function encriptarContrasena(contrasena) {
   try {
@@ -73,30 +74,66 @@ exports.login = async (req, res) => {
 };
 
 
-exports.changePassword = async (req, res) => {
-  const { id_cliente, nueva_contrasena } = req.body;
+exports.requestPasswordReset = (req, res) => {
+  const { correo_electronico } = req.body;
 
-  try {
-    // Obtener los datos del cliente
-    const [cliente] = await db.query('SELECT nombre, correo_electronico FROM clientes WHERE id_cliente = ?', [id_cliente]);
+  // Verifica que se haya proporcionado un correo electrónico
+  if (!correo_electronico) {
+    return res.status(400).json({ error: 'Correo electrónico es requerido' });
+  }
 
-    if (!cliente) {
-      return res.status(404).json({ error: 'Usuario no encontrado' });
+  // Realiza la consulta para obtener el id_cliente y nombre asociado al correo electrónico
+  db.query('SELECT id_cliente, nombre FROM clientes WHERE correo_electronico = ?', [correo_electronico], (err, result) => {
+    if (err) {
+      console.error('Error en la consulta:', err);
+      return res.status(500).json({ error: 'Error interno del servidor' });
     }
 
-    const { nombre, correo_electronico } = cliente;
+    // Verificar si no se encontraron resultados
+    if (!result || result.length === 0) {
+      return res.status(404).json({ error: 'Correo electrónico no encontrado' });
+    }
 
-    // Cambia la contraseña en la base de datos usando tu procedimiento almacenado
+    // Si se encontraron resultados, obtener id_cliente y nombre
+    const { id_cliente, nombre } = result[0]; // Suponiendo que solo se espera un resultado
+
+    // Generar el código de verificación
+    const codigo_verificacion = crypto.randomBytes(3).toString('hex').toUpperCase();
+
+    // Almacenar temporalmente el código en el servidor
+    global.passwordResetCodes = global.passwordResetCodes || {};
+    global.passwordResetCodes[id_cliente] = codigo_verificacion;
+
+    // Enviar el correo de notificación con el código de verificación
+    sendPasswordChangeEmail(correo_electronico, nombre, codigo_verificacion);
+
+    // Responder con éxito
+    res.status(200).json({ message: 'Código de verificación enviado a tu correo electrónico', id_cliente });
+  });
+};
+
+
+exports.verifyCodeAndResetPassword = async (req, res) => {
+  const { id_cliente, codigo_verificacion, nueva_contrasena } = req.body;
+
+  try {
+    // Verificar el código de verificación
+    if (!global.passwordResetCodes || global.passwordResetCodes[id_cliente] !== codigo_verificacion) {
+      return res.status(400).json({ error: 'Código de verificación inválido' });
+    }
+
+    // Cambiar la contraseña del cliente
     await db.query('CALL CambiarContrasena(?, ?)', [id_cliente, nueva_contrasena]);
 
-    // Enviar el correo de notificación
-    sendPasswordChangeEmail(correo_electronico, nombre);
+    // Eliminar el código de verificación del servidor
+    delete global.passwordResetCodes[id_cliente];
 
     res.status(200).json({ message: 'Contraseña cambiada exitosamente' });
   } catch (error) {
-    logger.error('Error al cambiar la contraseña:', error);
+    console.error('Error al restablecer la contraseña:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
+
 
 
