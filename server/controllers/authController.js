@@ -135,5 +135,3 @@ exports.verifyCodeAndResetPassword = async (req, res) => {
   }
 };
 
-
-

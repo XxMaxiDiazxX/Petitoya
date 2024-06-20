@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `historial_cambios` (
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
 -- crear informe de pedido
-CREATE TABLE informe_pedidos_auditoria (
+CREATE TABLE IF NOT EXISTS informe_pedidos_auditoria (
     id_auditoria INT AUTO_INCREMENT PRIMARY KEY,
     id_pedido INT,
     cliente VARCHAR(255),
@@ -89,6 +89,17 @@ CREATE TABLE informe_pedidos_auditoria (
     total_producto DECIMAL(10,2),
     fecha_informe DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Tabla temporal de carrito de compras
+CREATE TABLE IF NOT EXISTS `carrito` (
+    `id_cliente` VARCHAR(20) NOT NULL,
+    `id_producto` int(11) NOT NULL,
+    `cantidad` int(11) NOT NULL,
+    PRIMARY KEY (`id_cliente`, `id_producto`),
+    FOREIGN KEY (`id_cliente`) REFERENCES `clientes`(`id_cliente`),
+    FOREIGN KEY (`id_producto`) REFERENCES `productos`(`id_producto`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+
 
 
 DELIMITER //

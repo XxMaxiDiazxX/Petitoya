@@ -32,9 +32,10 @@ modifcacion de las apis para uso de los procedures
 modificacion del archivo del authContext por la creacion de la tabla de roles como foranea de la tabla de clientes
 la libreria de envio del correo para recuperacion de contraseñas es nodemailer
 cree la carpeta Usuarios en cliente que va a reunir todos los componenetes que van realacionados a la gestion de usuarios
-instale una nueva libreria llamada crypto que me genera contraseka o tokens para usar en el cambio de contraseña
+instale una nueva libreria llamada crypto que me genera codigo para usar en el cambio de contraseña
 JUEMADRE aver, cree una nueva cuenta de correo ya para petitoya para enviar correo para la recuperadcion de contraseña
 cree 2 paginas nuevas una para validacion del codigo que envie para cambiar la contraseña, y para enviar el correo
+el correo es petitoyaservice@gmail.com constraseña: asesinoZ@, se creo una contraseña de aplicacion y se implemento en la utilidad de email.Service.js del node
 
 
 
