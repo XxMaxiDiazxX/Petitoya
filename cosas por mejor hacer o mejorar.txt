@@ -42,3 +42,4 @@ cree 2 paginas nuevas una para validacion del codigo que envie para cambiar la c
 ---------------------- LO QUE ESTA PERO AUN NO FUNIONA ------------------------
 
 
+cambio de contraseña ya encripta la contraseña nueva
