@@ -113,21 +113,47 @@ exports.requestPasswordReset = (req, res) => {
 };
 
 
+// exports.verifyCodeAndResetPassword = async (req, res) => {
+//   const { id_cliente, codigo_verificacion, nueva_contrasena } = req.body;
+
+//   try {
+//     // Verificar el código de verificación
+//     if (!global.passwordResetCodes || global.passwordResetCodes[id_cliente] !== codigo_verificacion) {
+//       return res.status(400).json({ error: 'Código de verificación inválido' });
+//     }
+
+//     // Cambiar la contraseña del cliente
+//     await db.query('CALL CambiarContrasena(?, ?)', [id_cliente, nueva_contrasena]);
+
+//     // Eliminar el código de verificación del servidor
+//     delete global.passwordResetCodes[id_cliente];
+
+//     res.status(200).json({ message: 'Contraseña cambiada exitosamente' });
+//   } catch (error) {
+//     console.error('Error al restablecer la contraseña:', error);
+//     res.status(500).json({ error: 'Error interno del servidor' });
+//   }
+// };
+
 exports.verifyCodeAndResetPassword = async (req, res) => {
   const { id_cliente, codigo_verificacion, nueva_contrasena } = req.body;
 
   try {
     // Verificar el código de verificación
-    if (!global.passwordResetCodes || global.passwordResetCodes[id_cliente] !== codigo_verificacion) {
-      return res.status(400).json({ error: 'Código de verificación inválido' });
+    if (!global.passwordResetCodes || !global.passwordResetCodes[id_cliente] || global.passwordResetCodes[id_cliente] !== codigo_verificacion) {
+      return res.status(400).json({ error: 'Código de verificación inválido o expirado' });
     }
 
-    // Cambiar la contraseña del cliente
-    await db.query('CALL CambiarContrasena(?, ?)', [id_cliente, nueva_contrasena]);
+    // Encriptar la nueva contraseña
+    const hashedPassword = await encriptarContrasena(nueva_contrasena);
+
+    // Cambiar la contraseña del cliente en la base de datos
+    await db.query('CALL CambiarContrasena(?, ?)', [id_cliente, hashedPassword]);
 
     // Eliminar el código de verificación del servidor
     delete global.passwordResetCodes[id_cliente];
 
+    // Responder con éxito
     res.status(200).json({ message: 'Contraseña cambiada exitosamente' });
   } catch (error) {
     console.error('Error al restablecer la contraseña:', error);
@@ -135,3 +161,7 @@ exports.verifyCodeAndResetPassword = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> a62e38c03efb7b0e87e869a6b576d66a371f6447

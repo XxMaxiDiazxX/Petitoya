@@ -43,3 +43,4 @@ el correo es petitoyaservice@gmail.com constraseña: asesinoZ@, se creo una cont
 ---------------------- LO QUE ESTA PERO AUN NO FUNIONA ------------------------
 
 
+cambio de contraseña ya encripta la contraseña nueva
