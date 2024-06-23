@@ -161,7 +161,3 @@ exports.verifyCodeAndResetPassword = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
-=======
-
->>>>>>> a62e38c03efb7b0e87e869a6b576d66a371f6447

@@ -9,7 +9,7 @@ import EliminarProducto from '../AdminSupremo/DesactivarProducto';
 import PedidoModalMenu from './PedidoModalMenu';
 
 export const Menu = () => {
-    const { isLoggedIn, role } = useAuth();
+    const { isLoggedIn, role, user } = useAuth();
     const [productos, setProductos] = useState([]);
     const [productoSeleccionado, setProductoSeleccionado] = useState(null);
     const [mostrarModal, setMostrarModal] = useState(false);
@@ -49,6 +49,21 @@ export const Menu = () => {
         setMostrarPedidoModal(true);
     };
 
+
+    const handleRealizarPedido = async () => {
+        try {
+            await axios.post(`http://localhost:3001/orders`, {
+                id_cliente: user.id_cliente,
+                productos: carrito
+            });
+            setCarrito([]);
+        } catch (error) {
+            console.error('Error realizando pedido:', error);
+        }
+    };
+
+    
+
     return (
         <div className='content'>
             <div className="row">
@@ -67,7 +82,7 @@ export const Menu = () => {
                                         imagenSrc={`data:image/jpeg;base64,${producto.imagenBase64}`}
                                         onClick={() => handleAbrirPedidoModal(producto)}
                                     />
-                                    {isLoggedIn && role === 2 && role === 3  && (
+                                    {isLoggedIn && (role === 2 || role === 3)  && (
                                         <div className="d-flex">
                                             <button
                                                 className='btn btn-primary'
@@ -105,7 +120,7 @@ export const Menu = () => {
                                         imagenSrc={imagen}
                                         onClick={() => handleAbrirPedidoModal(producto)}
                                     />
-                                    {isLoggedIn && role === 2 && role === 3 && (
+                                    {isLoggedIn && (role === 2 || role === 3) && (
                                         <div className="d-flex">
                                             <button
                                                 className='btn btn-primary'
@@ -148,6 +163,7 @@ export const Menu = () => {
                     producto={productoSeleccionado}
                     mostrarModal={mostrarPedidoModal}
                     setMostrarModal={setMostrarPedidoModal}
+                    id_cliente={user.id}
                 />
             )}
         </div>

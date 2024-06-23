@@ -9,6 +9,7 @@ import RutaPrivadaAdmin from './autenticacion/RutaPriavadaAdmin';
 import Admin from './AdminSupremo/Admin';
 import { useAuth } from './autenticacion/AuthContext';
 import PageNotFound from './error/NotFoundPage';
+import Carrito from './pedidos/Carrito';
 
 
 export const PaginaPrincipal = () => {
@@ -20,7 +21,7 @@ export const PaginaPrincipal = () => {
       <BarraNavegacion />
       <div
         className="container flex-grow-1"
-        >
+      >
 
         <Routes>
           <Route path="/" element={<Inicio />} />
@@ -35,6 +36,7 @@ export const PaginaPrincipal = () => {
             )
           }
           />
+          <Route path='carrito' element={<Carrito />} />
           <Route path="admin" element={<RutaPrivadaAdmin element={<Admin />} />} />
           <Route path='*' element={<PageNotFound />} />
         </Routes>

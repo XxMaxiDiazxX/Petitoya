@@ -56,7 +56,10 @@ export const BarraNavegacion = () => {
           <Nav.Link as={Link} to="">Inicio</Nav.Link>
           <Nav.Link as={Link} to="menu">Menú</Nav.Link>
           {isLoggedIn && (
-            <Nav.Link as={Link} to="pedidos">Pedidos</Nav.Link>
+            <>
+              <Nav.Link as={Link} to="carrito">Carrito</Nav.Link>
+              <Nav.Link as={Link} to="pedidos">Pedidos</Nav.Link>
+            </>
           )}
           {isLoggedIn && role === 2 && (
             <Nav.Link as={Link} to="/admin">Ruta Privada Admin</Nav.Link>

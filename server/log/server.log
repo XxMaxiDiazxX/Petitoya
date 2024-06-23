@@ -5,3 +5,16 @@
 2024-06-10T20:12:39.769Z - [31MERROR[39M: [31mError al cambiar la contraseña: (intermediate value) is not iterable[39m
 2024-06-10T20:17:28.890Z - [31MERROR[39M: [31mError al cambiar la contraseña: (intermediate value) is not iterable[39m
 2024-06-14T21:58:25.265Z - [31MERROR[39M: [31mError al cambiar la contraseña: (intermediate value) is not iterable[39m
+2024-06-22T22:29:23.639Z - [31MERROR[39M: [31mError al añadir producto al carrito: ER_BAD_NULL_ERROR: Column 'id_cliente' cannot be null[39m
+2024-06-22T22:32:44.501Z - [31MERROR[39M: [31mError al añadir producto al carrito: ER_BAD_NULL_ERROR: Column 'id_cliente' cannot be null[39m
+2024-06-22T22:38:53.737Z - [31MERROR[39M: [31mError al insertar productos del carrito en el pedido: ER_BAD_FIELD_ERROR: Unknown column 'NaN' in 'field list'[39m
+2024-06-23T00:03:21.308Z - [31MERROR[39M: [31mError al insertar productos del carrito en el pedido: ER_BAD_FIELD_ERROR: Unknown column 'NaN' in 'field list'[39m
+2024-06-23T00:30:51.479Z - [31MERROR[39M: [31mError al insertar productos del carrito en el pedido: ER_BAD_FIELD_ERROR: Unknown column 'NaN' in 'field list'[39m
+2024-06-23T00:31:11.084Z - [31MERROR[39M: [31mError al insertar productos del carrito en el pedido: ER_BAD_FIELD_ERROR: Unknown column 'NaN' in 'field list'[39m
+2024-06-23T00:31:14.638Z - [31MERROR[39M: [31mError al insertar productos del carrito en el pedido: ER_BAD_FIELD_ERROR: Unknown column 'NaN' in 'field list'[39m
+2024-06-23T00:34:32.494Z - [31MERROR[39M: [31mError al insertar productos del carrito en el pedido: ER_BAD_FIELD_ERROR: Unknown column 'NaN' in 'field list'[39m
+2024-06-23T00:35:42.512Z - [31MERROR[39M: [31mError al insertar productos del carrito en el pedido: ER_BAD_FIELD_ERROR: Unknown column 'NaN' in 'field list'[39m
+2024-06-23T00:40:41.318Z - [31MERROR[39M: [31mError al insertar productos del carrito en el pedido: ER_BAD_FIELD_ERROR: Unknown column 'NaN' in 'field list'[39m
+2024-06-23T00:41:58.838Z - [31MERROR[39M: [31mError al insertar productos del carrito en el pedido: ER_BAD_FIELD_ERROR: Unknown column 'NaN' in 'field list'[39m
+2024-06-23T00:45:32.075Z - [31MERROR[39M: [31mError al insertar productos del carrito en el pedido: ER_BAD_FIELD_ERROR: Unknown column 'NaN' in 'field list'[39m
+2024-06-23T00:47:27.480Z - [31MERROR[39M: [31mError al insertar productos del carrito en el pedido: ER_BAD_FIELD_ERROR: Unknown column 'NaN' in 'field list'[39m
