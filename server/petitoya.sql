@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 19-06-2024 a las 19:09:31
+-- Tiempo de generación: 24-06-2024 a las 06:35:35
 -- Versión del servidor: 8.0.31
 -- Versión de PHP: 8.0.26
 
@@ -149,7 +149,78 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `ModificarUsuario` (IN `p_id_cliente
         id_cliente = p_id_cliente;
 END$$
 
+DROP PROCEDURE IF EXISTS `ObtenerProductosMenosUsados`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerProductosMenosUsados` ()   BEGIN
+    SELECT 
+        p.id_producto,
+        p.nombre,
+        p.descripcion,
+        p.precio,
+        p.categoria,
+        p.estado,
+        COUNT(pp.id_producto) AS cantidad_pedidos
+    FROM 
+        productos p
+    LEFT JOIN 
+        pedido_producto pp ON p.id_producto = pp.id_producto
+    GROUP BY 
+        p.id_producto, p.nombre, p.descripcion, p.precio, p.categoria, p.estado
+    ORDER BY 
+        cantidad_pedidos ASC;
+END$$
+
+DROP PROCEDURE IF EXISTS `RealizarPedidoDesdeCarrito`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `RealizarPedidoDesdeCarrito` (IN `p_id_cliente` VARCHAR(20), OUT `p_id_pedido` INT, OUT `p_message` VARCHAR(255))   BEGIN
+    DECLARE v_count INT;
+
+    -- Verificar si hay elementos en el carrito para el cliente dado
+    SELECT COUNT(*) INTO v_count
+    FROM carrito
+    WHERE id_cliente = p_id_cliente;
+
+    IF v_count = 0 THEN
+        SET p_message = 'El carrito está vacío';
+    ELSE
+        -- Crear un nuevo pedido
+        INSERT INTO pedidos (id_cliente, estado, fecha_compra)
+        VALUES (p_id_cliente, 'pendiente', NOW());
+
+        SET p_id_pedido = LAST_INSERT_ID();
+
+        -- Insertar productos del carrito en pedido_producto
+        INSERT INTO pedido_producto (id_pedido, id_producto, precio_compra, cantidad)
+        SELECT
+            p_id_pedido,
+            c.id_producto,
+            p.precio,
+            c.cantidad
+        FROM carrito c
+        JOIN productos p ON c.id_producto = p.id_producto
+        WHERE c.id_cliente = p_id_cliente;
+
+        -- Vaciar el carrito
+        DELETE FROM carrito WHERE id_cliente = p_id_cliente;
+
+        SET p_message = 'Pedido realizado con éxito';
+    END IF;
+END$$
+
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `carrito`
+--
+
+DROP TABLE IF EXISTS `carrito`;
+CREATE TABLE IF NOT EXISTS `carrito` (
+  `id_cliente` varchar(20) NOT NULL,
+  `id_producto` int NOT NULL,
+  `cantidad` int NOT NULL,
+  PRIMARY KEY (`id_cliente`,`id_producto`),
+  KEY `id_producto` (`id_producto`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -217,7 +288,32 @@ CREATE TABLE IF NOT EXISTS `informe_pedidos_auditoria` (
   `total_producto` decimal(10,2) DEFAULT NULL,
   `fecha_informe` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_auditoria`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `informe_pedidos_auditoria`
+--
+
+INSERT INTO `informe_pedidos_auditoria` (`id_auditoria`, `id_pedido`, `cliente`, `correo_electronico`, `fecha_compra`, `producto`, `precio_compra`, `cantidad`, `total_producto`, `fecha_informe`) VALUES
+(1, 12, 'karen', '1@gmail.com', '2024-06-22 20:15:27', 'asd', '99999999.99', 6, '99999999.99', '2024-06-22 20:15:27'),
+(2, 12, 'karen', '1@gmail.com', '2024-06-22 20:15:27', 'Gasesa', '40000.00', 2, '80000.00', '2024-06-22 20:15:27'),
+(3, 13, 'karen', '1@gmail.com', '2024-06-22 20:16:51', 'asd', '99999999.99', 3, '99999999.99', '2024-06-22 20:16:51'),
+(4, 13, 'karen', '1@gmail.com', '2024-06-22 20:16:51', 'Gasesa', '40000.00', 4, '160000.00', '2024-06-22 20:16:51'),
+(5, 14, 'karen', '1@gmail.com', '2024-06-22 20:17:41', 'asd', '99999999.99', 1, '99999999.99', '2024-06-22 20:17:41'),
+(6, 14, 'karen', '1@gmail.com', '2024-06-22 20:17:41', 'Gasesa', '40000.00', 1, '40000.00', '2024-06-22 20:17:41'),
+(7, 15, 'karen', '1@gmail.com', '2024-06-22 20:19:09', 'asd', '99999999.99', 1, '99999999.99', '2024-06-22 20:19:09'),
+(8, 15, 'karen', '1@gmail.com', '2024-06-22 20:19:09', 'Gasesa', '40000.00', 1, '40000.00', '2024-06-22 20:19:09'),
+(9, 16, 'karen', '1@gmail.com', '2024-06-22 20:20:45', 'asd', '99999999.99', 2, '99999999.99', '2024-06-22 20:20:45'),
+(10, 16, 'karen', '1@gmail.com', '2024-06-22 20:20:45', 'Gasesa', '40000.00', 2, '80000.00', '2024-06-22 20:20:45'),
+(11, 17, 'Juan', 'asdasdasda@gmail.com', '2024-06-24 00:05:42', 'Agua Mineral', '2.00', 5, '10.00', '2024-06-24 00:05:42'),
+(12, 17, 'Juan', 'asdasdasda@gmail.com', '2024-06-24 00:05:42', 'Galletas de Avena', '2.00', 3, '6.00', '2024-06-24 00:05:42'),
+(13, 17, 'Juan', 'asdasdasda@gmail.com', '2024-06-24 00:05:42', 'Donut de Vainilla', '2.00', 2, '4.00', '2024-06-24 00:05:42'),
+(14, 18, 'Juan', 'asdasdasda@gmail.com', '2024-06-24 00:05:50', 'Café Espresso', '3.00', 2, '6.00', '2024-06-24 00:05:50'),
+(15, 19, 'Juan', 'asdasdasda@gmail.com', '2024-06-24 00:05:55', 'Capuchino', '3.00', 2, '6.00', '2024-06-24 00:05:55'),
+(16, 20, 'Juan', 'asdasdasda@gmail.com', '2024-06-24 00:05:59', 'Pizza Margherita', '8.00', 3, '24.00', '2024-06-24 00:05:59'),
+(17, 21, 'Juan', 'asdasdasda@gmail.com', '2024-06-24 00:06:03', 'Ensalada César', '5.00', 3, '15.00', '2024-06-24 00:06:03'),
+(18, 22, 'Juan', 'asdasdasda@gmail.com', '2024-06-24 00:06:07', 'Ensalada César', '5.00', 3, '15.00', '2024-06-24 00:06:07'),
+(19, 23, 'Juan', 'asdasdasda@gmail.com', '2024-06-24 00:06:14', 'Sándwich de Pollo', '4.00', 2, '8.00', '2024-06-24 00:06:14');
 
 -- --------------------------------------------------------
 
@@ -233,7 +329,20 @@ CREATE TABLE IF NOT EXISTS `pedidos` (
   `fecha_compra` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_pedido`),
   KEY `id_cliente` (`id_cliente`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `pedidos`
+--
+
+INSERT INTO `pedidos` (`id_pedido`, `id_cliente`, `estado`, `fecha_compra`) VALUES
+(17, '1025884475', 'pendiente', '2024-06-24 00:05:42'),
+(18, '1025884475', 'pendiente', '2024-06-24 00:05:50'),
+(19, '1025884475', 'pendiente', '2024-06-24 00:05:55'),
+(20, '1025884475', 'pendiente', '2024-06-24 00:05:59'),
+(21, '1025884475', 'pendiente', '2024-06-24 00:06:03'),
+(22, '1025884475', 'pendiente', '2024-06-24 00:06:07'),
+(23, '1025884475', 'pendiente', '2024-06-24 00:06:14');
 
 -- --------------------------------------------------------
 
@@ -250,6 +359,21 @@ CREATE TABLE IF NOT EXISTS `pedido_producto` (
   PRIMARY KEY (`id_pedido`,`id_producto`),
   KEY `id_producto` (`id_producto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `pedido_producto`
+--
+
+INSERT INTO `pedido_producto` (`id_pedido`, `id_producto`, `precio_compra`, `cantidad`) VALUES
+(17, 475, 2, 5),
+(17, 484, 2, 3),
+(17, 485, 2, 2),
+(18, 466, 3, 2),
+(19, 470, 3, 2),
+(20, 479, 8, 3),
+(21, 478, 5, 3),
+(22, 478, 5, 3),
+(23, 477, 4, 2);
 
 --
 -- Disparadores `pedido_producto`
@@ -290,9 +414,55 @@ CREATE TABLE IF NOT EXISTS `productos` (
   `fecha_creacion` date DEFAULT NULL,
   `categoria` varchar(25) NOT NULL,
   `estado` varchar(25) NOT NULL DEFAULT 'activo',
-  `imagen` longblob,
+  `imagen` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_producto`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=486 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `productos`
+--
+
+INSERT INTO `productos` (`id_producto`, `nombre`, `descripcion`, `precio`, `fecha_creacion`, `categoria`, `estado`, `imagen`) VALUES
+(1, 'Salchipapa', 'con papa', 15000, '2024-06-23', 'Comida', 'inactivo', 'uploads/1715709644173-descarga.jpg'),
+(9, 'mari', 'Muslitos', 1, '2024-06-23', 'Comida', 'activo', 'uploads\\1719200854081-1719195684022-Foto documento.jpg'),
+(466, 'Café Espresso', 'Café espresso con una intensa crema', 3, NULL, 'Bebida', 'activo', NULL),
+(467, 'Café Americano', 'Café americano suave y equilibrado', 2, NULL, 'Bebida', 'activo', NULL),
+(468, 'Café Latte', 'Café latte con espuma de leche cremosa', 3, NULL, 'Bebida', 'activo', NULL),
+(469, 'Café Mocha', 'Café mocha con chocolate y crema batida', 4, NULL, 'Bebida', 'activo', NULL),
+(470, 'Capuchino', 'Capuchino con una perfecta mezcla de café y leche', 3, NULL, 'Bebida', 'activo', NULL),
+(471, 'Té Verde', 'Té verde japonés caliente', 3, NULL, 'Bebida', 'activo', NULL),
+(472, 'Té Negro', 'Té negro aromático y robusto', 2, NULL, 'Bebida', 'activo', NULL),
+(473, 'Jugo de Naranja Natural', 'Jugo de naranja fresco recién exprimido', 4, NULL, 'Bebida', 'activo', NULL),
+(474, 'Limonada', 'Refrescante limonada con hielo', 3, NULL, 'Bebida', 'activo', NULL),
+(475, 'Agua Mineral', 'Agua mineral natural', 2, NULL, 'Bebida', 'activo', NULL),
+(476, 'Croissant de Mantequilla', 'Croissant de hojaldre con mantequilla', 2, NULL, 'Comida', 'activo', NULL),
+(477, 'Sándwich de Pollo', 'Sándwich con filete de pollo y vegetales frescos', 4, NULL, 'Comida', 'activo', NULL),
+(478, 'Ensalada César', 'Ensalada con pollo a la parrilla, lechuga romana y aderezo césar', 5, NULL, 'Comida', 'activo', NULL),
+(479, 'Pizza Margherita', 'Pizza tradicional italiana con salsa de tomate, mozzarella y albahaca', 8, NULL, 'Comida', 'activo', NULL),
+(480, 'Hamburguesa Clásica', 'Hamburguesa de carne con queso cheddar y salsa especial', 7, NULL, 'Comida', 'activo', NULL),
+(481, 'Wrap Vegetariano', 'Wrap con verduras frescas y hummus', 5, NULL, 'Comida', 'activo', NULL),
+(482, 'Papas Fritas', 'Papas fritas crujientes y doradas', 3, NULL, 'Comida', 'activo', NULL),
+(483, 'Pastel de Chocolate', 'Delicioso pastel de chocolate con cobertura de ganache', 4, NULL, 'Comida', 'activo', NULL),
+(484, 'Galletas de Avena', 'Galletas de avena y pasas', 2, NULL, 'Comida', 'activo', NULL),
+(485, 'Donut de Vainilla', 'Donut clásico con glaseado de vainilla', 2, NULL, 'Comida', 'activo', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `producto_cantidad_pedidos`
+-- (Véase abajo para la vista actual)
+--
+DROP VIEW IF EXISTS `producto_cantidad_pedidos`;
+CREATE TABLE IF NOT EXISTS `producto_cantidad_pedidos` (
+`id_producto` int
+,`nombre` varchar(255)
+,`descripcion` varchar(255)
+,`precio` int
+,`categoria` varchar(25)
+,`estado` varchar(25)
+,`imagen` varchar(255)
+,`cantidad_pedidos` bigint
+);
 
 -- --------------------------------------------------------
 
@@ -316,9 +486,26 @@ INSERT INTO `roles` (`id_rol`, `nombre`) VALUES
 (2, 'Administrador'),
 (3, 'Superusuario');
 
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `producto_cantidad_pedidos`
+--
+DROP TABLE IF EXISTS `producto_cantidad_pedidos`;
+
+DROP VIEW IF EXISTS `producto_cantidad_pedidos`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `producto_cantidad_pedidos`  AS SELECT `p`.`id_producto` AS `id_producto`, `p`.`nombre` AS `nombre`, `p`.`descripcion` AS `descripcion`, `p`.`precio` AS `precio`, `p`.`categoria` AS `categoria`, `p`.`estado` AS `estado`, `p`.`imagen` AS `imagen`, count(`pp`.`id_producto`) AS `cantidad_pedidos` FROM (`productos` `p` left join `pedido_producto` `pp` on((`p`.`id_producto` = `pp`.`id_producto`))) GROUP BY `p`.`id_producto`, `p`.`nombre`, `p`.`descripcion`, `p`.`precio`, `p`.`categoria`, `p`.`estado`, `p`.`imagen``imagen`  ;
+
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `carrito`
+--
+ALTER TABLE `carrito`
+  ADD CONSTRAINT `carrito_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_cliente`),
+  ADD CONSTRAINT `carrito_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`);
 
 --
 -- Filtros para la tabla `clientes`

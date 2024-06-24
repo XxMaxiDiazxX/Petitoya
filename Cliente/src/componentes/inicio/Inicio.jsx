@@ -1,21 +1,46 @@
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Producto } from "./Producto";
 import palmera from '../../img/inicioSesion/fondo.png';
-import { useState } from "react";
+import PedidoModalInicio from "./PedidoModalInicio";
+import { useAuth } from "../autenticacion/AuthContext";
 
 export const Inicio = () => {
-
+  const { user } = useAuth();
   const [mostrarPedidoModal, setMostrarPedidoModal] = useState(false);
   const [productos, setProductos] = useState([]);
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
+  const [mensaje, setMensaje] = useState("");
 
+  useEffect(() => {
+    const obtenerProductosMenosUsados = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/products/leastused');
+        console.log('Respuesta del servidor:', response.data);
 
-  // FALTA MOSTRAR LOS PRODUCTOS POR ESTADISTICA PERO SE NECESITA MODIFICAR LA BASE DE DATOS
+        if (response.data.length > 0) {
+          const productosActivos = response.data.filter(producto => producto.estado !== 'inactivo');
+          setProductos(productosActivos);
+          setMensaje(`Se encontraron ${productosActivos.length} productos.`);
+        } else {
+          setMensaje('No se encontraron productos.');
+        }
+      } catch (error) {
+        console.error('Error al obtener los productos menos usados:', error);
+        setMensaje('Error interno del servidor.');
+      }
+    };
+
+    obtenerProductosMenosUsados();
+  }, []);
 
   const handleAbrirPedidoModal = (producto) => {
-    setMostrarPedidoModal(true);
     setProductoSeleccionado(producto);
+    setMostrarPedidoModal(true);
   };
+
+  const productosComidas = productos.filter(producto => producto.categoria === 'Comida');
+  const productosBebidas = productos.filter(producto => producto.categoria === 'Bebida');
 
   return (
     <>
@@ -32,39 +57,48 @@ export const Inicio = () => {
           <div className="comidas col-md-6">
             <h4 className="cuerpo">Comidas</h4>
             <div className="row">
-              {productos.map(producto => (
-                producto.categoria === 'Comida' && producto.estado !== 'inactivo' && (
-                  <div key={producto.id_producto}>
-                    <Producto
-                      nombre={producto.nombre}
-                      descripcion={producto.descripcion}
-                      precio={producto.precio}
-                      imagenSrc={`data:image/jpeg;base64,${producto.imagenBase64}`}
-                      onClick={() => handleAbrirPedidoModal(producto)}
-                    />
-                  </div>
-                )
+              {productosComidas.map(producto => (
+                <div key={producto.id_producto} className="col-6">
+                  <Producto
+                    nombre={producto.nombre}
+                    descripcion={producto.descripcion}
+                    precio={producto.precio}
+                    imagenSrc={`data:image/jpeg;base64,${producto.imagenBase64}`}
+                    onClick={() => handleAbrirPedidoModal(producto)}
+                  />
+                </div>
               ))}
-
             </div>
           </div>
           <div className="comidas col-md-6">
             <h4 className="cuerpo">Bebidas</h4>
             <div className="row">
-              <Producto imagenSrc={palmera} descripcion="Café gourmet El mejor café 250g" precio="$ 12.000" onClick={() => handleAbrirPedidoModal(producto)} />
-              <Producto imagenSrc={palmera} descripcion="Té verde Fuente de antioxidantes 100g" precio="$ 10.000" onClick={() => handleAbrirPedidoModal(prodcuto)}/>
-              {/* Agrega más productos según sea necesario */}
+              {productosBebidas.map(producto => (
+                <div key={producto.id_producto} className="col-6">
+                  <Producto
+                    nombre={producto.nombre}
+                    descripcion={producto.descripcion}
+                    precio={producto.precio}
+                    imagenSrc={`data:image/jpeg;base64,${producto.imagenBase64}`}
+                    onClick={() => handleAbrirPedidoModal(producto)}
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
       {mostrarPedidoModal && productoSeleccionado && (
-        <PedidoModal
+        <PedidoModalInicio
           producto={productoSeleccionado}
           mostrarModal={mostrarPedidoModal}
           setMostrarModal={setMostrarPedidoModal}
+          id_cliente={user.id}
         />
       )}
+      {mensaje && <p>{mensaje}</p>}
     </>
-  )
+  );
 };
+
+export default Inicio;

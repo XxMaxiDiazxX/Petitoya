@@ -1,34 +1,60 @@
-// PedidoModal.js
 import { useState } from 'react';
+import axios from 'axios';
+import '../../styles/menu/PedidoModalMenu.scss'; // Importa el archivo de estilos
 
-
-export const PedidoModalInicio = ({ producto, mostrarModal, setMostrarModal }) => {
-  const [cantidad, setCantidad] = useState(0);
+export const PedidoModalInicio = ({ producto, mostrarModal, setMostrarModal, id_cliente }) => {
+  const [cantidad, setCantidad] = useState(1); // Inicializar con 1 para evitar valores cero
 
   const handleModalClick = (e) => {
-    // Evita que los clics lleguen a los elementos detrás de la modal
     e.stopPropagation();
   };
 
-  const handlePedidoSubmit = (e) => {
-    e.preventDefault();
-    // Aquí puedes enviar el pedido al servidor o realizar alguna acción con la cantidad y el producto seleccionados
-    console.log(`Pedido realizado: ${cantidad} x ${producto.nombre}`);
-    // Cierra la ventana modal después de enviar el pedido
-    setMostrarModal(false);
+  const handleAddToCart = async () => {
+    try {
+      await axios.post('http://localhost:3001/cart', {
+        id_cliente,
+        id_producto: producto.id_producto,
+        cantidad,
+      });
+      alert('Producto añadido al carrito con éxito.');
+      setMostrarModal(false);
+    } catch (error) {
+      console.error(error);
+      alert('Hubo un error al añadir el producto al carrito. Por favor, inténtalo de nuevo.');
+    }
+  };
+
+  const handlePlaceOrder = async () => {
+    try {
+      await axios.post('http://localhost:3001/cart', {
+        id_cliente,
+        id_producto: producto.id_producto,
+        cantidad,
+      });
+
+      const response = await axios.post('http://localhost:3001/orders', {
+        id_cliente,
+      });
+      alert(`Pedido realizado con éxito: ${response.data.message}`);
+      setMostrarModal(false);
+    } catch (error) {
+      console.error(error);
+      alert('Hubo un error al realizar el pedido. Por favor, inténtalo de nuevo.');
+    }
   };
 
   return (
     <div>
       {mostrarModal && (
-        <div
-          className="modal-backdrop"
-          style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
-        ></div>
+        <div 
+        className="modal-backdrop" 
+        onClick={() => setMostrarModal(false)}
+        style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+        >
+        </div>
       )}
 
       <div className={`modal ${mostrarModal ? 'show' : ''}`} tabIndex="-1" role="dialog" style={{ display: mostrarModal ? 'block' : 'none' }} onClick={handleModalClick}>
-        {/* Contenido de la ventana modal */}
         <div className="modal-dialog modal-dialog-centered" role="document" onClick={(e) => e.stopPropagation()}>
           <div className="modal-content">
             <div className="modal-header">
@@ -46,8 +72,8 @@ export const PedidoModalInicio = ({ producto, mostrarModal, setMostrarModal }) =
             <div className="modal-body">
               <h5>{producto.nombre}</h5>
               <p>{producto.descripcion}</p>
-              <p>{`Precio: ${producto.precio}`}</p>
-              <form onSubmit={handlePedidoSubmit}>
+              <p><strong>Precio: ${producto.precio}</strong></p>
+              <form onSubmit={(e) => e.preventDefault()}>
                 <div className="form-group">
                   <label htmlFor="cantidad">Cantidad:</label>
                   <input
@@ -59,7 +85,14 @@ export const PedidoModalInicio = ({ producto, mostrarModal, setMostrarModal }) =
                     onChange={(e) => setCantidad(parseInt(e.target.value))}
                   />
                 </div>
-                <button type="submit" className="btn btn-primary">Realizar Pedido</button>
+                <div className="d-flex justify-content-between mt-3">
+                  <button type="button" className="btn btn-primary" onClick={handleAddToCart}>
+                    Añadir al Carrito
+                  </button>
+                  <button type="button" className="btn btn-success" onClick={handlePlaceOrder}>
+                    Realizar Pedido
+                  </button>
+                </div>
               </form>
             </div>
           </div>
@@ -69,4 +102,4 @@ export const PedidoModalInicio = ({ producto, mostrarModal, setMostrarModal }) =
   );
 };
 
-export default PedidoModal;
+export default PedidoModalInicio;
