@@ -28,7 +28,7 @@ exports.getProducts = (req, res) => {
           descripcion: producto.descripcion,
           precio: producto.precio,
           categoria: producto.categoria,
-          imagenSrc: `../${producto.imagen}`  // Asume que producto.imagen es el nombre de archivo de la imagen
+          imagenSrc: producto.imagen  // Asume que producto.imagen es el nombre de archivo de la imagen
         };
       });
 

@@ -4,12 +4,16 @@ const authRoutes = require('./routes/authroutes');
 const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const cartRoutes = require('./routes/cartRoutes');
+const path = require('path');
 
 const app = express();
 
 // Middlewares
 app.use(cors());
 app.use(express.json());
+
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Rutas
 app.use('/auth', authRoutes);

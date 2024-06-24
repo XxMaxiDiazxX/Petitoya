@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `productos` (
     `fecha_creacion` date DEFAULT NULL,
     `categoria` varchar(25) NOT NULL,
     `estado` varchar(25) NOT NULL DEFAULT 'activo',
-    `imagen` longblob DEFAULT NULL,
+    `imagen` varchar(255) DEFAULT NULL,
     PRIMARY KEY (`id_producto`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 

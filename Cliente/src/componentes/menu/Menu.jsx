@@ -21,9 +21,9 @@ export const Menu = () => {
     useEffect(() => {
         const fetchProductos = async () => {
             try {
-                console.log(apiUrl);
                 const response = await axios.get(`${apiUrl}products`);
                 setProductos(response.data);
+                
             } catch (error) {
                 console.error('Error fetching productos:', error);
             }
@@ -41,7 +41,6 @@ export const Menu = () => {
 
             const response = await axios.get(`${apiUrl}/products`);
             setProductos(response.data);
-
             setMostrarModal(false);
         } catch (error) {
             console.error('Error al editar el producto:', error);
