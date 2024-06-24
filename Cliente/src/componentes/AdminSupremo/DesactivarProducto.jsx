@@ -9,10 +9,10 @@ const EliminarProducto = ({ id_producto, onProductoEliminado, setProductos }) =>
   const handleDesactivarProducto = async (idProducto) => {
     try {
       // Enviar solicitud PUT al servidor para desactivar el producto
-      await axios.put(`http://localhost:3001/productos/desactivar/${idProducto}`);
+      await axios.put(`http://localhost:3001/products/desactivar/${idProducto}`);
 
       // Actualiza la lista de productos después de desactivar
-      const response = await axios.get('http://localhost:3001/productos');
+      const response = await axios.get('http://localhost:3001/products');
       setProductos(response.data);
 
       // Llama a la función onProductoEliminado para notificar al componente padre
