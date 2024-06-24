@@ -1,3 +1,5 @@
+
+
 export const Producto = ({ nombre, descripcion, precio, imagenSrc, onClick }) => (
   <div
     className="row bg-white mt-4 rounded"

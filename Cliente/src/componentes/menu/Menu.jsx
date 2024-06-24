@@ -7,6 +7,7 @@ import Producto from './Producto';
 import EditarProductoModal from '../AdminSupremo/EditarProductoModal';
 import EliminarProducto from '../AdminSupremo/DesactivarProducto';
 import PedidoModalMenu from './PedidoModalMenu';
+import '../../styles/menu/Menu.scss'; // Importa tu archivo de estilos SASS o CSS
 
 export const Menu = () => {
     const { isLoggedIn, role, user } = useAuth();
@@ -72,12 +73,12 @@ export const Menu = () => {
             <div className="row">
                 {isLoggedIn && (role === 2 || role === 3) && <AnadirProducto setProductos={setProductos} />}
 
-                <div className="col-md">
+                <div className="col-md-6 col-lg-6">
                     <h4 className='cuerpo'>Comidas</h4>
                     <div className='container mt-4'>
                         {productos.map(producto => (
                             producto.categoria === 'Comida' && producto.estado !== 'inactivo' && (
-                                <div key={producto.id_producto}>
+                                <div key={producto.id_producto} className="producto-item">
                                     <Producto
                                         nombre={producto.nombre}
                                         descripcion={producto.descripcion}
@@ -88,7 +89,7 @@ export const Menu = () => {
                                     {isLoggedIn && (role === 2 || role === 3) && (
                                         <div className="d-flex">
                                             <button
-                                                className='btn btn-primary'
+                                                className='btn btn-primary me-2'
                                                 onClick={() => handleAbrirEditarProductoModal(producto)}
                                             >
                                                 Editar Producto
@@ -108,12 +109,12 @@ export const Menu = () => {
                         ))}
                     </div>
                 </div>
-                <div className="col-md">
+                <div className="col-md-6 col-lg-6">
                     <h4 className='cuerpo'>Bebidas</h4>
                     <div className='container mt-4'>
                         {productos.map(producto => (
                             producto.categoria === 'Bebida' && producto.estado !== 'inactivo' && (
-                                <div key={producto.id_producto}>
+                                <div key={producto.id_producto} className="producto-item">
                                     <Producto
                                         nombre={producto.nombre}
                                         descripcion={producto.descripcion}
@@ -124,7 +125,7 @@ export const Menu = () => {
                                     {isLoggedIn && (role === 2 || role === 3) && (
                                         <div className="d-flex">
                                             <button
-                                                className='btn btn-primary'
+                                                className='btn btn-primary me-2'
                                                 onClick={() => handleAbrirEditarProductoModal(producto)}
                                             >
                                                 Editar Producto

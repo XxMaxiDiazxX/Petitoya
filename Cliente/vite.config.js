@@ -8,4 +8,12 @@ export default defineConfig({
       port: 3000,
     },
   plugins: [react()],
+
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "bootstrap/scss/functions"; @import "bootstrap/scss/variables"; @import "bootstrap/scss/mixins";`
+      }
+    }
+  }
 })

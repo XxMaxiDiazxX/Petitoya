@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import '../../styles/menu/PedidoModalMenu.scss'; // Importa el archivo de estilos
 
 export const PedidoModalMenu = ({ producto, mostrarModal, setMostrarModal, id_cliente }) => {
   const [cantidad, setCantidad] = useState(1); // Inicializar con 1 para evitar valores cero
@@ -45,10 +46,12 @@ export const PedidoModalMenu = ({ producto, mostrarModal, setMostrarModal, id_cl
   return (
     <div>
       {mostrarModal && (
-        <div
-          className="modal-backdrop"
-          style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
-        ></div>
+        <div 
+        className="modal-backdrop" 
+        onClick={() => setMostrarModal(false)}
+        style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+        >
+        </div>
       )}
 
       <div className={`modal ${mostrarModal ? 'show' : ''}`} tabIndex="-1" role="dialog" style={{ display: mostrarModal ? 'block' : 'none' }} onClick={handleModalClick}>
@@ -69,7 +72,7 @@ export const PedidoModalMenu = ({ producto, mostrarModal, setMostrarModal, id_cl
             <div className="modal-body">
               <h5>{producto.nombre}</h5>
               <p>{producto.descripcion}</p>
-              <p>{`Precio: ${producto.precio}`}</p>
+              <p><strong>Precio: ${producto.precio}</strong></p>
               <form onSubmit={(e) => e.preventDefault()}>
                 <div className="form-group">
                   <label htmlFor="cantidad">Cantidad:</label>
@@ -82,7 +85,7 @@ export const PedidoModalMenu = ({ producto, mostrarModal, setMostrarModal, id_cl
                     onChange={(e) => setCantidad(parseInt(e.target.value))}
                   />
                 </div>
-                <div className="d-flex justify-content-between">
+                <div className="d-flex justify-content-between mt-3">
                   <button type="button" className="btn btn-primary" onClick={handleAddToCart}>
                     Añadir al Carrito
                   </button>
