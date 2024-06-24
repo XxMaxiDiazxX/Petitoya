@@ -305,4 +305,45 @@ BEGIN
     END IF;
 END //
 
+
+CREATE PROCEDURE RealizarPedidoDesdeCarrito(
+    IN p_id_cliente VARCHAR(20),
+    OUT p_id_pedido INT,
+    OUT p_message VARCHAR(255)
+)
+BEGIN
+    DECLARE v_count INT;
+
+    -- Verificar si hay elementos en el carrito para el cliente dado
+    SELECT COUNT(*) INTO v_count
+    FROM carrito
+    WHERE id_cliente = p_id_cliente;
+
+    IF v_count = 0 THEN
+        SET p_message = 'El carrito está vacío';
+    ELSE
+        -- Crear un nuevo pedido
+        INSERT INTO pedidos (id_cliente, estado, fecha_compra)
+        VALUES (p_id_cliente, 'pendiente', NOW());
+
+        SET p_id_pedido = LAST_INSERT_ID();
+
+        -- Insertar productos del carrito en pedido_producto
+        INSERT INTO pedido_producto (id_pedido, id_producto, precio_compra, cantidad)
+        SELECT
+            p_id_pedido,
+            c.id_producto,
+            p.precio,
+            c.cantidad
+        FROM carrito c
+        JOIN productos p ON c.id_producto = p.id_producto
+        WHERE c.id_cliente = p_id_cliente;
+
+        -- Vaciar el carrito
+        DELETE FROM carrito WHERE id_cliente = p_id_cliente;
+
+        SET p_message = 'Pedido realizado con éxito';
+    END IF;
+END //
+
 DELIMITER ;

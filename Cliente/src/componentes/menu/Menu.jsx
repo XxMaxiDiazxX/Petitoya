@@ -15,6 +15,7 @@ export const Menu = () => {
     const [productoSeleccionado, setProductoSeleccionado] = useState(null);
     const [mostrarModal, setMostrarModal] = useState(false);
     const [mostrarPedidoModal, setMostrarPedidoModal] = useState(false);
+    const [carrito, setCarrito] = useState([]);
 
     useEffect(() => {
         const fetchProductos = async () => {
@@ -33,8 +34,8 @@ export const Menu = () => {
     const handleEditarProducto = async (productoEditado) => {
         try {
             await axios.put(
-                `${apiUrl}/products/${productoEditado.id_producto}`,
-                productoEditado
+                `http://localhost:3001/products/${productoSeleccionado.id_producto}`,
+                productoSeleccionado
             );
 
             const response = await axios.get(`${apiUrl}/products`);
@@ -50,6 +51,7 @@ export const Menu = () => {
         setProductoSeleccionado(producto);
         setMostrarPedidoModal(true);
     };
+
 
     const handleRealizarPedido = async () => {
         try {
@@ -124,10 +126,7 @@ export const Menu = () => {
                                         <div className="d-flex">
                                             <button
                                                 className='btn btn-primary'
-                                                onClick={() => {
-                                                    setProductoSeleccionado(producto);
-                                                    setMostrarModal(true);
-                                                }}
+                                                onClick={() => handleAbrirEditarProductoModal(producto)}
                                             >
                                                 Editar Producto
                                             </button>

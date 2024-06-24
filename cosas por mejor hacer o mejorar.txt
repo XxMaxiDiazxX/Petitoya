@@ -22,6 +22,11 @@ de la pagina de error
 # realizar que solo aparesca la validacion del codigo de cambio de contraseña, cuando sea valido ya aparesca la creacion de la nueva contraseña
 ademas de tambien darle diseño
 
+# hacer el icono de carrito en la barra
+
+#AJUSTAR BIEN EL FRONENT PAR QUE SE VEA BIEN
+
+# realiazr que el administrado registe los superusuario( empleados) 
 
 
 ------------------- CAMBIOS JOHANSHITO --------------------------------
@@ -36,11 +41,11 @@ instale una nueva libreria llamada crypto que me genera codigo para usar en el c
 JUEMADRE aver, cree una nueva cuenta de correo ya para petitoya para enviar correo para la recuperadcion de contraseña
 cree 2 paginas nuevas una para validacion del codigo que envie para cambiar la contraseña, y para enviar el correo
 el correo es petitoyaservice@gmail.com constraseña: asesinoZ@, se creo una contraseña de aplicacion y se implemento en la utilidad de email.Service.js del node
+realice el sistema de pedidos y carrito (falta el fronent)
 
 
 
-
----------------------- LO QUE ESTA PERO AUN NO FUNIONA ------------------------
+---------------------- CAMBIOS SUARIÑO ------------------------
 
 
 cambio de contraseña ya encripta la contraseña nueva
