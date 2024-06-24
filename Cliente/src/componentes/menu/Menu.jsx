@@ -22,7 +22,8 @@ export const Menu = () => {
         const fetchProductos = async () => {
             try {
                 const response = await axios.get(`${apiUrl}products`);
-                setProductos(response.data);
+                const productosActivos = response.data.filter(producto => producto.estado !== 'inactivo');
+                setProductos(productosActivos);
                 
             } catch (error) {
                 console.error('Error fetching productos:', error);
@@ -35,12 +36,13 @@ export const Menu = () => {
     const handleEditarProducto = async (productoEditado) => {
         try {
             await axios.put(
-                `http://localhost:3001/products/${productoSeleccionado.id_producto}`,
+                `${apiUrl}products/${productoSeleccionado.id_producto}`,
                 productoSeleccionado
             );
 
-            const response = await axios.get(`${apiUrl}/products`);
-            setProductos(response.data);
+            const response = await axios.get(`${apiUrl}products`);
+            const productosActivos = response.data.filter(producto => producto.estado !== 'inactivo');
+            setProductos(productosActivos);
             setMostrarModal(false);
         } catch (error) {
             console.error('Error al editar el producto:', error);
@@ -52,14 +54,13 @@ export const Menu = () => {
         setMostrarPedidoModal(true);
     };
 
-
     const handleRealizarPedido = async () => {
         try {
-            await axios.post(`${apiUrl}/orders`, {
+            await axios.post(`${apiUrl}orders`, {
                 id_cliente: user.id_cliente,
-                productos: carrito // Asegúrate de tener definida la variable `carrito` en tu contexto
+                productos: carrito
             });
-            setCarrito([]); // Asegúrate de tener definida la variable `setCarrito` en tu contexto
+            setCarrito([]);
         } catch (error) {
             console.error('Error realizando pedido:', error);
         }
@@ -74,13 +75,13 @@ export const Menu = () => {
                     <h4 className='cuerpo'>Comidas</h4>
                     <div className='container mt-4'>
                         {productos.map(producto => (
-                            producto.categoria === 'Comida' && producto.estado !== 'inactivo' && (
+                            producto.categoria === 'Comida' && (
                                 <div key={producto.id_producto} className="producto-item">
                                     <Producto
                                         nombre={producto.nombre}
                                         descripcion={producto.descripcion}
                                         precio={producto.precio}
-                                        imagenSrc={`${apiUrl}${producto.imagenSrc}`} // Ajustar según la estructura de la API y la ruta de las imágenes
+                                        imagenSrc={`${apiUrl}${producto.imagenSrc}`}
                                         onClick={() => handleAbrirPedidoModal(producto)}
                                     />
                                     {isLoggedIn && (role === 2 || role === 3) && (
@@ -110,13 +111,13 @@ export const Menu = () => {
                     <h4 className='cuerpo'>Bebidas</h4>
                     <div className='container mt-4'>
                         {productos.map(producto => (
-                            producto.categoria === 'Bebida' && producto.estado !== 'inactivo' && (
+                            producto.categoria === 'Bebida' && (
                                 <div key={producto.id_producto} className="producto-item">
                                     <Producto
                                         nombre={producto.nombre}
                                         descripcion={producto.descripcion}
                                         precio={producto.precio}
-                                        imagenSrc={`${apiUrl}${producto.imagenSrc}`} // Ajustar según la estructura de la API y la ruta de las imágenes
+                                        imagenSrc={`${apiUrl}${producto.imagenSrc}`}
                                         onClick={() => handleAbrirPedidoModal(producto)}
                                     />
                                     {isLoggedIn && (role === 2 || role === 3) && (
