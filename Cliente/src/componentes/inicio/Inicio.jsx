@@ -1,9 +1,12 @@
+// Inicio.jsx
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Producto } from "./Producto";
 import palmera from '../../img/inicioSesion/fondo.png';
 import PedidoModalInicio from "./PedidoModalInicio";
 import { useAuth } from "../autenticacion/AuthContext";
+import "../../styles/Inicio/Inicio.scss"; // Importar los estilos SCSS
 
 export const Inicio = () => {
   const { user } = useAuth();
@@ -20,7 +23,7 @@ export const Inicio = () => {
 
         if (response.data.length > 0) {
           const productosActivos = response.data.filter(producto => producto.estado !== 'inactivo');
-          setProductos(productosActivos);
+          setProductos(productosActivos.slice(0, 4)); // Limitar a 4 productos
           setMensaje(`Se encontraron ${productosActivos.length} productos.`);
         } else {
           setMensaje('No se encontraron productos.');
@@ -39,6 +42,7 @@ export const Inicio = () => {
     setMostrarPedidoModal(true);
   };
 
+  // Filtrar productos por categoría
   const productosComidas = productos.filter(producto => producto.categoria === 'Comida');
   const productosBebidas = productos.filter(producto => producto.categoria === 'Bebida');
 
@@ -54,11 +58,12 @@ export const Inicio = () => {
       <div className="sugerencias container text-center">
         <h2 className="mt-3 bg-barra3 cuerpo text-white">Sugerencias</h2>
         <div className="row">
-          <div className="comidas col-md-6">
+          {/* Mostrar productos de Comidas en 2x2 */}
+          <div className="col-md-6">
             <h4 className="cuerpo">Comidas</h4>
             <div className="row">
               {productosComidas.map(producto => (
-                <div key={producto.id_producto} className="col-6">
+                <div key={producto.id_producto} className="col-6 mb-4">
                   <Producto
                     nombre={producto.nombre}
                     descripcion={producto.descripcion}
@@ -70,11 +75,12 @@ export const Inicio = () => {
               ))}
             </div>
           </div>
-          <div className="comidas col-md-6">
+          {/* Mostrar productos de Bebidas en 2x2 */}
+          <div className="col-md-6">
             <h4 className="cuerpo">Bebidas</h4>
             <div className="row">
               {productosBebidas.map(producto => (
-                <div key={producto.id_producto} className="col-6">
+                <div key={producto.id_producto} className="col-6 mb-4">
                   <Producto
                     nombre={producto.nombre}
                     descripcion={producto.descripcion}
@@ -102,3 +108,4 @@ export const Inicio = () => {
 };
 
 export default Inicio;
+

@@ -1,0 +1,45 @@
+// Inicio.scss
+
+.sugerencias {
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+  
+      .col-md-6 {
+        flex: 0 0 50%; // Ocupar el 50% del ancho en pantallas md y superiores
+        max-width: 50%; // Limitar el ancho máximo al 50%
+        margin-bottom: 20px; // Espacio entre las tarjetas
+      }
+    }
+    
+    .card {
+      transition: transform 0.3s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
+      &:hover {
+        transform: translateY(-5px); // Efecto de levantamiento al hacer hover
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); // Sombra más intensa al hacer hover
+      }
+  
+      .card-img-top {
+        height: 200px; // Altura de la imagen de la tarjeta
+        object-fit: cover; // Ajuste de la imagen
+      }
+  
+      .card-body {
+        padding: 10px;
+      }
+  
+      .card-title {
+        font-size: 1.2rem; // Tamaño del título
+        margin-bottom: 10px; // Espacio bajo el título
+      }
+  
+      .card-text {
+        font-size: 1rem; // Tamaño del texto
+        color: #555; // Color del texto
+      }
+    }
+  }
+  

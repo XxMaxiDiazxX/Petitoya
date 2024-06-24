@@ -147,21 +147,54 @@ exports.activateProduct = (req, res) => {
 exports.getLeastUsedProducts = (req, res) => {
   const query = `
     SELECT 
-        p.id_producto,
-        p.nombre,
-        p.descripcion,
-        p.precio,
-        p.categoria,
-        COUNT(pp.id_pedido) AS cantidad_pedidos
-    FROM 
-        productos p
-    LEFT JOIN 
-        pedido_producto pp ON p.id_producto = pp.id_producto
-    GROUP BY 
-        p.id_producto, p.nombre, p.descripcion, p.precio, p.categoria
-    ORDER BY 
-        cantidad_pedidos ASC
-    LIMIT 4;`;
+        sub.id_producto,
+        sub.nombre,
+        sub.descripcion,
+        sub.precio,
+        sub.categoria,
+        sub.cantidad_pedidos
+    FROM (
+        (SELECT 
+            p.id_producto,
+            p.nombre,
+            p.descripcion,
+            p.precio,
+            p.categoria,
+            COUNT(pp.id_pedido) AS cantidad_pedidos
+        FROM 
+            productos p
+        LEFT JOIN 
+            pedido_producto pp ON p.id_producto = pp.id_producto
+        WHERE 
+            p.categoria = 'Comida' AND p.estado = 'activo'
+        GROUP BY 
+            p.id_producto, p.nombre, p.descripcion, p.precio, p.categoria
+        ORDER BY 
+            cantidad_pedidos ASC
+        LIMIT 4)
+        
+        UNION ALL
+        
+        (SELECT 
+            p.id_producto,
+            p.nombre,
+            p.descripcion,
+            p.precio,
+            p.categoria,
+            COUNT(pp.id_pedido) AS cantidad_pedidos
+        FROM 
+            productos p
+        LEFT JOIN 
+            pedido_producto pp ON p.id_producto = pp.id_producto
+        WHERE 
+            p.categoria = 'Bebida' AND p.estado = 'activo'
+        GROUP BY 
+            p.id_producto, p.nombre, p.descripcion, p.precio, p.categoria
+        ORDER BY 
+            cantidad_pedidos ASC
+        LIMIT 4)
+    ) AS sub
+    ORDER BY sub.cantidad_pedidos ASC;`;
 
   db.query(query, (err, result) => {
     if (err) {
@@ -177,13 +210,13 @@ exports.getLeastUsedProducts = (req, res) => {
             descripcion: producto.descripcion,
             precio: producto.precio,
             categoria: producto.categoria,
-            cantidad_pedidos: producto.cantidad_pedidos
+            cantidad_pedidos: producto.cantidad_pedidos,
           };
         });
 
         return res.status(200).json(productosMenosUsados);
       } else {
-        return res.status(404).json({ message: 'No se encontraron productos meeeeeenos usados.' });
+        return res.status(404).json({ message: 'No se encontraron productos menos usados.' });
       }
     }
   });
