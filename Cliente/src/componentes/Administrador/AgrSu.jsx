@@ -66,7 +66,7 @@ export const AgrSu = () => {
 
     return (
         <div className="h-100">
-            <Col xs={12} md={8} lg={6} className="contenedor d-flex flex-column align-items-center justify-content-center w-100 h-100">
+            <Col xs={12} md={8} lg={6} className="d-flex flex-column align-items-center justify-content-center w-100 h-100">
 
                 <h4 className="text-center reda cuerpo" style={{ fontSize: "45px" }}>Registro de empleados</h4>
 

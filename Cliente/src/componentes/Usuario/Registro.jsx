@@ -5,14 +5,6 @@ import {  Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
-
-// import fondo from '../img/registro/libreta.png'
-
-
-
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import './RegistroForm.css'; // Este será tu archivo de estilos personalizados
-
 export const Registro = () => {
     const initialValues = {
         nombre: '',
