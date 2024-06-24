@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import imagen from '../../img/cafe.jpg';
+import Producto from './Producto';
 import { useAuth } from '../autenticacion/AuthContext';
 import AnadirProducto from '../AdminSupremo/AnadirProducto';
-import Producto from './Producto';
 import EditarProductoModal from '../AdminSupremo/EditarProductoModal';
 import EliminarProducto from '../AdminSupremo/DesactivarProducto';
 import PedidoModalMenu from './PedidoModalMenu';
+
+const apiUrl = 'http://localhost:3001/';
 
 export const Menu = () => {
     const { isLoggedIn, role, user } = useAuth();
@@ -18,7 +19,8 @@ export const Menu = () => {
     useEffect(() => {
         const fetchProductos = async () => {
             try {
-                const response = await axios.get('http://localhost:3001/products');
+                console.log(apiUrl);
+                const response = await axios.get(`${apiUrl}products`);
                 setProductos(response.data);
             } catch (error) {
                 console.error('Error fetching productos:', error);
@@ -28,14 +30,14 @@ export const Menu = () => {
         fetchProductos();
     }, []);
 
-    const handleEditarProducto = async () => {
+    const handleEditarProducto = async (productoEditado) => {
         try {
             await axios.put(
-                `http://localhost:3001/api/products/${productoSeleccionado.id_producto}`,
-                productoSeleccionado
+                `${apiUrl}/products/${productoEditado.id_producto}`,
+                productoEditado
             );
 
-            const response = await axios.get('http://localhost:3001/products');
+            const response = await axios.get(`${apiUrl}/products`);
             setProductos(response.data);
 
             setMostrarModal(false);
@@ -49,20 +51,17 @@ export const Menu = () => {
         setMostrarPedidoModal(true);
     };
 
-
     const handleRealizarPedido = async () => {
         try {
-            await axios.post(`http://localhost:3001/orders`, {
+            await axios.post(`${apiUrl}/orders`, {
                 id_cliente: user.id_cliente,
-                productos: carrito
+                productos: carrito // Asegúrate de tener definida la variable `carrito` en tu contexto
             });
-            setCarrito([]);
+            setCarrito([]); // Asegúrate de tener definida la variable `setCarrito` en tu contexto
         } catch (error) {
             console.error('Error realizando pedido:', error);
         }
     };
-
-    
 
     return (
         <div className='content'>
@@ -79,16 +78,17 @@ export const Menu = () => {
                                         nombre={producto.nombre}
                                         descripcion={producto.descripcion}
                                         precio={producto.precio}
-                                        imagenSrc={`data:image/jpeg;base64,${producto.imagenBase64}`}
+                                        imagenSrc={`${apiUrl}${producto.imagenSrc}`} // Ajustar según la estructura de la API y la ruta de las imágenes
                                         onClick={() => handleAbrirPedidoModal(producto)}
                                     />
-                                    {isLoggedIn && (role === 2 || role === 3)  && (
+                                    {isLoggedIn && (role === 2 || role === 3) && (
                                         <div className="d-flex">
                                             <button
                                                 className='btn btn-primary'
-                                                onClick={() =>
-                                                    handleAbrirPedidoModal(producto)
-                                                }
+                                                onClick={() => {
+                                                    setProductoSeleccionado(producto);
+                                                    setMostrarModal(true);
+                                                }}
                                             >
                                                 Editar Producto
                                             </button>
@@ -117,7 +117,7 @@ export const Menu = () => {
                                         nombre={producto.nombre}
                                         descripcion={producto.descripcion}
                                         precio={producto.precio}
-                                        imagenSrc={imagen}
+                                        imagenSrc={`${apiUrl}${producto.imagenSrc}`} // Ajustar según la estructura de la API y la ruta de las imágenes
                                         onClick={() => handleAbrirPedidoModal(producto)}
                                     />
                                     {isLoggedIn && (role === 2 || role === 3) && (
