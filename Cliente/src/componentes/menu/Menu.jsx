@@ -14,6 +14,7 @@ export const Menu = () => {
     const [productoSeleccionado, setProductoSeleccionado] = useState(null);
     const [mostrarModal, setMostrarModal] = useState(false);
     const [mostrarPedidoModal, setMostrarPedidoModal] = useState(false);
+    const [carrito, setCarrito] = useState([]);
 
     useEffect(() => {
         const fetchProductos = async () => {
@@ -31,7 +32,7 @@ export const Menu = () => {
     const handleEditarProducto = async () => {
         try {
             await axios.put(
-                `http://localhost:3001/api/products/${productoSeleccionado.id_producto}`,
+                `http://localhost:3001/products/${productoSeleccionado.id_producto}`,
                 productoSeleccionado
             );
 
@@ -49,6 +50,10 @@ export const Menu = () => {
         setMostrarPedidoModal(true);
     };
 
+    const handleAbrirEditarProductoModal = (producto) => {
+        setProductoSeleccionado(producto);
+        setMostrarModal(true);
+    };
 
     const handleRealizarPedido = async () => {
         try {
@@ -61,8 +66,6 @@ export const Menu = () => {
             console.error('Error realizando pedido:', error);
         }
     };
-
-    
 
     return (
         <div className='content'>
@@ -82,13 +85,11 @@ export const Menu = () => {
                                         imagenSrc={`data:image/jpeg;base64,${producto.imagenBase64}`}
                                         onClick={() => handleAbrirPedidoModal(producto)}
                                     />
-                                    {isLoggedIn && (role === 2 || role === 3)  && (
+                                    {isLoggedIn && (role === 2 || role === 3) && (
                                         <div className="d-flex">
                                             <button
                                                 className='btn btn-primary'
-                                                onClick={() =>
-                                                    handleAbrirPedidoModal(producto)
-                                                }
+                                                onClick={() => handleAbrirEditarProductoModal(producto)}
                                             >
                                                 Editar Producto
                                             </button>
@@ -124,10 +125,7 @@ export const Menu = () => {
                                         <div className="d-flex">
                                             <button
                                                 className='btn btn-primary'
-                                                onClick={() => {
-                                                    setProductoSeleccionado(producto);
-                                                    setMostrarModal(true);
-                                                }}
+                                                onClick={() => handleAbrirEditarProductoModal(producto)}
                                             >
                                                 Editar Producto
                                             </button>
