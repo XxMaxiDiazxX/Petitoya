@@ -10,6 +10,7 @@ import Admin from './AdminSupremo/Admin';
 import { useAuth } from './autenticacion/AuthContext';
 import PageNotFound from './error/NotFoundPage';
 import Carrito from './pedidos/Carrito';
+import { AgrSu } from './Administrador/AgrSu';
 
 
 export const PaginaPrincipal = () => {
@@ -37,7 +38,7 @@ export const PaginaPrincipal = () => {
           }
           />
           <Route path='carrito' element={<Carrito />} />
-          <Route path="admin" element={<RutaPrivadaAdmin element={<Admin />} />} />
+          <Route path="admin" element={<RutaPrivadaAdmin element={<AgrSu/>} />} />
           <Route path='*' element={<PageNotFound />} />
         </Routes>
       </div>

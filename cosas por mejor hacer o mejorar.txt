@@ -49,6 +49,8 @@ realice el sistema de pedidos y carrito (falta el fronent)
 
 
 cambio de contraseña ya encripta la contraseña nueva
+manejo de las imagenes de los productos
+admin puede agregar empleados
 
 DELIMITER //
 

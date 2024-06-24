@@ -28,6 +28,19 @@ exports.register = async (req, res) => {
   }
 };
 
+exports.registerSu = async (req, res) => {
+  const { documento, nombre, correo_electronico, telefono, contrasena } = req.body;
+
+  try {
+    const hashedPassword = await encriptarContrasena(contrasena);
+    await db.query('CALL CrearUsuario(?, ?, ?, ?, ?, 3)', [documento, nombre, correo_electronico, telefono, hashedPassword]);
+    res.status(200).json({ message: 'Registro exitoso' });
+  } catch (error) {
+    logger.error('Error al registrar usuario:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
 
 
 exports.login = async (req, res) => {
