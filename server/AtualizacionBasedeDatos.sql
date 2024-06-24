@@ -346,4 +346,26 @@ BEGIN
     END IF;
 END //
 
+
+
+CREATE PROCEDURE ObtenerProductosMenosUsados()
+BEGIN
+    SELECT 
+        p.id_producto,
+        p.nombre,
+        p.descripcion,
+        p.precio,
+        p.categoria,
+        p.estado,
+        COUNT(pp.id_producto) AS cantidad_pedidos
+    FROM 
+        productos p
+    LEFT JOIN 
+        pedido_producto pp ON p.id_producto = pp.id_producto
+    GROUP BY 
+        p.id_producto, p.nombre, p.descripcion, p.precio, p.categoria, p.estado
+    ORDER BY 
+        cantidad_pedidos ASC;
+END //
+
 DELIMITER ;

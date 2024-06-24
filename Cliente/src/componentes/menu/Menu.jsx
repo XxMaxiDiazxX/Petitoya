@@ -49,6 +49,11 @@ export const Menu = () => {
         }
     };
 
+    const handleAbrirEditarProductoModal = (producto) => {
+        setProductoSeleccionado(producto);
+        setMostrarModal(true);
+    }
+
     const handleAbrirPedidoModal = (producto) => {
         setProductoSeleccionado(producto);
         setMostrarPedidoModal(true);
