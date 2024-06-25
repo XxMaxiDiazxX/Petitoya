@@ -1,37 +1,41 @@
-// OrdersManagement.jsx
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const OrdersManagement = () => {
-  const [orders, setOrders] = useState([]);
-  const [error, setError] = useState(null);
+  const [ordersType, setOrdersType] = useState('pendiente'); // Estado para controlar el tipo de pedidos
+  const [orders, setOrders] = useState([]); // Estado para almacenar los pedidos según el tipo seleccionado
+  const [error, setError] = useState(null); // Estado para manejar errores
 
   useEffect(() => {
-    fetchPendingOrders();
-  }, []);
+    fetchOrders(ordersType); // Llamar a la función para obtener los pedidos iniciales
+  }, [ordersType]); // Ejecutar cada vez que cambie ordersType
 
-  const fetchPendingOrders = async () => {
+  // Función para obtener pedidos según el tipo seleccionado
+  const fetchOrders = async (type) => {
+    let url = `http://localhost:3001/super/${type}`;
+
     try {
-      const response = await axios.get('http://localhost:3001/super/pendientes');
+      const response = await axios.get(url);
       setOrders(response.data);
       setError(null); // Reiniciar el estado de error si la carga fue exitosa
     } catch (error) {
-      console.error('Error fetching pending orders:', error.message);
-      setError('Error al cargar los pedidos pendientes. Inténtelo de nuevo más tarde.'); // Mensaje de error
+      console.error(`Error fetching ${type} orders:`, error.message);
+      setError('Error al cargar los pedidos. Inténtelo de nuevo más tarde.'); // Mensaje de error
     }
   };
 
+  // Función para actualizar el estado de un pedido
   const handleUpdateOrderStatus = async (idPedido, nuevoEstado) => {
     try {
       await axios.put(`http://localhost:3001/super/${idPedido}`, { nuevoEstado });
+      // Actualizar el estado localmente después de la actualización en el servidor
       const updatedOrders = orders.map(order => {
         if (order.id_pedido === idPedido) {
           return { ...order, estado: nuevoEstado };
         }
         return order;
       });
-      setOrders(updatedOrders); // Actualizar el estado de orders
+      setOrders(updatedOrders);
       setError(null); // Reiniciar el estado de error si la actualización fue exitosa
     } catch (error) {
       console.error('Error updating order status:', error);
@@ -39,11 +43,41 @@ const OrdersManagement = () => {
     }
   };
 
+  // Función para cambiar el tipo de pedidos mostrados
+  const changeOrdersType = (type) => {
+    setOrdersType(type);
+  };
+
   return (
     <div className="container mt-5">
       <div className="row mb-3">
         <div className="col-md-6">
-          <h2>Pedidos Pendientes</h2>
+          <h2>Pedidos {ordersType.charAt(0).toUpperCase() + ordersType.slice(1)}</h2>
+        </div>
+        <div className="col-md-6 d-flex justify-content-end align-items-center">
+          <div className="btn-group" role="group" aria-label="Opciones de tipo de pedidos">
+            <button
+              type="button"
+              className={`btn ${ordersType === 'pendiente' ? 'btn-primary' : 'btn-secondary'}`}
+              onClick={() => changeOrdersType('pendiente')}
+            >
+              Pendientes
+            </button>
+            <button
+              type="button"
+              className={`btn ${ordersType === 'en proceso' ? 'btn-primary' : 'btn-secondary'}`}
+              onClick={() => changeOrdersType('en proceso')}
+            >
+              En Proceso
+            </button>
+            <button
+              type="button"
+              className={`btn ${ordersType === 'por entrega' ? 'btn-primary' : 'btn-secondary'}`}
+              onClick={() => changeOrdersType('por entrega')}
+            >
+              Por Entrega
+            </button>
+          </div>
         </div>
       </div>
       <div className="row">

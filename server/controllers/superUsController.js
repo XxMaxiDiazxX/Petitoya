@@ -5,7 +5,7 @@ exports.getPendingOrders = (req, res) => {
   const query = `
     SELECT id_pedido, id_cliente, estado, fecha_compra
     FROM pedidos
-    WHERE estado = 'pendientes';
+    WHERE estado = 'pendiente';
   `;
 
   db.query(query, (err, result) => {
@@ -17,26 +17,32 @@ exports.getPendingOrders = (req, res) => {
     }
   });
 };
-
-// Obtener pedidos según estado
 exports.getOrdersByState = (req, res) => {
-  const { estado } = req.params;
+  let { estado } = req.params;
 
-  // Validar estado permitido
-  const validStates = ['pendientes', 'en_proceso', 'por_entrega'];
-  if (!validStates.includes(estado)) {
-    return res.status(400).json({ error: 'Estado no válido' });
+  // Si no se proporciona estado en la URL, asumir que se quieren todos los pedidos
+  let whereClause = '';
+  let queryParams = [];
+
+  if (estado) {
+    // Validar estado permitido
+    const validStates = ['pendiente', 'en proceso', 'por entrega'];
+    if (!validStates.includes(estado)) {
+      return res.status(400).json({ error: 'Estado no válido' });
+    }
+    whereClause = 'WHERE estado = ?';
+    queryParams = [estado];
   }
 
   const query = `
     SELECT id_pedido, id_cliente, estado, fecha_compra
     FROM pedidos
-    WHERE estado = ?;
+    ${whereClause};
   `;
 
-  db.query(query, [estado], (err, result) => {
+  db.query(query, queryParams, (err, result) => {
     if (err) {
-      logger.error(`Error al obtener pedidos ${estado}:`, err);
+      logger.error(`Error al obtener pedidos ${estado || 'de todos los estados'}:`, err);
       res.status(500).json({ error: 'Error interno del servidor' });
     } else {
       res.status(200).json(result);
@@ -44,29 +50,27 @@ exports.getOrdersByState = (req, res) => {
   });
 };
 
-// Actualizar estado de un pedido
 exports.updateOrderStatus = (req, res) => {
-  const { id_pedido } = req.params;
-  const { nuevoEstado } = req.body;
-
-  // Validar estado permitido
-  const validStates = ['en proceso', 'por entrega', 'entregado'];
-  if (!validStates.includes(nuevoEstado)) {
-    return res.status(400).json({ error: 'Estado no válido' });
-  }
-
-  const updateQuery = `
-    UPDATE pedidos
-    SET estado = ?
-    WHERE id_pedido = ?;
-  `;
-
-  db.query(updateQuery, [nuevoEstado, id_pedido], (err, result) => {
-    if (err) {
-      logger.error('Error al actualizar estado del pedido:', err);
-      res.status(500).json({ error: 'Error interno del servidor' });
-    } else {
-      res.status(200).json({ message: 'Estado actualizado correctamente' });
+    const { id_pedido } = req.params;
+    const { nuevoEstado } = req.body;
+  
+    const validStates = ['en proceso', 'por entrega', 'entregado'];
+    if (!validStates.includes(nuevoEstado)) {
+      return res.status(400).json({ error: 'Estado no válido' });
     }
-  });
-};
+  
+    const updateQuery = `
+      UPDATE pedidos
+      SET estado = ?
+      WHERE id_pedido = ?;
+    `;
+  
+    db.query(updateQuery, [nuevoEstado, id_pedido], (err, result) => {
+      if (err) {
+        logger.error('Error al actualizar estado del pedido:', err);
+        res.status(500).json({ error: 'Error interno del servidor' });
+      } else {
+        res.status(200).json({ message: 'Estado actualizado correctamente' });
+      }
+    });
+  };
