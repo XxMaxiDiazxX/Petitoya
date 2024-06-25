@@ -221,6 +221,26 @@ main {
   height: 90%; // Mantén la altura automática para mantener la proporción de la imagen
 }
 
+.request-reset-password, .verify-and-reset-password{
+  background-color :#D0B389;
+  background-image: url("../img/error/fondo.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.password {
+  background-color :#D0B389;
+  border: 5px solid grey; // Borde sólido de 2px y color gris claro
+  border-radius: 10px;
+  padding-left: 50pxpx;
+}
+
+//d-flex flex-column justify-content-center align-items-center w-100 h-100
 
 // Merge the maps
 $theme-colors: map-merge($theme-colors, $custom-colors);

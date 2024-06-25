@@ -11,9 +11,11 @@ export const ValidacionToken = () => {
   const navigate = useNavigate();
 
   return (
-    <Container className="request-reset-password d-flex flex-column justify-content-center w-100 h-100">
-      <Row className="justify-content-center">
-        <Col md={6}>
+    <Container className="request-reset-password d-flex flex-column justify-content-center">
+      <Row className=" password  justify-content-center">
+
+        <Col md={6} className="justify-content-center">
+          <h2 className="text-center mb-4">Recuperación de Cuenta</h2>
           <Formik
             initialValues={{ correo_electronico: '' }}
             validationSchema={Yup.object({
@@ -45,7 +47,7 @@ export const ValidacionToken = () => {
                   type="email"
                   name="correo_electronico"
                   className="form-control"
-                  placeholder="Tu Correo Electrónico"
+                  placeholder="Correo Electrónico"
                 />
                 <ErrorMessage name="correo_electronico" component="div" className="text-danger" />
               </div>

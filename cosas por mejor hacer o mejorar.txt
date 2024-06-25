@@ -1,3 +1,20 @@
+----------------------------------el minimo viable---------------------------------------
+
+           CLIENTE
+imagenes en sugerencias
+diseño ventana modal
+diseño miniatura
+foto carrito
+interfaz configuracion
+
+            EMPLEADO
+inabilitar la seccion de pedido para el empleado
+que le salga que chuchas tiene que entregar o preparar
+
+            GERENTE
+diseño de estadisticas
+carrusel que el admin pueda modificar
+
 
 ------------------------- FALTANTE EN LO QUE SABEMOS XD --------------------------------
 
