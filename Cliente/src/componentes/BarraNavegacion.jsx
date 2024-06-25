@@ -61,7 +61,7 @@ export const BarraNavegacion = () => {
           {/* Contenido del menú del usuario */}
           <Navbar.Collapse id="usuario-nav" in={userNavExpanded}>
             <Nav className="ml-auto">
-              <Nav.Link as={Link} to="/" className="mx-2" onClick={() => setUserNavExpanded(false)}>Inicio</Nav.Link>
+              <Nav.Link as={Link} to="" className="mx-2" onClick={() => setUserNavExpanded(false)}>Inicio</Nav.Link>
               <Nav.Link as={Link} to="menu" className="mx-2" onClick={() => setUserNavExpanded(false)}>Menú</Nav.Link>
               {isLoggedIn && (
                 <Nav.Link as={Link} to="pedidos" className="mx-2" onClick={() => setUserNavExpanded(false)}>Pedidos</Nav.Link>
