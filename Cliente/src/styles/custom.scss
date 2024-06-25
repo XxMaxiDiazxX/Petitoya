@@ -207,6 +207,19 @@ main {
   background-position: center;
 }
 
+// Estilos para el contenedor del carousel
+.carousel-container {
+  max-width: 700px; // Ajusta el ancho máximo del carousel según tu diseño
+  margin: 0 auto;   // Centra el carousel horizontalmente
+}
+
+// Estilos para las imágenes dentro de cada slide del carousel
+.carousel-item-image {
+  width: 100%; // Ajusta el ancho de las imágenes al 100% del contenedor del slide
+  height: 90%; // Mantén la altura automática para mantener la proporción de la imagen
+}
+
+
 // Merge the maps
 $theme-colors: map-merge($theme-colors, $custom-colors);
 
