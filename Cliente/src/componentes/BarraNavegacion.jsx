@@ -80,7 +80,7 @@ export const BarraNavegacion = () => {
             <Nav className="ml-auto">
               {isLoggedIn && (
                 <>
-                  <Nav.Link as={Link} to="/carrito" className="text-white cuerpo" onClick={() => setLinksNavExpanded(false)}>
+                  <Nav.Link as={Link} to="carrito" className="text-white cuerpo" onClick={() => setLinksNavExpanded(false)}>
                     <span className="d-lg-none">Carrito</span>
                     <img src={FaShoppingCart} height="40" alt="Carrito" className="d-none d-lg-block" />
                   </Nav.Link>

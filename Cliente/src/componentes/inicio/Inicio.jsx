@@ -27,7 +27,6 @@ export const Inicio = () => {
         }
       } catch (error) {
         console.error('Error al obtener los productos menos usados:', error);
-        setMensaje('Error interno del servidor.');
       }
     };
 
@@ -43,8 +42,6 @@ export const Inicio = () => {
   const productosComidas = productos.filter(producto => producto.categoria === 'Comida');
   const productosBebidas = productos.filter(producto => producto.categoria === 'Bebida');
 
-  console.log('Productos Comidas:', productosComidas);
-  console.log('Productos Bebidas:', productosBebidas);
 
   return (
     <>

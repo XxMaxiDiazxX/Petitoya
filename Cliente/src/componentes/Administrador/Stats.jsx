@@ -37,10 +37,10 @@ export const EstadisticasVentas = () => {
     <div>
       <h2>Estadísticas de Ventas</h2>
 
-      <h3>Productos Más y Menos Comprados</h3>
+      <h3>Productos Más Comprados</h3>
       <ResponsiveContainer width="100%" height={400}>
         <BarChart
-          data={[...productosMasComprados, ...productosMenosComprados]}
+          data={productosMasComprados}
           margin={{
             top: 20, right: 30, left: 20, bottom: 5,
           }}
@@ -51,6 +51,23 @@ export const EstadisticasVentas = () => {
           <Tooltip />
           <Legend />
           <Bar dataKey="total_cantidad" name="Cantidad" fill="#8884d8" />
+        </BarChart>
+      </ResponsiveContainer>
+
+      <h3>Productos Menos Comprados</h3>
+      <ResponsiveContainer width="100%" height={400}>
+        <BarChart
+          data={productosMenosComprados}
+          margin={{
+            top: 20, right: 30, left: 20, bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="nombre" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="total_cantidad" name="Cantidad" fill="#82ca9d" />
         </BarChart>
       </ResponsiveContainer>
 
