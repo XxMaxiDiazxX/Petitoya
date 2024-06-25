@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react';
 import axios from 'axios';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import { useState } from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -25,10 +24,10 @@ export const AgrSu = () => {
         correo_electronico: Yup.string().email('Ingrese un correo electrónico válido').required('Campo requerido'),
         contrasena: Yup
             .string()
-            .min(6, 'La contrasena debe tener al menos 6 caracteres')
+            .min(6, 'La contraseña debe tener al menos 6 caracteres')
             .matches(
                 /^(?=.*\d)(?=.*[A-Z])(?=.*[\W_]).*$/,
-                'La contrasena debe contener al menos un numero, una letra mayuscula y un caracter especial'
+                'La contraseña debe contener al menos un número, una letra mayúscula y un carácter especial'
             )
             .required('Campo requerido'),
         confirmar_contrasena: Yup
@@ -38,19 +37,20 @@ export const AgrSu = () => {
         telefono: Yup
             .number()
             .required('Campo requerido'),
-
     });
 
     const [registrationError, setRegistrationError] = useState(null);
+    const [registrationSuccess, setRegistrationSuccess] = useState(false);
     const navigate = useNavigate();
 
-
-    const onSubmit = (values, { setSubmitting }) => {
+    const onSubmit = (values, { setSubmitting, resetForm }) => {
         axios.post('http://localhost:3001/auth/registerSu', values)
             .then(response => {
                 console.log('Registro exitoso:', response.data);
-                // Realizar acciones adicionales después del registro exitoso
-                handleSuccessfulRegistration(response.data);
+                setRegistrationSuccess(true);
+                resetForm();
+                // Opcional: Navegar a otra página o realizar acciones adicionales después del registro
+                // navigate('/dashboard'); // Ejemplo de navegación a otra página
             })
             .catch(error => {
                 console.error('Error de registro:', error.response?.data);
@@ -59,10 +59,6 @@ export const AgrSu = () => {
             .finally(() => {
                 setSubmitting(false);
             });
-    };
-
-    const handleSuccessfulRegistration = (userData) => {
-        console.log('Acciones después del registro exitoso:', userData);
     };
 
     return (
@@ -82,6 +78,11 @@ export const AgrSu = () => {
                             {registrationError && (
                                 <div className="alert alert-danger" role="alert">
                                     {registrationError}
+                                </div>
+                            )}
+                            {registrationSuccess && (
+                                <div className="alert alert-success" role="alert">
+                                    Usuario registrado correctamente
                                 </div>
                             )}
                             <Row className="mb-3 d-flex align-items-center ">
