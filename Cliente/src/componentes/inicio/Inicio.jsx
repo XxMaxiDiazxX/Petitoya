@@ -6,7 +6,6 @@ import palmera from '../../img/inicioSesion/fondo.png';
 import PedidoModalInicio from "./PedidoModalInicio";
 import { useAuth } from "../autenticacion/AuthContext";
 import "../../styles/Inicio/Inicio.scss"; // Importar los estilos SCSS
-import Carusel from "./Carusel";
 
 export const Inicio = () => {
   const { user } = useAuth();
