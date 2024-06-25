@@ -27,7 +27,7 @@ export const PedidoModalInicio = ({ producto, mostrarModal, setMostrarModal, id_
   const handlePlaceOrder = async () => {
     if (!id_cliente) {
       // Redireccionar al usuario al login si no está autenticado
-      window.location.href = '/'; // Cambia '/login' por la ruta correcta de tu página de inicio de sesión
+      window.location.href = '/';
       return;
     }
 

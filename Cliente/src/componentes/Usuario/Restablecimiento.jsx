@@ -3,7 +3,8 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Container } from 'react-bootstrap'; // Importa los componentes de Bootstrap necesarios
+import { Container, Row, Col, Button } from 'react-bootstrap'; // Importa los componentes de Bootstrap necesarios
+import '../../styles/menu/PedidoModalMenu.scss'; // Ajusta la ruta a tu archivo SCSS
 
 const validationSchema = Yup.object().shape({
   codigo_verificacion: Yup.string()
@@ -20,7 +21,6 @@ const validationSchema = Yup.object().shape({
     .required('Confirmar contraseña es obligatorio'),
 });
 
-
 export const VerifyAndResetPassword = () => {
   const location = useLocation();
   const { id_cliente } = location.state || {};
@@ -29,7 +29,10 @@ export const VerifyAndResetPassword = () => {
   const navigate = useNavigate();
 
   return (
-    <Container className="verify-and-reset-password d-flex flex-column justify-content-center align-items-center w-100 h-100">
+    <Container className="verify-and-reset-password d-flex flex-column justify-content-center">
+      <Row className="password justify-content-center">
+        <Col md={6} className="justify-content-center">
+      <h2 className="text-center mb-4">Recuperación de Contraseña</h2>
       <Formik
         initialValues={{ id_cliente, codigo_verificacion: '', nueva_contrasena: '', confirmar_contrasena: '' }}
         validationSchema={validationSchema}
@@ -88,6 +91,8 @@ export const VerifyAndResetPassword = () => {
           </div>
         </Form>
       </Formik>
+      </Col>
+      </Row>
     </Container>
   );
 };
