@@ -4,6 +4,10 @@ import { useAuth } from '../autenticacion/AuthContext';
 import { Table } from 'react-bootstrap';
 import '../../styles/Inicio/Carrito.scss';
 
+
+const apiUrl = 'http://localhost:3001/';
+
+
 const Carrito = () => {
     const [carrito, setCarrito] = useState([]);
     const { user } = useAuth();
@@ -14,6 +18,7 @@ const Carrito = () => {
                 try {
                     const response = await axios.get(`http://localhost:3001/cart/${user.id}`);
                     setCarrito(response.data);
+                    console.log(response.data);
                 } catch (error) {
                     console.error('Error fetching carrito:', error);
                 }
@@ -94,7 +99,7 @@ const Carrito = () => {
                                 {carrito.map((producto) => (
                                     <tr key={producto.id_producto}>
                                         <td>
-                                            <img src={`data:image/jpeg;base64,${producto.imagenBase64}`} alt={producto.nombre} style={{ width: '50px', height: '50px' }} />
+                                            <img src={`${apiUrl}${producto.imagen}`} alt={producto.nombre} style={{ width: '50px', height: '50px' }} />
                                             {producto.nombre}
                                         </td>
                                         <td>{producto.descripcion}</td>
@@ -120,7 +125,7 @@ const Carrito = () => {
                     <div className="d-block d-md-none">
                         {carrito.map((producto) => (
                             <div key={producto.id_producto} className="carrito-item-mobile">
-                                <img src={`data:image/jpeg;base64,${producto.imagenBase64}`} alt={producto.nombre} style={{ width: '50px', height: '50px' }} />
+                                <img src={`${apiUrl}${producto.imagen}`} alt={producto.nombre} style={{ width: '50px', height: '50px' }} />
                                 <div>
                                     <h4>{producto.nombre}</h4>
                                     <p>{producto.descripcion}</p>

@@ -118,7 +118,7 @@ const AnadirProducto = ({ setProductos }) => {
           </Formik>
         </>
       ) : (
-        <button className="btn btn-primary" onClick={handleAgregarProducto}>
+        <button className="btn btn-primary custom-button2" onClick={handleAgregarProducto}>
           Añadir Producto
         </button>
       )}

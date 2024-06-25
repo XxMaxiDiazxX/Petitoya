@@ -152,7 +152,8 @@ exports.getLeastUsedProducts = (req, res) => {
         sub.descripcion,
         sub.precio,
         sub.categoria,
-        sub.cantidad_pedidos
+        sub.cantidad_pedidos,
+        sub.imagen
     FROM (
         (SELECT 
             p.id_producto,
@@ -160,6 +161,7 @@ exports.getLeastUsedProducts = (req, res) => {
             p.descripcion,
             p.precio,
             p.categoria,
+            p.imagen,
             COUNT(pp.id_pedido) AS cantidad_pedidos
         FROM 
             productos p
@@ -168,7 +170,7 @@ exports.getLeastUsedProducts = (req, res) => {
         WHERE 
             p.categoria = 'Comida' AND p.estado = 'activo'
         GROUP BY 
-            p.id_producto, p.nombre, p.descripcion, p.precio, p.categoria
+            p.id_producto, p.nombre, p.descripcion, p.precio, p.categoria, p.imagen
         ORDER BY 
             cantidad_pedidos ASC
         LIMIT 4)
@@ -181,6 +183,7 @@ exports.getLeastUsedProducts = (req, res) => {
             p.descripcion,
             p.precio,
             p.categoria,
+            p.imagen,
             COUNT(pp.id_pedido) AS cantidad_pedidos
         FROM 
             productos p
@@ -189,7 +192,7 @@ exports.getLeastUsedProducts = (req, res) => {
         WHERE 
             p.categoria = 'Bebida' AND p.estado = 'activo'
         GROUP BY 
-            p.id_producto, p.nombre, p.descripcion, p.precio, p.categoria
+            p.id_producto, p.nombre, p.descripcion, p.precio, p.categoria, p.imagen
         ORDER BY 
             cantidad_pedidos ASC
         LIMIT 4)
@@ -211,6 +214,7 @@ exports.getLeastUsedProducts = (req, res) => {
             precio: producto.precio,
             categoria: producto.categoria,
             cantidad_pedidos: producto.cantidad_pedidos,
+            imagenSrc: producto.imagen
           };
         });
 

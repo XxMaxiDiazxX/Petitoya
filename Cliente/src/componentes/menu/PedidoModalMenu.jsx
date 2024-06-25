@@ -128,10 +128,10 @@ export const PedidoModalMenu = ({ producto, mostrarModal, setMostrarModal, id_cl
                   />
                 </div>
                 <div className="d-flex justify-content-between mt-3">
-                  <button type="button" className="btn btn-primary" onClick={handleAddToCart}>
+                  <button type="button" className="btn btn-primary custom-button1" onClick={handleAddToCart}>
                     Añadir al Carrito
                   </button>
-                  <button type="button" className="btn btn-success" onClick={handlePlaceOrder}>
+                  <button type="button" className="btn btn-success custom-button1" onClick={handlePlaceOrder}>
                     Realizar Pedido
                   </button>
                 </div>

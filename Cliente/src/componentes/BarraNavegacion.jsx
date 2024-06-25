@@ -6,7 +6,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './autenticacion/AuthContext';
 import palmeraIco from '../img/palmera.png';
-import FaShoppingCart from '../img/carro-de-la-compra.ico';
+import FaShoppingCart from '../img/carro-de-la-compr.ico';
 import '../styles/Inicio/BarraNavegacion.scss'; // Importa el archivo SASS
 
 export const BarraNavegacion = () => {

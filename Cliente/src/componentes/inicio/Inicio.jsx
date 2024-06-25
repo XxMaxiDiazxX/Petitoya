@@ -7,6 +7,10 @@ import PedidoModalInicio from "./PedidoModalInicio";
 import { useAuth } from "../autenticacion/AuthContext";
 import "../../styles/Inicio/Inicio.scss"; // Importar los estilos SCSS
 
+
+const apiUrl = 'http://localhost:3001/';
+
+
 export const Inicio = () => {
   const { user } = useAuth() || { user: null };
   const [mostrarPedidoModal, setMostrarPedidoModal] = useState(false);
@@ -59,7 +63,7 @@ export const Inicio = () => {
                     nombre={producto.nombre}
                     descripcion={producto.descripcion}
                     precio={producto.precio}
-                    imagenSrc={`data:image/jpeg;base64,${producto.imagenBase64}`}
+                    imagenSrc={`${apiUrl}${producto.imagenSrc}`}
                     onClick={() => handleAbrirPedidoModal(producto)}
                   />
                 </div>
@@ -76,7 +80,7 @@ export const Inicio = () => {
                     nombre={producto.nombre}
                     descripcion={producto.descripcion}
                     precio={producto.precio}
-                    imagenSrc={`data:image/jpeg;base64,${producto.imagenBase64}`}
+                    imagenSrc={`${apiUrl}${producto.imagenSrc}`}
                     onClick={() => handleAbrirPedidoModal(producto)}
                   />
                 </div>

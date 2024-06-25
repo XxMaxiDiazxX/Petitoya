@@ -92,11 +92,11 @@ export const PedidoModalInicio = ({ producto, mostrarModal, setMostrarModal, id_
                 </div>
                 <div className="d-flex justify-content-between mt-3">
                   {id_cliente && (
-                    <button type="button" className="btn btn-primary" onClick={handleAddToCart}>
+                    <button type="button" className="btn btn-primary custom-button1" onClick={handleAddToCart}>
                       Añadir al Carrito
                     </button>
                   )}
-                  <button type="button" className="btn btn-success" onClick={handlePlaceOrder}>
+                  <button type="button" className="btn btn-success custom-button2" onClick={handlePlaceOrder}>
                     {id_cliente ? 'Realizar Pedido' : 'Iniciar Sesión para Realizar Pedido'}
                   </button>
                 </div>

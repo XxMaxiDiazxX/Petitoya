@@ -46,7 +46,7 @@ exports.getCart = (req, res) => {
   const id_cliente = req.params.id_cliente;
 
   db.query(
-    'SELECT c.id_cliente, c.id_producto, p.nombre, p.descripcion, p.precio, c.cantidad ' +
+    'SELECT c.id_cliente, c.id_producto, p.nombre, p.descripcion, p.precio, c.cantidad, p.imagen ' +
     'FROM carrito c JOIN productos p ON c.id_producto = p.id_producto WHERE c.id_cliente = ?',
     [id_cliente],
     (err, result) => {
