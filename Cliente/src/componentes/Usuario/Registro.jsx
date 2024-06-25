@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { useState } from 'react';
-import {  Row, Col, Button } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import * as Yup from 'yup';
 
 export const Registro = () => {
@@ -42,7 +44,6 @@ export const Registro = () => {
     const [registrationError, setRegistrationError] = useState(null);
     const navigate = useNavigate();
 
-
     const onSubmit = (values, { setSubmitting }) => {
         axios.post('http://localhost:3001/auth/register', values)
             .then(response => {
@@ -61,6 +62,7 @@ export const Registro = () => {
 
     const handleSuccessfulRegistration = (userData) => {
         console.log('Acciones después del registro exitoso:', userData);
+        toast.success('Registro exitoso');
         navigate('/');
     };
 
@@ -68,11 +70,10 @@ export const Registro = () => {
         navigate('/');
     }
 
-
     return (
         <div className="h-100">
+            <ToastContainer />
             <Col xs={12} md={8} lg={6} className="contenedor d-flex flex-column align-items-center justify-content-center w-100 h-100">
-
                 <h4 className="text-center reda cuerpo" style={{ fontSize: "45px" }}>Registro</h4>
 
                 <Formik
@@ -80,7 +81,6 @@ export const Registro = () => {
                     onSubmit={onSubmit}
                     validationSchema={validationSchema}
                 >
-
                     <Form className="fondito p-4 text-center labe naranj" style={{ width: "65%", fontSize: "20px" }} >
                         {registrationError && (
                             <div className="alert alert-danger" role="alert">

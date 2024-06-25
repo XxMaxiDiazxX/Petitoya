@@ -26,7 +26,7 @@ const EliminarProducto = ({ id_producto, onProductoEliminado, setProductos }) =>
 
   return (
     <>
-      <button className="btn btn-danger" onClick={() => setMostrarModal(true)}>
+      <button className="btn btn-danger custom-button2" onClick={() => setMostrarModal(true)}>
         Eliminar Producto
       </button>
 

@@ -185,7 +185,7 @@ export const Menu = () => {
                                         <td>{producto.precio}</td>
                                         <td>
                                             <button
-                                                className='btn btn-primary me-2'
+                                                className='btn btn-primary me-2 custom-button1'
                                                 onClick={() => handleAbrirEditarProductoModal(producto)}
                                             >
                                                 Editar

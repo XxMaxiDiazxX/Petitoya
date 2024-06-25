@@ -94,7 +94,6 @@ export const BarraNavegacion = () => {
               )}
               {isLoggedIn ? (
                 <NavDropdown title={<span style={EstiloCuenta} className="d-none d-lg-inline">Bienvenido, {user.username}</span>} id="basic-nav-dropdown" className='text-white cuerpo d-none d-lg-block'>
-                  <NavDropdown.Item href="#action/3.2">Configuración</NavDropdown.Item>
                   <NavDropdown.Item onClick={handleLogout}>Cerrar Sesión</NavDropdown.Item>
                 </NavDropdown>
               ) : (

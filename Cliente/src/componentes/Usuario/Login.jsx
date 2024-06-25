@@ -48,7 +48,14 @@ export const Login = () => {
                 <Formik
                   initialValues={{ documento: '', contrasena: '' }}
                   validationSchema={Yup.object({
-                    // Esquema de validación
+                    contrasena: Yup
+                    .string()
+                    .min(6, 'La contrasena debe tener al menos 6 caracteres')
+                    .matches(
+                        /^(?=.*\d)(?=.*[A-Z])(?=.*[\W_]).*$/,
+                        'La contrasena debe contener al menos un numero, una letra mayuscula y un caracter especial'
+                    )
+                    .required('Campo requerido'),
                   })}
                   onSubmit={(values, { setSubmitting }) => {
                     axios.post('http://localhost:3001/auth/login', values)

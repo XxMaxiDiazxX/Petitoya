@@ -240,6 +240,26 @@ main {
   padding-left: 50pxpx;
 }
 
+
+.custom-button {
+  background-color: rgb(244, 240, 239) !important;
+  border-color: rgb(244, 240, 239) !important;
+  color: black !important; /* Asegúrate de que el texto sea visible */
+}
+
+.custom-button1 {
+  background-color: #e3cb94 !important;
+  border-color: rgb(244, 240, 239) !important;
+  color: black !important; /* Asegúrate de que el texto sea visible */
+}
+
+.custom-button2 {
+  background-color: #5e2f1a !important;
+  border-color: rgb(153, 85, 68) !important;
+  color: white !important; /* Asegúrate de que el texto sea visible */
+}
+
+
 //d-flex flex-column justify-content-center align-items-center w-100 h-100
 
 // Merge the maps
