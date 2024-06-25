@@ -1,14 +1,14 @@
+// Inicio.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Producto } from "./Producto";
 import Carusel from "./Carusel";
-import palmera from '../../img/inicioSesion/fondo.png';
 import PedidoModalInicio from "./PedidoModalInicio";
 import { useAuth } from "../autenticacion/AuthContext";
 import "../../styles/Inicio/Inicio.scss"; // Importar los estilos SCSS
 
 export const Inicio = () => {
-  const { user } = useAuth();
+  const { user } = useAuth() || { user: null };
   const [mostrarPedidoModal, setMostrarPedidoModal] = useState(false);
   const [productos, setProductos] = useState([]);
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
@@ -43,10 +43,9 @@ export const Inicio = () => {
   const productosComidas = productos.filter(producto => producto.categoria === 'Comida');
   const productosBebidas = productos.filter(producto => producto.categoria === 'Bebida');
 
-
   return (
     <>
-    <Carusel/>
+      <Carusel/>
       <div className="sugerencias container text-center">
         <h2 className="mt-3 bg-barra3 cuerpo text-white">Sugerencias</h2>
         <div className="row">
@@ -91,11 +90,10 @@ export const Inicio = () => {
           producto={productoSeleccionado}
           mostrarModal={mostrarPedidoModal}
           setMostrarModal={setMostrarPedidoModal}
-          id_cliente={user.id}
+          id_cliente={user ? user.id : null}  // Aquí se asegura de que user y user.id estén definidos
         />
       )}
     </>
   );
 };
 
-export default Inicio;

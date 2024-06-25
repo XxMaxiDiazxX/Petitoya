@@ -1,6 +1,6 @@
 import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
-import imagen1 from '../../img/descarga.png';
+import imagen1 from '../../img/error/fondo.jpg';
 const apiUrl = 'http://localhost:3001/';
 
 const Carusel = () => {

@@ -209,8 +209,9 @@ main {
 
 // Estilos para el contenedor del carousel
 .carousel-container {
-  max-width: 700px; // Ajusta el ancho máximo del carousel según tu diseño
+  max-width: 500px; // Ajusta el ancho máximo del carousel según tu diseño
   margin: 0 auto;   // Centra el carousel horizontalmente
+  margin-top: 15px;
 }
 
 // Estilos para las imágenes dentro de cada slide del carousel

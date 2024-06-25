@@ -25,6 +25,12 @@ export const PedidoModalInicio = ({ producto, mostrarModal, setMostrarModal, id_
   };
 
   const handlePlaceOrder = async () => {
+    if (!id_cliente) {
+      // Redireccionar al usuario al login si no está autenticado
+      window.location.href = '/'; // Cambia '/login' por la ruta correcta de tu página de inicio de sesión
+      return;
+    }
+
     try {
       await axios.post('http://localhost:3001/cart', {
         id_cliente,
@@ -46,12 +52,11 @@ export const PedidoModalInicio = ({ producto, mostrarModal, setMostrarModal, id_
   return (
     <div>
       {mostrarModal && (
-        <div 
-        className="modal-backdrop" 
-        onClick={() => setMostrarModal(false)}
-        style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
-        >
-        </div>
+        <div
+          className="modal-backdrop"
+          onClick={() => setMostrarModal(false)}
+          style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+        />
       )}
 
       <div className={`modal ${mostrarModal ? 'show' : ''}`} tabIndex="-1" role="dialog" style={{ display: mostrarModal ? 'block' : 'none' }} onClick={handleModalClick}>
@@ -86,11 +91,13 @@ export const PedidoModalInicio = ({ producto, mostrarModal, setMostrarModal, id_
                   />
                 </div>
                 <div className="d-flex justify-content-between mt-3">
-                  <button type="button" className="btn btn-primary" onClick={handleAddToCart}>
-                    Añadir al Carrito
-                  </button>
+                  {id_cliente && (
+                    <button type="button" className="btn btn-primary" onClick={handleAddToCart}>
+                      Añadir al Carrito
+                    </button>
+                  )}
                   <button type="button" className="btn btn-success" onClick={handlePlaceOrder}>
-                    Realizar Pedido
+                    {id_cliente ? 'Realizar Pedido' : 'Iniciar Sesión para Realizar Pedido'}
                   </button>
                 </div>
               </form>

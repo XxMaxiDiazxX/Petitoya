@@ -21,9 +21,7 @@ export const PaginaPrincipal = () => {
   return (
     <div className="d-flex flex-column" style={{ minHeight: '100vh' }}>
       <BarraNavegacion />
-      <div
-        className="container flex-grow-1"
-      >
+      <div className="container flex-grow-1">
 
         <Routes>
           <Route path="/" element={<Inicio />} />
