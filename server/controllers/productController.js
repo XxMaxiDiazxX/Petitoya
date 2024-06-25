@@ -202,7 +202,6 @@ exports.getLeastUsedProducts = (req, res) => {
       res.status(500).json({ error: 'Error interno del servidor' });
     } else {
       if (result.length > 0) {
-        console.log('Productos menos usados:', result);
         // Mapear los resultados para construir la respuesta
         const productosMenosUsados = result.map(producto => {
           return {
@@ -215,9 +214,9 @@ exports.getLeastUsedProducts = (req, res) => {
           };
         });
 
-        return res.status(200).json(productosMenosUsados);
+         res.status(200).json(productosMenosUsados);
       } else {
-        return res.status(404).json({ message: 'No se encontraron productos menos usados.' });
+         res.status(404).json({ message: 'No se encontraron productos menos usados.' });
       }
     }
   });

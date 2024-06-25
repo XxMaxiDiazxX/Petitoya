@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 24-06-2024 a las 06:35:35
+-- Tiempo de generación: 24-06-2024 a las 23:41:14
 -- Versión del servidor: 8.0.31
 -- Versión de PHP: 8.0.26
 
@@ -288,7 +288,7 @@ CREATE TABLE IF NOT EXISTS `informe_pedidos_auditoria` (
   `total_producto` decimal(10,2) DEFAULT NULL,
   `fecha_informe` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_auditoria`)
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `informe_pedidos_auditoria`
@@ -313,7 +313,10 @@ INSERT INTO `informe_pedidos_auditoria` (`id_auditoria`, `id_pedido`, `cliente`,
 (16, 20, 'Juan', 'asdasdasda@gmail.com', '2024-06-24 00:05:59', 'Pizza Margherita', '8.00', 3, '24.00', '2024-06-24 00:05:59'),
 (17, 21, 'Juan', 'asdasdasda@gmail.com', '2024-06-24 00:06:03', 'Ensalada César', '5.00', 3, '15.00', '2024-06-24 00:06:03'),
 (18, 22, 'Juan', 'asdasdasda@gmail.com', '2024-06-24 00:06:07', 'Ensalada César', '5.00', 3, '15.00', '2024-06-24 00:06:07'),
-(19, 23, 'Juan', 'asdasdasda@gmail.com', '2024-06-24 00:06:14', 'Sándwich de Pollo', '4.00', 2, '8.00', '2024-06-24 00:06:14');
+(19, 23, 'Juan', 'asdasdasda@gmail.com', '2024-06-24 00:06:14', 'Sándwich de Pollo', '4.00', 2, '8.00', '2024-06-24 00:06:14'),
+(20, 24, 'Juan', 'asdasdasda@gmail.com', '2024-06-24 18:01:56', 'mari', '10000.00', 13, '130000.00', '2024-06-24 18:01:56'),
+(21, 24, 'Juan', 'asdasdasda@gmail.com', '2024-06-24 18:01:56', 'Café Mocha', '4.00', 11, '44.00', '2024-06-24 18:01:56'),
+(22, 24, 'Juan', 'asdasdasda@gmail.com', '2024-06-24 18:01:56', 'Croissant de Mantequilla', '2.00', 14, '28.00', '2024-06-24 18:01:56');
 
 -- --------------------------------------------------------
 
@@ -329,7 +332,7 @@ CREATE TABLE IF NOT EXISTS `pedidos` (
   `fecha_compra` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_pedido`),
   KEY `id_cliente` (`id_cliente`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `pedidos`
@@ -342,7 +345,8 @@ INSERT INTO `pedidos` (`id_pedido`, `id_cliente`, `estado`, `fecha_compra`) VALU
 (20, '1025884475', 'pendiente', '2024-06-24 00:05:59'),
 (21, '1025884475', 'pendiente', '2024-06-24 00:06:03'),
 (22, '1025884475', 'pendiente', '2024-06-24 00:06:07'),
-(23, '1025884475', 'pendiente', '2024-06-24 00:06:14');
+(23, '1025884475', 'pendiente', '2024-06-24 00:06:14'),
+(24, '1025884475', 'pendiente', '2024-06-24 18:01:56');
 
 -- --------------------------------------------------------
 
@@ -373,7 +377,10 @@ INSERT INTO `pedido_producto` (`id_pedido`, `id_producto`, `precio_compra`, `can
 (20, 479, 8, 3),
 (21, 478, 5, 3),
 (22, 478, 5, 3),
-(23, 477, 4, 2);
+(23, 477, 4, 2),
+(24, 9, 10000, 13),
+(24, 469, 4, 11),
+(24, 476, 2, 14);
 
 --
 -- Disparadores `pedido_producto`
@@ -424,7 +431,7 @@ CREATE TABLE IF NOT EXISTS `productos` (
 
 INSERT INTO `productos` (`id_producto`, `nombre`, `descripcion`, `precio`, `fecha_creacion`, `categoria`, `estado`, `imagen`) VALUES
 (1, 'Salchipapa', 'con papa', 15000, '2024-06-23', 'Comida', 'inactivo', 'uploads/1715709644173-descarga.jpg'),
-(9, 'mari', 'Muslitos', 1, '2024-06-23', 'Comida', 'activo', 'uploads\\1719200854081-1719195684022-Foto documento.jpg'),
+(9, 'mari', 'Muslitos', 10000, '2024-06-23', 'Comida', 'activo', 'uploads\\1719200854081-1719195684022-Foto documento.jpg'),
 (466, 'Café Espresso', 'Café espresso con una intensa crema', 3, NULL, 'Bebida', 'activo', NULL),
 (467, 'Café Americano', 'Café americano suave y equilibrado', 2, NULL, 'Bebida', 'activo', NULL),
 (468, 'Café Latte', 'Café latte con espuma de leche cremosa', 3, NULL, 'Bebida', 'activo', NULL),

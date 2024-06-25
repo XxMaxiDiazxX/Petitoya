@@ -11,7 +11,6 @@ export const Inicio = () => {
   const [mostrarPedidoModal, setMostrarPedidoModal] = useState(false);
   const [productos, setProductos] = useState([]);
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
-  const [mensaje, setMensaje] = useState("");
 
   useEffect(() => {
     const obtenerProductosMenosUsados = async () => {
@@ -23,9 +22,8 @@ export const Inicio = () => {
           const productosActivos = response.data.filter(producto => producto.estado !== 'inactivo');
           console.log('Productos activos:', productosActivos);
           setProductos(productosActivos.slice(0, 8)); // Limitar a 8 productos
-          setMensaje(`Se encontraron ${productosActivos.length} productos.`);
         } else {
-          setMensaje('No se encontraron productos.');
+          console.log('No se encontraron productos.');
         }
       } catch (error) {
         console.error('Error al obtener los productos menos usados:', error);
@@ -104,7 +102,6 @@ export const Inicio = () => {
           id_cliente={user.id}
         />
       )}
-      {mensaje && <p>{mensaje}</p>}
     </>
   );
 };
