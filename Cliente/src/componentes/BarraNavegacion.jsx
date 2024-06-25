@@ -98,7 +98,7 @@ export const BarraNavegacion = () => {
               ) : (
                 <>
                   <Nav.Link as={Link} to="/registro" style={EstiloCuenta} onClick={() => setLinksNavExpanded(false)}>Registro</Nav.Link>
-                  <Nav.Link as={Link} to="/login" style={EstiloCuenta} onClick={() => setLinksNavExpanded(false)}>Iniciar Sesión</Nav.Link>
+                  <Nav.Link as={Link} to="/" style={EstiloCuenta} onClick={() => setLinksNavExpanded(false)}>Iniciar Sesión</Nav.Link>
                 </>
               )}
             </Nav>
