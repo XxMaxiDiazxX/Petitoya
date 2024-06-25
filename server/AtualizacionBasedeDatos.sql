@@ -36,9 +36,11 @@ CREATE TABLE IF NOT EXISTS `pedidos` (
     `id_cliente` VARCHAR(20) NOT NULL,
     `estado` varchar(20) NOT NULL,
     `fecha_compra` datetime DEFAULT CURRENT_TIMESTAMP,
+    `monto_total` DECIMAL(10, 2) DEFAULT 0,
     PRIMARY KEY (`id_pedido`),
     FOREIGN KEY (`id_cliente`) REFERENCES `clientes`(`id_cliente`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+
 
 -- Tabla de productos
 CREATE TABLE IF NOT EXISTS `productos` (
@@ -339,6 +341,15 @@ BEGIN
         JOIN productos p ON c.id_producto = p.id_producto
         WHERE c.id_cliente = p_id_cliente;
 
+        -- Calcular el monto total del pedido
+        UPDATE pedidos
+        SET monto_total = (
+            SELECT SUM(pp.precio_compra * pp.cantidad)
+            FROM pedido_producto pp
+            WHERE pp.id_pedido = p_id_pedido
+        )
+        WHERE id_pedido = p_id_pedido;
+
         -- Vaciar el carrito
         DELETE FROM carrito WHERE id_cliente = p_id_cliente;
 
@@ -346,6 +357,22 @@ BEGIN
     END IF;
 END //
 
+CREATE TRIGGER after_insert_pedido_producto
+AFTER INSERT ON pedido_producto
+FOR EACH ROW
+BEGIN
+    DECLARE total DECIMAL(10, 2);
 
+    -- Calcular el total del pedido actualizado
+    SELECT SUM(pp.precio_compra * pp.cantidad)
+    INTO total
+    FROM pedido_producto pp
+    WHERE pp.id_pedido = NEW.id_pedido;
+
+    -- Actualizar monto_total en la tabla pedidos
+    UPDATE pedidos
+    SET monto_total = total
+    WHERE id_pedido = NEW.id_pedido;
+END //
 
 DELIMITER ;

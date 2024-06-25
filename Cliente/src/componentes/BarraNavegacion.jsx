@@ -63,8 +63,10 @@ export const BarraNavegacion = () => {
             <Nav className="ml-auto">
               <Nav.Link as={Link} to="" className="mx-2" onClick={() => setUserNavExpanded(false)}>Inicio</Nav.Link>
               <Nav.Link as={Link} to="menu" className="mx-2" onClick={() => setUserNavExpanded(false)}>Menú</Nav.Link>
-              {isLoggedIn && (
+              {isLoggedIn && role === 1 ? (
                 <Nav.Link as={Link} to="pedidos" className="mx-2" onClick={() => setUserNavExpanded(false)}>Pedidos</Nav.Link>
+              ) : (
+                <></>
               )}
               {isLoggedIn && role === 2 && (
                 <Nav.Link as={Link} to="admin" className="mx-2" onClick={() => setUserNavExpanded(false)}>Ruta Privada Admin</Nav.Link>

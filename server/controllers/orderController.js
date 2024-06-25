@@ -15,6 +15,29 @@ exports.getOrdersByClient = (req, res) => {
   });
 };
 
+// Obtener detalles del pedido por ID
+exports.getOrderDetails = (req, res) => {
+  const id_pedido = req.params.id_pedido;
+
+  const query = `
+    SELECT p.id_producto, p.nombre, p.descripcion, p.precio, pp.cantidad, pp.precio_compra
+    FROM pedido_producto pp
+    JOIN productos p ON pp.id_producto = p.id_producto
+    WHERE pp.id_pedido = ?
+  `;
+
+  db.query(query, [id_pedido], (err, result) => {
+    if (err) {
+      logger.error('Error al consultar los detalles del pedido:', err);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    } else {
+      res.status(200).json(result);
+    }
+  });
+};
+
+
+
 // Realizar pedido desde el carrito
 exports.placeOrder = (req, res) => {
   const { id_cliente } = req.body; // Obtener el id_cliente desde el cuerpo de la solicitud

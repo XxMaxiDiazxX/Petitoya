@@ -29,3 +29,10 @@
     }
   }
 }
+// Asegúrate de que Item.scss esté siendo cargado y compilado correctamente en tu proyecto
+.custom-modal {
+  .modal-dialog {
+    max-width: 70% !important; // Añadir !important para asegurar que se aplique el ancho correctamente
+    margin: auto;
+  }
+}

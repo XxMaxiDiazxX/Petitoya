@@ -34,93 +34,97 @@ export const EstadisticasVentas = () => {
   }, []);
 
   return (
-    <div>
+    <div className="container">
       <h2>Estadísticas de Ventas</h2>
 
-      <h3>Productos Más Comprados</h3>
-      <ResponsiveContainer width="100%" height={400}>
-        <BarChart
-          data={productosMasComprados}
-          margin={{
-            top: 20, right: 30, left: 20, bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="nombre" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="total_cantidad" name="Cantidad" fill="#8884d8" />
-        </BarChart>
-      </ResponsiveContainer>
+      <div className="row">
+        <div className="col-md-6">
+          <h3>Productos Más Comprados</h3>
+          <ResponsiveContainer width="100%" height={400}>
+            <BarChart
+              data={productosMasComprados}
+              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="nombre" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="total_cantidad" name="Cantidad" fill="#8884d8" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
 
-      <h3>Productos Menos Comprados</h3>
-      <ResponsiveContainer width="100%" height={400}>
-        <BarChart
-          data={productosMenosComprados}
-          margin={{
-            top: 20, right: 30, left: 20, bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="nombre" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="total_cantidad" name="Cantidad" fill="#82ca9d" />
-        </BarChart>
-      </ResponsiveContainer>
+        <div className="col-md-6">
+          <h3>Productos Menos Comprados</h3>
+          <ResponsiveContainer width="100%" height={400}>
+            <BarChart
+              data={productosMenosComprados}
+              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="nombre" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="total_cantidad" name="Cantidad" fill="#82ca9d" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
 
-      <h3>Ventas Diarias</h3>
-      <ResponsiveContainer width="100%" height={400}>
-        <BarChart
-          data={ventasDiarias}
-          margin={{
-            top: 20, right: 30, left: 20, bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="fecha" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="total_ventas" name="Ventas" fill="#82ca9d" />
-        </BarChart>
-      </ResponsiveContainer>
+      <div className="row mt-4">
+        <div className="col-md-4">
+          <h3>Ventas Diarias</h3>
+          <ResponsiveContainer width="100%" height={400}>
+            <BarChart
+              data={ventasDiarias}
+              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="fecha" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="total_ventas" name="Ventas" fill="#82ca9d" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
 
-      <h3>Ventas Semanales</h3>
-      <ResponsiveContainer width="100%" height={400}>
-        <BarChart
-          data={ventasSemanales}
-          margin={{
-            top: 20, right: 30, left: 20, bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="semana" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="total_ventas" name="Ventas" fill="#82ca9d" />
-        </BarChart>
-      </ResponsiveContainer>
+        <div className="col-md-4">
+          <h3>Ventas Semanales</h3>
+          <ResponsiveContainer width="100%" height={400}>
+            <BarChart
+              data={ventasSemanales}
+              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="semana" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="total_ventas" name="Ventas" fill="#82ca9d" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
 
-      <h3>Ventas Mensuales</h3>
-      <ResponsiveContainer width="100%" height={400}>
-        <BarChart
-          data={ventasMensuales}
-          margin={{
-            top: 20, right: 30, left: 20, bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="mes" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="total_ventas" name="Ventas" fill="#82ca9d" />
-        </BarChart>
-      </ResponsiveContainer>
+        <div className="col-md-4">
+          <h3>Ventas Mensuales</h3>
+          <ResponsiveContainer width="100%" height={400}>
+            <BarChart
+              data={ventasMensuales}
+              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="mes" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="total_ventas" name="Ventas" fill="#82ca9d" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
     </div>
   );
 };

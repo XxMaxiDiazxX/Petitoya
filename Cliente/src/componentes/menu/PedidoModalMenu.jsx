@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify'; // Importar toast y ToastContainer
+import 'react-toastify/dist/ReactToastify.css'; // Estilos CSS para react-toastify
 import '../../styles/menu/PedidoModalMenu.scss'; // Importa el archivo de estilos
 
 export const PedidoModalMenu = ({ producto, mostrarModal, setMostrarModal, id_cliente }) => {
@@ -16,11 +18,31 @@ export const PedidoModalMenu = ({ producto, mostrarModal, setMostrarModal, id_cl
         id_producto: producto.id_producto,
         cantidad,
       });
-      alert('Producto añadido al carrito con éxito.');
+
+      // Mostrar notificación de éxito
+      toast.success('Producto añadido al carrito con éxito', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
       setMostrarModal(false);
     } catch (error) {
       console.error(error);
-      alert('Hubo un error al añadir el producto al carrito. Por favor, inténtalo de nuevo.');
+      // Mostrar notificación de error
+      toast.error('Hubo un error al añadir el producto al carrito. Por favor, inténtalo de nuevo', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
@@ -35,21 +57,41 @@ export const PedidoModalMenu = ({ producto, mostrarModal, setMostrarModal, id_cl
       const response = await axios.post('http://localhost:3001/orders', {
         id_cliente,
       });
-      alert(`Pedido realizado con éxito: ${response.data.message}`);
+
+      // Mostrar notificación de éxito
+      toast.success(`Pedido realizado con éxito}`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
       setMostrarModal(false);
     } catch (error) {
       console.error(error);
-      alert('Hubo un error al realizar el pedido. Por favor, inténtalo de nuevo.');
+      // Mostrar notificación de error
+      toast.error('Hubo un error al realizar el pedido. Por favor, inténtalo de nuevo', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
   return (
     <div>
       {mostrarModal && (
-        <div 
-        className="modal-backdrop" 
-        onClick={() => setMostrarModal(false)}
-        style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+        <div
+          className="modal-backdrop"
+          onClick={() => setMostrarModal(false)}
+          style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
         >
         </div>
       )}
