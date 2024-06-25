@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../../styles/pedidos/Item.scss'; // Importa el archivo SCSS para los estilos personalizados
 
-const Pedido = ({ id_pedido, estado, fecha_compra }) => {
+const Pedido = ({ id_pedido, estado, fecha_compra, tipoVisible, actualizarEstadoPedido }) => {
     // Función para formatear la fecha de compra
     const formatDate = (dateString) => {
       const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
@@ -16,10 +16,28 @@ const Pedido = ({ id_pedido, estado, fecha_compra }) => {
           <h5 className="card-title">{`Pedido ID: ${id_pedido}`}</h5>
           <p className="card-text">{`Estado: ${estado}`}</p>
           <p className="card-text">{`Fecha de Compra: ${formatDate(fecha_compra)}`}</p>
+          <div className="btn-group mt-2">
+            {tipoVisible === 'pendiente' && (
+              <button className="btn btn-primary" onClick={() => actualizarEstadoPedido(id_pedido, 'en proceso')}>
+                Marcar como En Proceso
+              </button>
+            )}
+            {tipoVisible === 'en proceso' && (
+              <button className="btn btn-primary" onClick={() => actualizarEstadoPedido(id_pedido, 'por entrega')}>
+                Marcar como Por Entrega
+              </button>
+            )}
+            {tipoVisible === 'por entrega' && (
+              <button className="btn btn-primary" onClick={() => actualizarEstadoPedido(id_pedido, 'entregado')}>
+                Marcar como Entregado
+              </button>
+            )}
+          </div>
         </div>
       </div>
     );
   };
+  
 
 
 export const Item = ({ id_cliente }) => {

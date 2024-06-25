@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const OrdersManagement = () => {
   const [ordersType, setOrdersType] = useState('pendiente'); // Estado para controlar el tipo de pedidos
@@ -37,6 +39,9 @@ const OrdersManagement = () => {
       });
       setOrders(updatedOrders);
       setError(null); // Reiniciar el estado de error si la actualización fue exitosa
+
+      // Mostrar notificación de éxito
+      toast.success(`El estado del pedido ${idPedido} se ha actualizado a ${nuevoEstado}.`);
     } catch (error) {
       console.error('Error updating order status:', error);
       setError('Error al actualizar el estado del pedido. Inténtelo de nuevo más tarde.'); // Mensaje de error
@@ -90,27 +95,33 @@ const OrdersManagement = () => {
                 <p className="card-text">Estado: {order.estado}</p>
                 <p className="card-text">Fecha de Compra: {new Date(order.fecha_compra).toLocaleString()}</p>
                 <div className="btn-group" role="group" aria-label="Opciones de estado">
-                  <button
-                    type="button"
-                    className={`btn btn-sm ${order.estado === 'en proceso' ? 'btn-primary' : 'btn-secondary'}`}
-                    onClick={() => handleUpdateOrderStatus(order.id_pedido, 'en proceso')}
-                  >
-                    Marcar como En Proceso
-                  </button>
-                  <button
-                    type="button"
-                    className={`btn btn-sm ${order.estado === 'por entrega' ? 'btn-primary' : 'btn-secondary'}`}
-                    onClick={() => handleUpdateOrderStatus(order.id_pedido, 'por entrega')}
-                  >
-                    Marcar como Por Entrega
-                  </button>
-                  <button
-                    type="button"
-                    className={`btn btn-sm ${order.estado === 'entregado' ? 'btn-primary' : 'btn-secondary'}`}
-                    onClick={() => handleUpdateOrderStatus(order.id_pedido, 'entregado')}
-                  >
-                    Marcar como Entregado
-                  </button>
+                  {ordersType === 'pendiente' && (
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-primary"
+                      onClick={() => handleUpdateOrderStatus(order.id_pedido, 'en proceso')}
+                    >
+                      Marcar como En Proceso
+                    </button>
+                  )}
+                  {ordersType === 'en proceso' && (
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-primary"
+                      onClick={() => handleUpdateOrderStatus(order.id_pedido, 'por entrega')}
+                    >
+                      Marcar como Por Entrega
+                    </button>
+                  )}
+                  {ordersType === 'por entrega' && (
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-primary"
+                      onClick={() => handleUpdateOrderStatus(order.id_pedido, 'entregado')}
+                    >
+                      Marcar como Entregado
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -118,6 +129,7 @@ const OrdersManagement = () => {
         ))}
       </div>
       {error && <div className="alert alert-danger mt-3">{error}</div>}
+      <ToastContainer />
     </div>
   );
 };
