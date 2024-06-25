@@ -18,7 +18,6 @@ export const Menu = () => {
     const [productoSeleccionado, setProductoSeleccionado] = useState(null);
     const [mostrarModal, setMostrarModal] = useState(false);
     const [mostrarPedidoModal, setMostrarPedidoModal] = useState(false);
-    const [carrito, setCarrito] = useState([]);
 
     useEffect(() => {
         const fetchProductos = async () => {
@@ -30,7 +29,7 @@ export const Menu = () => {
                 console.error('Error fetching productos:', error);
             }
         };
-
+        console.log(productos);
         fetchProductos();
     }, []);
 
@@ -84,88 +83,89 @@ export const Menu = () => {
     return (
         <div className='content'>
             <ToastContainer /> {/* Contenedor de las notificaciones */}
-            {isLoggedIn && role === 1 && (
-                            <div className="row">
-                            {isLoggedIn && (role === 2 || role === 3) && <AnadirProducto setProductos={setProductos} />}
-            
-                            <div className="col-md-6 col-lg-6">
-                                <h4 className='cuerpo'>Comidas</h4>
-                                <div className='container mt-4'>
-                                    {productos.map(producto => (
-                                        producto.categoria === 'Comida' && (
-                                            <div key={producto.id_producto} className="producto-item">
-                                                <Producto
-                                                    nombre={producto.nombre}
-                                                    descripcion={producto.descripcion}
-                                                    precio={producto.precio}
-                                                    imagenSrc={`${apiUrl}${producto.imagenSrc}`}
-                                                    onClick={() => handleAbrirPedidoModal(producto)}
+            {role !== 2 && role !==3 && (
+                <div className="row">
+
+                    <div className="col-md-6 col-lg-6">
+                        <h4 className='cuerpo'>Comidas</h4>
+                        <div className='container mt-4'>
+                            {productos.map(producto => (
+                                producto.categoria === 'Comida' && (
+                                    <div key={producto.id_producto} className="producto-item">
+                                        <Producto
+                                            nombre={producto.nombre}
+                                            descripcion={producto.descripcion}
+                                            precio={producto.precio}
+                                            imagenSrc={`${apiUrl}${producto.imagenSrc}`}
+                                            onClick={() => handleAbrirPedidoModal(producto)}
+                                        />
+                                        {isLoggedIn && (role === 2 || role === 3) && (
+                                            <div className="d-flex">
+                                                <button
+                                                    className='btn btn-primary me-2'
+                                                    onClick={() => handleAbrirEditarProductoModal(producto)}
+                                                >
+                                                    Editar Producto
+                                                </button>
+                                                <EliminarProducto
+                                                    id_producto={producto.id_producto}
+                                                    setProductos={setProductos}
+                                                    onProductoEliminado={(id) => {
+                                                        const updatedProductos = productos.filter(p => p.id_producto !== id);
+                                                        setProductos(updatedProductos);
+                                                    }}
                                                 />
-                                                {isLoggedIn && (role === 2 || role === 3) && (
-                                                    <div className="d-flex">
-                                                        <button
-                                                            className='btn btn-primary me-2'
-                                                            onClick={() => handleAbrirEditarProductoModal(producto)}
-                                                        >
-                                                            Editar Producto
-                                                        </button>
-                                                        <EliminarProducto
-                                                            id_producto={producto.id_producto}
-                                                            setProductos={setProductos}
-                                                            onProductoEliminado={(id) => {
-                                                                const updatedProductos = productos.filter(p => p.id_producto !== id);
-                                                                setProductos(updatedProductos);
-                                                            }}
-                                                        />
-                                                    </div>
-                                                )}
                                             </div>
-                                        )
-                                    ))}
-                                </div>
-                            </div>
-                            <div className="col-md-6 col-lg-6">
-                                <h4 className='cuerpo'>Bebidas</h4>
-                                <div className='container mt-4'>
-                                    {productos.map(producto => (
-                                        producto.categoria === 'Bebida' && (
-                                            <div key={producto.id_producto} className="producto-item">
-                                                <Producto
-                                                    nombre={producto.nombre}
-                                                    descripcion={producto.descripcion}
-                                                    precio={producto.precio}
-                                                    imagenSrc={`${apiUrl}${producto.imagenSrc}`}
-                                                    onClick={() => handleAbrirPedidoModal(producto)}
-                                                />
-                                                {isLoggedIn && (role === 2 || role === 3) && (
-                                                    <div className="d-flex">
-                                                        <button
-                                                            className='btn btn-primary me-2'
-                                                            onClick={() => handleAbrirEditarProductoModal(producto)}
-                                                        >
-                                                            Editar Producto
-                                                        </button>
-                                                        <EliminarProducto
-                                                            id_producto={producto.id_producto}
-                                                            setProductos={setProductos}
-                                                            onProductoEliminado={(id) => {
-                                                                const updatedProductos = productos.filter(p => p.id_producto !== id);
-                                                                setProductos(updatedProductos);
-                                                            }}
-                                                        />
-                                                    </div>
-                                                )}
-                                            </div>
-                                        )
-                                    ))}
-                                </div>
-                            </div>
+                                        )}
+                                    </div>
+                                )
+                            ))}
                         </div>
-            
+                    </div>
+                    <div className="col-md-6 col-lg-6">
+                        <h4 className='cuerpo'>Bebidas</h4>
+                        <div className='container mt-4'>
+                            {productos.map(producto => (
+                                producto.categoria === 'Bebida' && (
+                                    <div key={producto.id_producto} className="producto-item">
+                                        <Producto
+                                            nombre={producto.nombre}
+                                            descripcion={producto.descripcion}
+                                            precio={producto.precio}
+                                            imagenSrc={`${apiUrl}${producto.imagenSrc}`}
+                                            onClick={() => handleAbrirPedidoModal(producto)}
+                                        />
+                                        {isLoggedIn && (role === 2 || role === 3) && (
+                                            <div className="d-flex">
+                                                <button
+                                                    className='btn btn-primary me-2'
+                                                    onClick={() => handleAbrirEditarProductoModal(producto)}
+                                                >
+                                                    Editar Producto
+                                                </button>
+                                                <EliminarProducto
+                                                    id_producto={producto.id_producto}
+                                                    setProductos={setProductos}
+                                                    onProductoEliminado={(id) => {
+                                                        const updatedProductos = productos.filter(p => p.id_producto !== id);
+                                                        setProductos(updatedProductos);
+                                                    }}
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+                                )
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
             )}
 
             {isLoggedIn && (role === 2 || role === 3) && (
                 <div className="row mt-4">
+                    {isLoggedIn && (role === 2 || role === 3) && <AnadirProducto setProductos={setProductos} />}
+
                     <div className="col-md-12">
                         <h4 className='cuerpo'>Todos los Productos</h4>
                         <table className="table table-striped mt-4">

@@ -33,7 +33,7 @@ exports.getProducts = (req, res) => {
         };
       });
 
-      res.status(200).json(productosConImagenes);
+      return res.status(200).json(productosConImagenes);
     }
   });
 };

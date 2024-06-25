@@ -1,5 +1,6 @@
 const Producto = ({ nombre, descripcion, precio, imagenSrc, onClick }) => {
   // Verificar si imagenSrc tiene un valor antes de usarlo
+  console.log(imagenSrc);
   if (!imagenSrc) {
     return null; // O mostrar un mensaje de carga, o manejar el caso de imagen no disponible
   }

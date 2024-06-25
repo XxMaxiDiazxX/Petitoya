@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 24-06-2024 a las 23:41:14
+-- Tiempo de generación: 25-06-2024 a las 10:51:48
 -- Versión del servidor: 8.0.31
 -- Versión de PHP: 8.0.26
 
@@ -172,6 +172,7 @@ END$$
 DROP PROCEDURE IF EXISTS `RealizarPedidoDesdeCarrito`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `RealizarPedidoDesdeCarrito` (IN `p_id_cliente` VARCHAR(20), OUT `p_id_pedido` INT, OUT `p_message` VARCHAR(255))   BEGIN
     DECLARE v_count INT;
+    DECLARE total_pedido DECIMAL(10, 2);
 
     -- Verificar si hay elementos en el carrito para el cliente dado
     SELECT COUNT(*) INTO v_count
@@ -197,6 +198,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `RealizarPedidoDesdeCarrito` (IN `p_
         FROM carrito c
         JOIN productos p ON c.id_producto = p.id_producto
         WHERE c.id_cliente = p_id_cliente;
+
+        -- Calcular el monto total del pedido
+        SELECT SUM(pp.precio_compra * pp.cantidad) INTO total_pedido
+        FROM pedido_producto pp
+        WHERE pp.id_pedido = p_id_pedido;
+
+        -- Actualizar monto_total en la tabla pedidos
+        UPDATE pedidos
+        SET monto_total = total_pedido
+        WHERE id_pedido = p_id_pedido;
 
         -- Vaciar el carrito
         DELETE FROM carrito WHERE id_cliente = p_id_cliente;
@@ -247,9 +258,9 @@ CREATE TABLE IF NOT EXISTS `clientes` (
 --
 
 INSERT INTO `clientes` (`id_cliente`, `nombre`, `correo_electronico`, `telefono`, `contrasena`, `fecha_creacion`, `estado`, `id_rol`) VALUES
-('1025884474', 'Johan', 'johansebastianvelezortiz@gmail.com', '3214140078', 'asesinonZ@2', '2024-06-08 22:36:25', 'activo', 1),
 ('1025884475', 'Juan', 'asdasdasda@gmail.com', '123', '$2b$10$1qAZ.HvYnoX0ZomDnkgiIuTDsvFJjhw3G8AJxFlkKbPlJTqppYdB6', '2024-06-08 22:39:09', 'activo', 2),
-('1038128324', 'karen', '1@gmail.com', '321414565656', '$2b$10$1qAZ.HvYnoX0ZomDnkgiIuTDsvFJjhw3G8AJxFlkKbPlJTqppYdB6', '2024-06-08 23:29:14', 'activo', 3);
+('1038128324', 'karen', '1@gmail.com', '321414565656', '$2b$10$1qAZ.HvYnoX0ZomDnkgiIuTDsvFJjhw3G8AJxFlkKbPlJTqppYdB6', '2024-06-08 23:29:14', 'activo', 3),
+('3', 'sebas', '1@gmail.com', '123', '$2b$10$1qAZ.HvYnoX0ZomDnkgiIuTDsvFJjhw3G8AJxFlkKbPlJTqppYdB6', '2024-06-24 23:02:26', 'activo', 1);
 
 -- --------------------------------------------------------
 
@@ -288,7 +299,7 @@ CREATE TABLE IF NOT EXISTS `informe_pedidos_auditoria` (
   `total_producto` decimal(10,2) DEFAULT NULL,
   `fecha_informe` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_auditoria`)
-) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `informe_pedidos_auditoria`
@@ -316,7 +327,22 @@ INSERT INTO `informe_pedidos_auditoria` (`id_auditoria`, `id_pedido`, `cliente`,
 (19, 23, 'Juan', 'asdasdasda@gmail.com', '2024-06-24 00:06:14', 'Sándwich de Pollo', '4.00', 2, '8.00', '2024-06-24 00:06:14'),
 (20, 24, 'Juan', 'asdasdasda@gmail.com', '2024-06-24 18:01:56', 'mari', '10000.00', 13, '130000.00', '2024-06-24 18:01:56'),
 (21, 24, 'Juan', 'asdasdasda@gmail.com', '2024-06-24 18:01:56', 'Café Mocha', '4.00', 11, '44.00', '2024-06-24 18:01:56'),
-(22, 24, 'Juan', 'asdasdasda@gmail.com', '2024-06-24 18:01:56', 'Croissant de Mantequilla', '2.00', 14, '28.00', '2024-06-24 18:01:56');
+(22, 24, 'Juan', 'asdasdasda@gmail.com', '2024-06-24 18:01:56', 'Croissant de Mantequilla', '2.00', 14, '28.00', '2024-06-24 18:01:56'),
+(23, 25, 'Juan', 'asdasdasda@gmail.com', '2024-06-24 22:50:34', 'mari', '10000.00', 1, '10000.00', '2024-06-24 22:50:34'),
+(24, 26, 'Juan', 'asdasdasda@gmail.com', '2024-06-24 22:51:19', 'Capuchino', '3.00', 5, '15.00', '2024-06-24 22:51:19'),
+(25, 27, 'sebas', '1@gmail.com', '2024-06-24 23:05:54', 'mari', '10000.00', 3, '30000.00', '2024-06-24 23:05:54'),
+(26, 27, 'sebas', '1@gmail.com', '2024-06-24 23:05:54', 'Croissant de Mantequilla', '2.00', 3, '6.00', '2024-06-24 23:05:54'),
+(27, 28, 'karen', '1@gmail.com', '2024-06-25 00:30:04', 'mari', '10000.00', 1, '10000.00', '2024-06-25 00:30:04'),
+(28, 29, 'karen', '1@gmail.com', '2024-06-25 02:01:07', 'mari', '10000.00', 1, '10000.00', '2024-06-25 02:01:07'),
+(29, 30, 'karen', '1@gmail.com', '2024-06-25 02:01:09', 'Café Espresso', '3.00', 1, '3.00', '2024-06-25 02:01:09'),
+(30, 31, 'karen', '1@gmail.com', '2024-06-25 02:01:11', 'Croissant de Mantequilla', '2.00', 1, '2.00', '2024-06-25 02:01:11'),
+(31, 32, 'karen', '1@gmail.com', '2024-06-25 03:42:20', 'mari', '10000.00', 1, '10000.00', '2024-06-25 03:42:20'),
+(32, 32, 'karen', '1@gmail.com', '2024-06-25 03:42:20', 'Croissant de Mantequilla', '2.00', 1, '2.00', '2024-06-25 03:42:20'),
+(33, 33, 'karen', '1@gmail.com', '2024-06-25 04:14:37', 'mari', '10000.00', 2, '20000.00', '2024-06-25 04:14:37'),
+(34, 34, 'karen', '1@gmail.com', '2024-06-25 04:16:57', 'mari', '10000.00', 1, '10000.00', '2024-06-25 04:16:57'),
+(35, 35, 'karen', '1@gmail.com', '2024-06-25 04:17:27', 'mari', '10000.00', 2, '20000.00', '2024-06-25 04:17:27'),
+(36, 36, 'sebas', '1@gmail.com', '2024-06-25 04:49:45', 'mari', '10000.00', 2, '20000.00', '2024-06-25 04:49:45'),
+(37, 36, 'sebas', '1@gmail.com', '2024-06-25 04:49:45', 'Café Espresso', '3.00', 2, '6.00', '2024-06-25 04:49:45');
 
 -- --------------------------------------------------------
 
@@ -330,23 +356,36 @@ CREATE TABLE IF NOT EXISTS `pedidos` (
   `id_cliente` varchar(20) NOT NULL,
   `estado` varchar(20) NOT NULL,
   `fecha_compra` datetime DEFAULT CURRENT_TIMESTAMP,
+  `monto_total` decimal(10,2) DEFAULT '0.00',
   PRIMARY KEY (`id_pedido`),
   KEY `id_cliente` (`id_cliente`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `pedidos`
 --
 
-INSERT INTO `pedidos` (`id_pedido`, `id_cliente`, `estado`, `fecha_compra`) VALUES
-(17, '1025884475', 'pendiente', '2024-06-24 00:05:42'),
-(18, '1025884475', 'pendiente', '2024-06-24 00:05:50'),
-(19, '1025884475', 'pendiente', '2024-06-24 00:05:55'),
-(20, '1025884475', 'pendiente', '2024-06-24 00:05:59'),
-(21, '1025884475', 'pendiente', '2024-06-24 00:06:03'),
-(22, '1025884475', 'pendiente', '2024-06-24 00:06:07'),
-(23, '1025884475', 'pendiente', '2024-06-24 00:06:14'),
-(24, '1025884475', 'pendiente', '2024-06-24 18:01:56');
+INSERT INTO `pedidos` (`id_pedido`, `id_cliente`, `estado`, `fecha_compra`, `monto_total`) VALUES
+(17, '1025884475', 'por entrega', '2024-06-24 00:05:42', '0.00'),
+(18, '1025884475', 'por entrega', '2024-06-24 00:05:50', '0.00'),
+(19, '1025884475', 'entregado', '2024-06-24 00:05:55', '0.00'),
+(20, '1025884475', 'en proceso', '2024-06-24 00:05:59', '0.00'),
+(21, '1025884475', 'pendiente', '2024-06-24 00:06:03', '0.00'),
+(22, '1025884475', 'por entrega', '2024-06-24 00:06:07', '0.00'),
+(23, '1025884475', 'pendiente', '2024-06-24 00:06:14', '0.00'),
+(24, '1025884475', 'pendiente', '2024-06-24 18:01:56', '0.00'),
+(25, '1025884475', 'pendiente', '2024-06-24 22:50:34', '0.00'),
+(26, '1025884475', 'pendiente', '2024-06-24 22:51:19', '0.00'),
+(27, '3', 'pendiente', '2024-06-24 23:05:54', '0.00'),
+(28, '1038128324', 'pendiente', '2024-06-25 00:30:04', '0.00'),
+(29, '1038128324', 'pendiente', '2024-06-25 02:01:07', '0.00'),
+(30, '1038128324', 'pendiente', '2024-06-25 02:01:09', '0.00'),
+(31, '1038128324', 'pendiente', '2024-06-25 02:01:11', '0.00'),
+(32, '1038128324', 'pendiente', '2024-06-25 03:42:20', '0.00'),
+(33, '1038128324', 'pendiente', '2024-06-25 04:14:37', '0.00'),
+(34, '1038128324', 'pendiente', '2024-06-25 04:16:57', '0.00'),
+(35, '1038128324', 'pendiente', '2024-06-25 04:17:27', '0.00'),
+(36, '3', 'pendiente', '2024-06-25 04:49:45', '20006.00');
 
 -- --------------------------------------------------------
 
@@ -380,7 +419,22 @@ INSERT INTO `pedido_producto` (`id_pedido`, `id_producto`, `precio_compra`, `can
 (23, 477, 4, 2),
 (24, 9, 10000, 13),
 (24, 469, 4, 11),
-(24, 476, 2, 14);
+(24, 476, 2, 14),
+(25, 9, 10000, 1),
+(26, 470, 3, 5),
+(27, 9, 10000, 3),
+(27, 476, 2, 3),
+(28, 9, 10000, 1),
+(29, 9, 10000, 1),
+(30, 466, 3, 1),
+(31, 476, 2, 1),
+(32, 9, 10000, 1),
+(32, 476, 2, 1),
+(33, 9, 10000, 2),
+(34, 9, 10000, 1),
+(35, 9, 10000, 2),
+(36, 9, 10000, 2),
+(36, 466, 3, 2);
 
 --
 -- Disparadores `pedido_producto`
@@ -388,20 +442,28 @@ INSERT INTO `pedido_producto` (`id_pedido`, `id_producto`, `precio_compra`, `can
 DROP TRIGGER IF EXISTS `after_insert_pedido_producto`;
 DELIMITER $$
 CREATE TRIGGER `after_insert_pedido_producto` AFTER INSERT ON `pedido_producto` FOR EACH ROW BEGIN
-    INSERT INTO informe_pedidos_auditoria (id_pedido, cliente, correo_electronico, fecha_compra, producto, precio_compra, cantidad, total_producto)
-    SELECT 
-        p.id_pedido,
-        c.nombre AS cliente,
-        c.correo_electronico,
-        p.fecha_compra,
-        prod.nombre AS producto,
-        NEW.precio_compra,
-        NEW.cantidad,
-        (NEW.precio_compra * NEW.cantidad) AS total_producto
-    FROM pedidos p
-    JOIN clientes c ON p.id_cliente = c.id_cliente
-    JOIN productos prod ON NEW.id_producto = prod.id_producto
-    WHERE p.id_pedido = NEW.id_pedido;
+    DECLARE v_id_pedido INT;
+
+    -- Obtener el id_pedido de la fila insertada
+    SELECT id_pedido INTO v_id_pedido FROM pedidos WHERE id_pedido = NEW.id_pedido;
+
+    -- Insertar en informe_pedidos_auditoria si el pedido existe
+    IF v_id_pedido IS NOT NULL THEN
+        INSERT INTO informe_pedidos_auditoria (id_pedido, cliente, correo_electronico, fecha_compra, producto, precio_compra, cantidad, total_producto)
+        SELECT 
+            p.id_pedido,
+            c.nombre AS cliente,
+            c.correo_electronico,
+            p.fecha_compra,
+            prod.nombre AS producto,
+            NEW.precio_compra,
+            NEW.cantidad,
+            (NEW.precio_compra * NEW.cantidad) AS total_producto
+        FROM pedidos p
+        JOIN clientes c ON p.id_cliente = c.id_cliente
+        JOIN productos prod ON NEW.id_producto = prod.id_producto
+        WHERE p.id_pedido = NEW.id_pedido;
+    END IF;
 END
 $$
 DELIMITER ;
@@ -423,7 +485,7 @@ CREATE TABLE IF NOT EXISTS `productos` (
   `estado` varchar(25) NOT NULL DEFAULT 'activo',
   `imagen` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_producto`)
-) ENGINE=InnoDB AUTO_INCREMENT=486 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=487 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `productos`
@@ -446,12 +508,13 @@ INSERT INTO `productos` (`id_producto`, `nombre`, `descripcion`, `precio`, `fech
 (477, 'Sándwich de Pollo', 'Sándwich con filete de pollo y vegetales frescos', 4, NULL, 'Comida', 'activo', NULL),
 (478, 'Ensalada César', 'Ensalada con pollo a la parrilla, lechuga romana y aderezo césar', 5, NULL, 'Comida', 'activo', NULL),
 (479, 'Pizza Margherita', 'Pizza tradicional italiana con salsa de tomate, mozzarella y albahaca', 8, NULL, 'Comida', 'activo', NULL),
-(480, 'Hamburguesa Clásica', 'Hamburguesa de carne con queso cheddar y salsa especial', 7, NULL, 'Comida', 'activo', NULL),
+(480, 'Hamburguesa Clásica', 'Hamburguesa de carne con queso cheddar y salsa especial', 7, NULL, 'Comida', 'activo', 'uploads\\1719200854081-1719195684022-Foto documento.jpg'),
 (481, 'Wrap Vegetariano', 'Wrap con verduras frescas y hummus', 5, NULL, 'Comida', 'activo', NULL),
 (482, 'Papas Fritas', 'Papas fritas crujientes y doradas', 3, NULL, 'Comida', 'activo', NULL),
 (483, 'Pastel de Chocolate', 'Delicioso pastel de chocolate con cobertura de ganache', 4, NULL, 'Comida', 'activo', NULL),
 (484, 'Galletas de Avena', 'Galletas de avena y pasas', 2, NULL, 'Comida', 'activo', NULL),
-(485, 'Donut de Vainilla', 'Donut clásico con glaseado de vainilla', 2, NULL, 'Comida', 'activo', NULL);
+(485, 'Donut de Vainilla', 'Donut clásico con glaseado de vainilla', 2, NULL, 'Comida', 'activo', NULL),
+(486, 'WEBONES', 'esto es la descripcion', 100000000, '2024-06-25', 'Comida', 'activo', 'uploads\\1719312630002-1719195684022-Foto documento.jpg');
 
 -- --------------------------------------------------------
 

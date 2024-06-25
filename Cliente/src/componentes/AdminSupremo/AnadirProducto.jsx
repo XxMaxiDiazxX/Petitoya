@@ -21,7 +21,6 @@ const AnadirProducto = ({ setProductos }) => {
 
         // Crear un FormData para enviar datos de formulario y la imagen
         const formData = new FormData();
-        formData.append('id_producto', values.id_producto);
         formData.append('nombre', values.nombre);
         formData.append('descripcion', values.descripcion);
         formData.append('precio', values.precio);
@@ -68,19 +67,14 @@ const AnadirProducto = ({ setProductos }) => {
         <>
           <h2 className="mb-4">Añadir Producto</h2>
           <Formik
-            initialValues={{ id_producto: '', nombre: '', descripcion: '', precio: '', categoria: '' }}
+            initialValues={{ nombre: '', descripcion: '', precio: '', categoria: '' }}
             onSubmit={handleSubmit}
           >
             {({ setFieldValue }) => (
               <Form className='w-75 container bg-Barra2 text-white rounded p-3'>
                 <div className='row'>
-                  <div className="mb-1 col-md-6">
-                    <label className="form-label">id:</label>
-                    <Field type="text" name="id_producto" className="form-control" />
-                    {idExistError && <span className="text-danger">{idExistError}</span>}
-                  </div>
 
-                  <div className="mb-1 col-md-6">
+                  <div className="mb-1 col-md">
                     <label className="form-label">Nombre:</label>
                     <Field type="text" name="nombre" className="form-control" />
                   </div>
