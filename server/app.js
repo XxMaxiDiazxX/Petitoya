@@ -9,6 +9,7 @@ const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const cartRoutes = require('./routes/cartRoutes');
 const statsRoutes = require('./routes/statsRoutes');
+const superUsRouter = require('./routes/superUsRoutes')
 
 
 // Middlewares
@@ -22,8 +23,9 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/auth', authRoutes);
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
-app.use('/cart', cartRoutes)
-app.use('/stats', statsRoutes)
+app.use('/cart', cartRoutes);
+app.use('/stats', statsRoutes);
+app.use('/super', superUsRouter);
 
 
 // Iniciar el servidor
