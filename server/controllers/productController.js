@@ -202,6 +202,7 @@ exports.getLeastUsedProducts = (req, res) => {
       res.status(500).json({ error: 'Error interno del servidor' });
     } else {
       if (result.length > 0) {
+        console.log('Productos menos usados:', result);
         // Mapear los resultados para construir la respuesta
         const productosMenosUsados = result.map(producto => {
           return {
