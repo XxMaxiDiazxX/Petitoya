@@ -256,6 +256,13 @@ BEGIN
     WHERE id_producto = p_id_producto;
 END //
 
+CREATE PROCEDURE HabilitarProducto(IN p_id_producto VARCHAR(20))
+BEGIN
+    UPDATE productos
+    SET estado = 'activo'
+    WHERE id_producto = p_id_producto;
+END //
+
 -- Procedimiento para crear un pedido
 CREATE PROCEDURE CrearPedido(
     IN p_id_cliente VARCHAR(20),

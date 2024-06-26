@@ -3,17 +3,6 @@ const db = require('../models/db');
 const logger = require('../utils/logger');
 const path = require('path');
 
-// exports.getProducts = (req, res) => {
-//   db.query('SELECT * FROM productos', (err, result) => {
-//     if (err) {
-//       logger.error('Error al consultar la base de datos:', err);
-//       res.status(500).json({ error: 'Error interno del servidor' });
-//     } else {
-//       res.status(200).json(result);
-//     }
-//   });
-// };
-
 exports.getProducts = (req, res) => {
   db.query('SELECT * FROM productos', (err, result) => {
     if (err) {
@@ -50,25 +39,18 @@ exports.getProductsByCategory = (req, res) => {
   });
 };
 
-// exports.createProduct = (req, res) => {
-//   const imagen = req.file;
-//   const { id_producto, nombre, descripcion, precio, categoria } = req.body;
 
-//   const imagenBinaria = fs.readFileSync(imagen.path);
+exports.getInactiveProducts = (req, res) => {
+  db.query('SELECT * FROM productos WHERE estado = "inactivo"', (err, result) => {
+    if (err) {
+      logger.error('Error al consultar la base de datos:', err);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    } else {
+      res.status(200).json(result);
+    }
+  });
+};
 
-//   db.query(
-//     'CALL CrearProducto(?, ?, ?, ?, ?, ?)',
-//     [id_producto, nombre, descripcion, precio, categoria, imagenBinaria],
-//     (err, result) => {
-//       if (err) {
-//         logger.error('Error al insertar producto en la base de datos:', err);
-//         res.status(500).json({ error: 'Error interno del servidor' });
-//       } else {
-//         res.status(200).json({ message: 'Producto creado exitosamente' });
-//       }
-//     }
-//   );
-// };
 
 exports.createProduct = (req, res) => {
   const imagen = req.file; // Obtiene la imagen subida desde el request

@@ -20,3 +20,7 @@
 2024-06-25T08:58:37.596Z - [31MERROR[39M: [31mError al consultar los detalles del pedido: ER_NO_SUCH_TABLE: Table 'petitoya.productos_pedidos' doesn't exist[39m
 2024-06-25T09:03:35.544Z - [31MERROR[39M: [31mError al consultar los detalles del pedido: ER_NO_SUCH_TABLE: Table 'petitoya.productos_pedidos' doesn't exist[39m
 2024-06-25T09:03:46.439Z - [31MERROR[39M: [31mError al consultar los detalles del pedido: ER_NO_SUCH_TABLE: Table 'petitoya.productos_pedidos' doesn't exist[39m
+2024-06-26T03:41:06.230Z - [31MERROR[39M: [31mError al añadir producto al carrito: ER_BAD_NULL_ERROR: Column 'id_cliente' cannot be null[39m
+2024-06-26T03:41:07.973Z - [31MERROR[39M: [31mError al añadir producto al carrito: ER_BAD_NULL_ERROR: Column 'id_cliente' cannot be null[39m
+2024-06-26T04:01:26.171Z - [31MERROR[39M: [31mError al habilitar el producto: ER_SP_DOES_NOT_EXIST: PROCEDURE petitoya.HabilitarProducto does not exist[39m
+2024-06-26T04:02:36.133Z - [31MERROR[39M: [31mError al habilitar el producto: ER_SP_DOES_NOT_EXIST: PROCEDURE petitoya.HabilitarProducto does not exist[39m

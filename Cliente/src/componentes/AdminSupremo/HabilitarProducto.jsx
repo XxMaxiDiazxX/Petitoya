@@ -9,10 +9,10 @@ const HabilitarProducto = ({ id_producto, onProductoHabilitado, setProductos }) 
   const handleHabilitarProducto = async (idProducto) => {
     try {
       // Enviar solicitud PUT al servidor para habilitar el producto
-      await axios.put(`http://localhost:3001/productos/habilitar/${idProducto}`);
+      await axios.put(`http://localhost:3001/products/habilitar/${idProducto}`);
 
       // Actualiza la lista de productos después de habilitar
-      const response = await axios.get('http://localhost:3001/productos');
+      const response = await axios.get('http://localhost:3001/products');
       setProductos(response.data);
 
       // Llama a la función onProductoHabilitado para notificar al componente padre
@@ -26,7 +26,7 @@ const HabilitarProducto = ({ id_producto, onProductoHabilitado, setProductos }) 
 
   return (
     <>
-      <button className="btn btn-success" onClick={() => setMostrarModal(true)}>
+      <button className="btn btn-success custom-button1" onClick={() => setMostrarModal(true)}>
         Habilitar Producto
       </button>
 

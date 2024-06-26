@@ -43,7 +43,7 @@ export const BarraNavegacion = () => {
         <Container>
 
           {/* Toggle para el menú del usuario a la izquierda (solo visible en pantallas pequeñas) */}
-          <Navbar.Toggle aria-controls="usuario-nav" className="d-lg-none d-xs-block" onClick={handleToggleUserNav} />
+          <Navbar.Toggle aria-controls="usuario-nav" className="d-lg-none d-xs-block" onClick={handleToggleLinksNav} />
 
           {/* Logo en el centro */}
           <Navbar.Brand as={Link} to="/" className="mx-auto d-lg-block">
@@ -54,7 +54,7 @@ export const BarraNavegacion = () => {
           </Navbar.Brand>
 
           {/* Toggle para la navegación de links a la derecha (solo visible en pantallas pequeñas) */}
-          <Navbar.Toggle aria-controls="links-nav" className="d-lg-none d-xs-block" onClick={handleToggleLinksNav}>
+          <Navbar.Toggle aria-controls="links-nav" className="d-lg-none d-xs-block" onClick={handleToggleUserNav}>
             <span className="text-white cuerpo">Menú</span>
           </Navbar.Toggle>
 

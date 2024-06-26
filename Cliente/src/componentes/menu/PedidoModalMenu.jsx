@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'; // Importar toast y ToastContainer
 import 'react-toastify/dist/ReactToastify.css'; // Estilos CSS para react-toastify
 import '../../styles/menu/PedidoModalMenu.scss'; // Importa el archivo de estilos
 
-export const PedidoModalMenu = ({ producto, mostrarModal, setMostrarModal, id_cliente }) => {
+export const PedidoModalMenu = ({ producto, mostrarModal, setMostrarModal, id_cliente, isLoggedIn }) => {
   const [cantidad, setCantidad] = useState(1); // Inicializar con 1 para evitar valores cero
 
   const handleModalClick = (e) => {
@@ -12,6 +12,11 @@ export const PedidoModalMenu = ({ producto, mostrarModal, setMostrarModal, id_cl
   };
 
   const handleAddToCart = async () => {
+    if (!isLoggedIn) {
+      toast.info('Debes iniciar sesión para añadir productos al carrito.');
+      return;
+    }
+
     try {
       await axios.post('http://localhost:3001/cart', {
         id_cliente,
@@ -47,6 +52,11 @@ export const PedidoModalMenu = ({ producto, mostrarModal, setMostrarModal, id_cl
   };
 
   const handlePlaceOrder = async () => {
+    if (!isLoggedIn) {
+      toast.info('Debes iniciar sesión para realizar un pedido.');
+      return;
+    }
+
     try {
       await axios.post('http://localhost:3001/cart', {
         id_cliente,
@@ -59,7 +69,7 @@ export const PedidoModalMenu = ({ producto, mostrarModal, setMostrarModal, id_cl
       });
 
       // Mostrar notificación de éxito
-      toast.success(`Pedido realizado con éxito}`, {
+      toast.success(`Pedido realizado con éxito`, {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
