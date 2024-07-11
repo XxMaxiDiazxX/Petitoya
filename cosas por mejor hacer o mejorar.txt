@@ -18,32 +18,21 @@ carrusel que el admin pueda modificar
 
 ------------------------- FALTANTE EN LO QUE SABEMOS XD --------------------------------
 
-# Realizar un atributo para la tabla productos, que almacene el numero de compras, de cada producto, con el fin del implementar
-un tipo rating de las comidas mas compradas y tambien lo que menos compren, para implementarlo en el inicio, con el fin de 
-sugerir esas comidas que se estan perdiendo.
-
-# Realizar apartado de estados de los pedidos, los activos y los inactivos
-
 # Modificar el diccionario de datos
-
-# realizar el feellback
-de la pagina de error
-
 
 # validar la actualizacion de el usuario, y que el admin solo ponga cuando en la creacion de ese usuario, que no se pueda cambiar el estado
 
-# eliminar el boton de "Realzar pedido", para que solo aparesca si se realiza el click en el mismo cuadro
+# realizar que solo aparesca la validacion del codigo de cambio de contraseña, cuando sea valido ya aparesca la creacion de la nueva contraseña ademas de tambien darle diseño
 
-# FALTA MOSTRAR LOS PRODUCTOS POR ESTADISTICA PERO SE NECESITA MODIFICAR LA BASE DE DATOS
+# AJUSTAR BIEN EL FRONENT PAR QUE SE VEA BIEN
 
-# realizar que solo aparesca la validacion del codigo de cambio de contraseña, cuando sea valido ya aparesca la creacion de la nueva contraseña
-ademas de tambien darle diseño
+# se cambio la verificacion del usuario no existente, se cierra el server
 
-# hacer el icono de carrito en la barra
+# falta el manual
 
-#AJUSTAR BIEN EL FRONENT PAR QUE SE VEA BIEN
+# Agregando el producto el precio de esto, se agregan letras, cambiar esto validando
 
-# realiazr que el administrado registe los superusuario( empleados) 
+# para hacer el drud de edicion del carusel que lo edite el administrador
 
 
 ------------------- CAMBIOS JOHANSHITO --------------------------------
@@ -59,8 +48,10 @@ JUEMADRE aver, cree una nueva cuenta de correo ya para petitoya para enviar corr
 cree 2 paginas nuevas una para validacion del codigo que envie para cambiar la contraseña, y para enviar el correo
 el correo es petitoyaservice@gmail.com constraseña: asesinoZ@, se creo una contraseña de aplicacion y se implemento en la utilidad de email.Service.js del node
 realice el sistema de pedidos y carrito (falta el fronent)
-
-
+Realizar un atributo para la tabla productos, que almacene el numero de compras, de cada producto, con el fin del implementar un tipo rating de las comidas mas compradas y tambien lo que menos compren, para implementarlo en el inicio, con el fin de  sugerir esas comidas que se estan perdiendo.
+Realizar apartado de estados de los pedidos, los activos y los inactivos
+MOSTRAR LOS PRODUCTOS POR ESTADISTICA PERO SE NECESITA MODIFICAR LA BASE DE DATOS
+hacer el icono de carrito en la barra
 
 ---------------------- CAMBIOS SUARIÑO ------------------------
 
@@ -68,6 +59,8 @@ realice el sistema de pedidos y carrito (falta el fronent)
 cambio de contraseña ya encripta la contraseña nueva
 manejo de las imagenes de los productos
 admin puede agregar empleados
+realizar el feellback de la pagina de error
+realiazr que el administrado registe los superusuario (empleados) 
 
 DELIMITER //
 

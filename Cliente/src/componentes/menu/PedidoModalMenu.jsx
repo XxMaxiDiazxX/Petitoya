@@ -3,6 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify'; // Importar toast y ToastContainer
 import 'react-toastify/dist/ReactToastify.css'; // Estilos CSS para react-toastify
 import '../../styles/menu/PedidoModalMenu.scss'; // Importa el archivo de estilos
+import { useAuth } from '../autenticacion/AuthContext';
 
 export const PedidoModalMenu = ({ producto, mostrarModal, setMostrarModal, id_cliente, isLoggedIn }) => {
   const [cantidad, setCantidad] = useState(1); // Inicializar con 1 para evitar valores cero

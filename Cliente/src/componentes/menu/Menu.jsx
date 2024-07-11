@@ -291,7 +291,8 @@ export const Menu = () => {
                     producto={productoSeleccionado}
                     mostrarModal={mostrarPedidoModal}
                     setMostrarModal={setMostrarPedidoModal}
-                    id_cliente={isLoggedIn ? user.id_cliente : null}
+                    id_cliente={isLoggedIn ? user.id : null}
+                    isLoggedIn={isLoggedIn}
                 />
             )}
         </div>

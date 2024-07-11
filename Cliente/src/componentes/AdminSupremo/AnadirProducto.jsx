@@ -107,10 +107,10 @@ const AnadirProducto = ({ setProductos }) => {
                     onChange={(event) => setSelectedFile(event.currentTarget.files[0])} // Actualizamos el archivo seleccionado en el estado
                   />
                 </div>
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btn-primary custom-button1">
                   Añadir Producto
                 </button>
-                <button className="btn btn-primary ml-3 mr-3" onClick={handleAgregarProducto}>
+                <button className="btn btn-primary ml-3 mr-3 custom-button2" onClick={handleAgregarProducto}>
                   Cerrar
                 </button>
               </Form>

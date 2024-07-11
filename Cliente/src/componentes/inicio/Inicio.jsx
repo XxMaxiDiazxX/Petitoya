@@ -49,8 +49,8 @@ export const Inicio = () => {
 
   return (
     <>
-      <Carusel/>
       <div className="sugerencias container text-center">
+      <Carusel/>
         <h2 className="mt-3 bg-barra3 cuerpo text-white">Sugerencias</h2>
         <div className="row">
           {/* Mostrar productos de Comidas */}

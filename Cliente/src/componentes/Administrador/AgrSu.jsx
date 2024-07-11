@@ -66,7 +66,7 @@ export const AgrSu = () => {
             <div className="h-100">
                 <Col xs={12} md={8} lg={6} className="d-flex flex-column align-items-center justify-content-center w-100 h-100">
 
-                    <h4 className="text-center reda cuerpo" style={{ fontSize: "45px" }}>Registro de empleados</h4>
+                    <h4 className="text-center cuerpo" style={{ fontSize: "45px" }}>Registro de empleados</h4>
 
                     <Formik
                         initialValues={initialValues}
@@ -163,8 +163,8 @@ export const AgrSu = () => {
                                     />
                                     <ErrorMessage name="confirmar_contrasena" component="span" className="error" />
                                 </Col>
-                                <Col className='mx-4 d-flex align-items-center justify-content-center cuerpo text-uppercase text-uppercase'>
-                                    <Button type="submit" className='bg-naranj border-0'>REGISTRARSE</Button>
+                                <Col className='mx-4 d-flex align-items-center justify-content-center'>
+                                    <Button type="submit" className='border-0 custom-button2'>REGISTRARSE</Button>
                                 </Col>
                             </Row>
                         </Form>

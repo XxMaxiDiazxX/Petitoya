@@ -61,7 +61,7 @@ export const Login = () => {
                     axios.post('http://localhost:3001/auth/login', values)
                       .then(response => {
                         if (response.data && response.data.user) {
-                          console.log('Inicio de sesión exitoso:', response.data.user, response.data.user.isAdmin);
+                          console.log('Inicio de sesión exitoso:', response.data.user, response.data.user.role);
                           authLogin({
                             user: response.data.user,
                             role: response.data.user.role,
@@ -78,7 +78,8 @@ export const Login = () => {
                       })
                       .finally(() => {
                         setSubmitting(false);
-                      });
+                      }
+                    );
                   }}
                 >
                   <Form className='container-sm d-grid text-center labe naranj' style={{ fontWeight: "bold", fontSize: "20px" }}>
