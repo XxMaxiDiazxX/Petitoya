@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const db = require('../models/db');
 const logger = require('../utils/logger');
 const { sendPasswordChangeEmail } = require('../utils/emailService');
+const { Console } = require('console');
 
 async function encriptarContrasena(contrasena) {
   try {
@@ -19,14 +20,52 @@ exports.register = async (req, res) => {
   const { documento, nombre, correo_electronico, telefono, contrasena } = req.body;
 
   try {
-    const hashedPassword = await encriptarContrasena(contrasena);
-    await db.query('CALL CrearUsuario(?, ?, ?, ?, ?, 1)', [documento, nombre, correo_electronico, telefono, hashedPassword]);
-    res.status(200).json({ message: 'Registro exitoso' });
+    console.log("HOLA");
+      // Verificar existencia de duplicados antes de intentar crear el usuario
+      const verificacion = await db.query('CALL VerificarExistenciaUsuario(?, ?, ?)', [documento, correo_electronico, telefono]);
+      console.log(verificacion);
+      // Verificar el resultado de la verificación
+      if (verificacion && verificacion.length > 0 && verificacion[0].mensaje) {
+          // Si la verificación devuelve algún mensaje de error, manejarlo
+          const { mensaje } = verificacion[0];
+          console.log(mensaje);
+
+          if (mensaje.includes('El ID del cliente ya existe')) {
+              return res.status(400).json({ error: 'El ID del cliente ya existe' });
+          } else if (mensaje.includes('El correo electrónico ya existe')) {
+              return res.status(400).json({ error: 'El correo electrónico ya existe' });
+          } else if (mensaje.includes('El teléfono ya existe')) {
+              return res.status(400).json({ error: 'El teléfono ya existe' });
+          } else {
+              return res.status(400).json({ error: 'Ya existe un registro con ese ID, correo electrónico o teléfono.' });
+          }
+      }
+
+      // Si no hay duplicados, proceder a crear el usuario
+      const hashedPassword = await encriptarContrasena(contrasena);
+      await db.query('CALL CrearUsuario(?, ?, ?, ?, ?, 1)', [documento, nombre, correo_electronico, telefono, hashedPassword]);
+      res.status(200).json({ message: 'Registro exitoso' });
+
   } catch (error) {
-    logger.error('Error al registrar usuario:', error);
-    res.status(500).json({ error: 'Error interno del servidor' });
+      logger.error('Error al registrar usuario:', error);
+
+      // Manejo de errores específicos de base de datos
+      if (error.code === 'ER_DUP_ENTRY') {
+          if (error.message.includes('id_cliente')) {
+              return res.status(400).json({ error: 'El ID del cliente ya existe' });
+          } else if (error.message.includes('correo_electronico')) {
+              return res.status(400).json({ error: 'El correo electrónico ya existe' });
+          } else if (error.message.includes('telefono')) {
+              return res.status(400).json({ error: 'El teléfono ya existe' });
+          } else {
+              return res.status(400).json({ error: 'Ya existe un registro con ese ID, correo electrónico o teléfono.' });
+          }
+      } else {
+          return res.status(500).json({ error: 'Error interno del servidor' });
+      }
   }
 };
+
 
 exports.registerSu = async (req, res) => {
   const { documento, nombre, correo_electronico, telefono, contrasena } = req.body;

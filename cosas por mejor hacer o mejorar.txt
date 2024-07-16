@@ -34,6 +34,17 @@ carrusel que el admin pueda modificar
 
 # para hacer el drud de edicion del carusel que lo edite el administrador
 
+# (Opcional): Controlar y limitar la cantidad de solicitudes entrantes (rate limit)
+
+# Obligado: Ajustar tiempo de conexión (Keep Alive)
+
+# Seria bueno Ponerlo: Agregar tiempos de espera en solicitudes HTTP (Timeouts)
+
+# Ponerlo: Limitar el tamaño del cuerpo HTTP (Payload size).
+
+# mejor mirara pagina me aburri de escribir:
+https://medium.com/@diego.coder/construyendo-aplicaciones-seguras-con-node-js-y-express-61a941085ead
+
 
 ------------------- CAMBIOS JOHANSHITO --------------------------------
 

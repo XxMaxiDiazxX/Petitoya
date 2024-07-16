@@ -128,6 +128,46 @@ BEGIN
 END //
 
 
+-- verificacion de existencia del usuario
+CREATE PROCEDURE VerificarExistenciaUsuario(
+    IN p_id_cliente VARCHAR(20),
+    IN p_correo_electronico VARCHAR(255),
+    IN p_telefono VARCHAR(15)
+)
+BEGIN
+    DECLARE existe_id INT DEFAULT 0;
+    DECLARE existe_correo INT DEFAULT 0;
+    DECLARE existe_telefono INT DEFAULT 0;
+    DECLARE error_message VARCHAR(255);
+
+    -- Verificar si el id_cliente ya existe
+    SELECT COUNT(*) INTO existe_id FROM clientes WHERE id_cliente = p_id_cliente;
+    IF existe_id > 0 THEN
+        SET error_message = 'El ID del cliente ya existe';
+    END IF;
+
+    -- Verificar si el correo_electronico ya existe
+    SELECT COUNT(*) INTO existe_correo FROM clientes WHERE correo_electronico = p_correo_electronico;
+    IF existe_correo > 0 THEN
+        SET error_message = CONCAT(error_message, ' El correo electrónico ya existe');
+    END IF;
+
+    -- Verificar si el telefono ya existe
+    SELECT COUNT(*) INTO existe_telefono FROM clientes WHERE telefono = p_telefono;
+    IF existe_telefono > 0 THEN
+        SET error_message = CONCAT(error_message, ' El teléfono ya existe');
+    END IF;
+
+    -- Si hay algún duplicado, retornar el mensaje de error
+    IF error_message IS NOT NULL THEN
+        SELECT error_message AS error;
+    ELSE
+        -- Si no hay duplicados, retornar un mensaje de éxito
+        SELECT 'No existe duplicado' AS mensaje;
+    END IF;
+END //
+
+
 -- Procedimiento para crear un usuario
 CREATE PROCEDURE CrearUsuario(
     IN p_id_cliente VARCHAR(20),
