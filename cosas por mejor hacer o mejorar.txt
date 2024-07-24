@@ -18,6 +18,12 @@ carrusel que el admin pueda modificar
 
 ------------------------- FALTANTE EN LO QUE SABEMOS XD --------------------------------
 
+Prioridad: 
+ # mejorar el diagrama de casos de uso de lucidchard
+ # Manuales
+ # UML
+ # Eliminar empleados (interfaz gerente) o modificarlos
+
 # Modificar el diccionario de datos
 
 # validar la actualizacion de el usuario, y que el admin solo ponga cuando en la creacion de ese usuario, que no se pueda cambiar el estado
@@ -44,6 +50,8 @@ carrusel que el admin pueda modificar
 
 # mejor mirara pagina me aburri de escribir:
 https://medium.com/@diego.coder/construyendo-aplicaciones-seguras-con-node-js-y-express-61a941085ead
+
+# Casos de uso
 
 
 ------------------- CAMBIOS JOHANSHITO --------------------------------

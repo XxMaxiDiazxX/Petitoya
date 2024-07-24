@@ -50,6 +50,7 @@ exports.getOrdersByState = (req, res) => {
   });
 };
 
+  // actualizar el estado del pedido, en proceso, por entrega, entregado
 exports.updateOrderStatus = (req, res) => {
     const { id_pedido } = req.params;
     const { nuevoEstado } = req.body;
