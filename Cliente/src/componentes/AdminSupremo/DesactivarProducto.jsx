@@ -27,23 +27,23 @@ const EliminarProducto = ({ id_producto, onProductoEliminado, setProductos }) =>
   return (
     <>
       <button className="btn btn-danger custom-button2" onClick={() => setMostrarModal(true)}>
-        Eliminar Producto
+        Inactivar Producto
       </button>
 
       {/* Modal de confirmación */}
       <Modal show={mostrarModal} onHide={() => setMostrarModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Confirmar Eliminación</Modal.Title>
+          <Modal.Title>Confirmar inactivacion</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          ¿Estás seguro de que deseas eliminar este producto?
+          ¿Estás seguro de que deseas inactivar este producto?
         </Modal.Body>
         <Modal.Footer>
           <button className="btn btn-secondary" onClick={() => setMostrarModal(false)}>
             Cancelar
           </button>
           <button className="btn btn-danger" onClick={() => handleDesactivarProducto(id_producto)}>
-            Confirmar Desactivacion
+            Confirmar inactivacion
           </button>
         </Modal.Footer>
       </Modal>

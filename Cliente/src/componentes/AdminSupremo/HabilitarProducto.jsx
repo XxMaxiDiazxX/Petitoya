@@ -27,23 +27,23 @@ const HabilitarProducto = ({ id_producto, onProductoHabilitado, setProductos }) 
   return (
     <>
       <button className="btn btn-success custom-button1" onClick={() => setMostrarModal(true)}>
-        Habilitar Producto
+        Activar Producto
       </button>
 
       {/* Modal de confirmación */}
       <Modal show={mostrarModal} onHide={() => setMostrarModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Confirmar Habilitación</Modal.Title>
+          <Modal.Title>Confirmar Activación</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          ¿Estás seguro de que deseas habilitar este producto?
+          ¿Estás seguro de que deseas actviar este producto?
         </Modal.Body>
         <Modal.Footer>
           <button className="btn btn-secondary" onClick={() => setMostrarModal(false)}>
             Cancelar
           </button>
           <button className="btn btn-success" onClick={() => handleHabilitarProducto(id_producto)}>
-            Confirmar Habilitación
+            Confirmar Activación
           </button>
         </Modal.Footer>
       </Modal>
