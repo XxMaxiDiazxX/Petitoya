@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 25-06-2024 a las 10:51:48
+-- Tiempo de generación: 25-07-2024 a las 03:38:38
 -- Versión del servidor: 8.0.31
 -- Versión de PHP: 8.0.26
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `petitoya`
 --
+CREATE DATABASE IF NOT EXISTS `petitoya` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `petitoya`;
 
 DELIMITER $$
 --
@@ -114,6 +116,13 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `GenerarInformeUsuarios` ()   BEGIN
         estado,
         id_rol
     FROM clientes;
+END$$
+
+DROP PROCEDURE IF EXISTS `HabilitarProducto`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `HabilitarProducto` (IN `p_id_producto` VARCHAR(20))   BEGIN
+    UPDATE productos
+    SET estado = 'activo'
+    WHERE id_producto = p_id_producto;
 END$$
 
 DROP PROCEDURE IF EXISTS `HabilitarUsuario`$$
@@ -231,7 +240,7 @@ CREATE TABLE IF NOT EXISTS `carrito` (
   `cantidad` int NOT NULL,
   PRIMARY KEY (`id_cliente`,`id_producto`),
   KEY `id_producto` (`id_producto`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -251,15 +260,15 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `id_rol` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`id_cliente`),
   KEY `id_rol` (`id_rol`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `clientes`
 --
 
 INSERT INTO `clientes` (`id_cliente`, `nombre`, `correo_electronico`, `telefono`, `contrasena`, `fecha_creacion`, `estado`, `id_rol`) VALUES
+('1025884474', 'karen', '1@gmail.com', '321414565656', '$2b$10$1qAZ.HvYnoX0ZomDnkgiIuTDsvFJjhw3G8AJxFlkKbPlJTqppYdB6', '2024-06-08 23:29:14', 'activo', 3),
 ('1025884475', 'Juan', 'asdasdasda@gmail.com', '123', '$2b$10$1qAZ.HvYnoX0ZomDnkgiIuTDsvFJjhw3G8AJxFlkKbPlJTqppYdB6', '2024-06-08 22:39:09', 'activo', 2),
-('1038128324', 'karen', '1@gmail.com', '321414565656', '$2b$10$1qAZ.HvYnoX0ZomDnkgiIuTDsvFJjhw3G8AJxFlkKbPlJTqppYdB6', '2024-06-08 23:29:14', 'activo', 3),
 ('3', 'sebas', '1@gmail.com', '123', '$2b$10$1qAZ.HvYnoX0ZomDnkgiIuTDsvFJjhw3G8AJxFlkKbPlJTqppYdB6', '2024-06-24 23:02:26', 'activo', 1);
 
 -- --------------------------------------------------------
@@ -278,7 +287,7 @@ CREATE TABLE IF NOT EXISTS `historial_cambios` (
   PRIMARY KEY (`id_cambio`),
   KEY `id_cliente` (`id_cliente`),
   KEY `realizado_por` (`realizado_por`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -299,7 +308,7 @@ CREATE TABLE IF NOT EXISTS `informe_pedidos_auditoria` (
   `total_producto` decimal(10,2) DEFAULT NULL,
   `fecha_informe` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_auditoria`)
-) ENGINE=MyISAM AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `informe_pedidos_auditoria`
@@ -342,7 +351,11 @@ INSERT INTO `informe_pedidos_auditoria` (`id_auditoria`, `id_pedido`, `cliente`,
 (34, 34, 'karen', '1@gmail.com', '2024-06-25 04:16:57', 'mari', '10000.00', 1, '10000.00', '2024-06-25 04:16:57'),
 (35, 35, 'karen', '1@gmail.com', '2024-06-25 04:17:27', 'mari', '10000.00', 2, '20000.00', '2024-06-25 04:17:27'),
 (36, 36, 'sebas', '1@gmail.com', '2024-06-25 04:49:45', 'mari', '10000.00', 2, '20000.00', '2024-06-25 04:49:45'),
-(37, 36, 'sebas', '1@gmail.com', '2024-06-25 04:49:45', 'Café Espresso', '3.00', 2, '6.00', '2024-06-25 04:49:45');
+(37, 36, 'sebas', '1@gmail.com', '2024-06-25 04:49:45', 'Café Espresso', '3.00', 2, '6.00', '2024-06-25 04:49:45'),
+(38, 37, 'sebas', '1@gmail.com', '2024-06-25 22:45:41', 'mari', '10000.00', 1, '10000.00', '2024-06-25 22:45:41'),
+(39, 37, 'sebas', '1@gmail.com', '2024-06-25 22:45:41', 'Café Mocha', '4.00', 2, '8.00', '2024-06-25 22:45:41'),
+(40, 38, 'sebas', '1@gmail.com', '2024-07-24 21:39:26', 'Donut de Vainilla', '2.00', 1, '2.00', '2024-07-24 21:39:26'),
+(41, 38, 'sebas', '1@gmail.com', '2024-07-24 21:39:26', 'WEBONES', '100000.00', 1, '100000.00', '2024-07-24 21:39:26');
 
 -- --------------------------------------------------------
 
@@ -359,33 +372,7 @@ CREATE TABLE IF NOT EXISTS `pedidos` (
   `monto_total` decimal(10,2) DEFAULT '0.00',
   PRIMARY KEY (`id_pedido`),
   KEY `id_cliente` (`id_cliente`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Volcado de datos para la tabla `pedidos`
---
-
-INSERT INTO `pedidos` (`id_pedido`, `id_cliente`, `estado`, `fecha_compra`, `monto_total`) VALUES
-(17, '1025884475', 'por entrega', '2024-06-24 00:05:42', '0.00'),
-(18, '1025884475', 'por entrega', '2024-06-24 00:05:50', '0.00'),
-(19, '1025884475', 'entregado', '2024-06-24 00:05:55', '0.00'),
-(20, '1025884475', 'en proceso', '2024-06-24 00:05:59', '0.00'),
-(21, '1025884475', 'pendiente', '2024-06-24 00:06:03', '0.00'),
-(22, '1025884475', 'por entrega', '2024-06-24 00:06:07', '0.00'),
-(23, '1025884475', 'pendiente', '2024-06-24 00:06:14', '0.00'),
-(24, '1025884475', 'pendiente', '2024-06-24 18:01:56', '0.00'),
-(25, '1025884475', 'pendiente', '2024-06-24 22:50:34', '0.00'),
-(26, '1025884475', 'pendiente', '2024-06-24 22:51:19', '0.00'),
-(27, '3', 'pendiente', '2024-06-24 23:05:54', '0.00'),
-(28, '1038128324', 'pendiente', '2024-06-25 00:30:04', '0.00'),
-(29, '1038128324', 'pendiente', '2024-06-25 02:01:07', '0.00'),
-(30, '1038128324', 'pendiente', '2024-06-25 02:01:09', '0.00'),
-(31, '1038128324', 'pendiente', '2024-06-25 02:01:11', '0.00'),
-(32, '1038128324', 'pendiente', '2024-06-25 03:42:20', '0.00'),
-(33, '1038128324', 'pendiente', '2024-06-25 04:14:37', '0.00'),
-(34, '1038128324', 'pendiente', '2024-06-25 04:16:57', '0.00'),
-(35, '1038128324', 'pendiente', '2024-06-25 04:17:27', '0.00'),
-(36, '3', 'pendiente', '2024-06-25 04:49:45', '20006.00');
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -401,40 +388,7 @@ CREATE TABLE IF NOT EXISTS `pedido_producto` (
   `cantidad` int NOT NULL,
   PRIMARY KEY (`id_pedido`,`id_producto`),
   KEY `id_producto` (`id_producto`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Volcado de datos para la tabla `pedido_producto`
---
-
-INSERT INTO `pedido_producto` (`id_pedido`, `id_producto`, `precio_compra`, `cantidad`) VALUES
-(17, 475, 2, 5),
-(17, 484, 2, 3),
-(17, 485, 2, 2),
-(18, 466, 3, 2),
-(19, 470, 3, 2),
-(20, 479, 8, 3),
-(21, 478, 5, 3),
-(22, 478, 5, 3),
-(23, 477, 4, 2),
-(24, 9, 10000, 13),
-(24, 469, 4, 11),
-(24, 476, 2, 14),
-(25, 9, 10000, 1),
-(26, 470, 3, 5),
-(27, 9, 10000, 3),
-(27, 476, 2, 3),
-(28, 9, 10000, 1),
-(29, 9, 10000, 1),
-(30, 466, 3, 1),
-(31, 476, 2, 1),
-(32, 9, 10000, 1),
-(32, 476, 2, 1),
-(33, 9, 10000, 2),
-(34, 9, 10000, 1),
-(35, 9, 10000, 2),
-(36, 9, 10000, 2),
-(36, 466, 3, 2);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Disparadores `pedido_producto`
@@ -485,36 +439,28 @@ CREATE TABLE IF NOT EXISTS `productos` (
   `estado` varchar(25) NOT NULL DEFAULT 'activo',
   `imagen` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_producto`)
-) ENGINE=InnoDB AUTO_INCREMENT=487 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=488 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `productos`
 --
 
 INSERT INTO `productos` (`id_producto`, `nombre`, `descripcion`, `precio`, `fecha_creacion`, `categoria`, `estado`, `imagen`) VALUES
-(1, 'Salchipapa', 'con papa', 15000, '2024-06-23', 'Comida', 'inactivo', 'uploads/1715709644173-descarga.jpg'),
-(9, 'mari', 'Muslitos', 10000, '2024-06-23', 'Comida', 'activo', 'uploads\\1719200854081-1719195684022-Foto documento.jpg'),
-(466, 'Café Espresso', 'Café espresso con una intensa crema', 3, NULL, 'Bebida', 'activo', NULL),
-(467, 'Café Americano', 'Café americano suave y equilibrado', 2, NULL, 'Bebida', 'activo', NULL),
-(468, 'Café Latte', 'Café latte con espuma de leche cremosa', 3, NULL, 'Bebida', 'activo', NULL),
-(469, 'Café Mocha', 'Café mocha con chocolate y crema batida', 4, NULL, 'Bebida', 'activo', NULL),
-(470, 'Capuchino', 'Capuchino con una perfecta mezcla de café y leche', 3, NULL, 'Bebida', 'activo', NULL),
-(471, 'Té Verde', 'Té verde japonés caliente', 3, NULL, 'Bebida', 'activo', NULL),
-(472, 'Té Negro', 'Té negro aromático y robusto', 2, NULL, 'Bebida', 'activo', NULL),
-(473, 'Jugo de Naranja Natural', 'Jugo de naranja fresco recién exprimido', 4, NULL, 'Bebida', 'activo', NULL),
-(474, 'Limonada', 'Refrescante limonada con hielo', 3, NULL, 'Bebida', 'activo', NULL),
-(475, 'Agua Mineral', 'Agua mineral natural', 2, NULL, 'Bebida', 'activo', NULL),
-(476, 'Croissant de Mantequilla', 'Croissant de hojaldre con mantequilla', 2, NULL, 'Comida', 'activo', NULL),
-(477, 'Sándwich de Pollo', 'Sándwich con filete de pollo y vegetales frescos', 4, NULL, 'Comida', 'activo', NULL),
-(478, 'Ensalada César', 'Ensalada con pollo a la parrilla, lechuga romana y aderezo césar', 5, NULL, 'Comida', 'activo', NULL),
-(479, 'Pizza Margherita', 'Pizza tradicional italiana con salsa de tomate, mozzarella y albahaca', 8, NULL, 'Comida', 'activo', NULL),
-(480, 'Hamburguesa Clásica', 'Hamburguesa de carne con queso cheddar y salsa especial', 7, NULL, 'Comida', 'activo', 'uploads\\1719200854081-1719195684022-Foto documento.jpg'),
-(481, 'Wrap Vegetariano', 'Wrap con verduras frescas y hummus', 5, NULL, 'Comida', 'activo', NULL),
-(482, 'Papas Fritas', 'Papas fritas crujientes y doradas', 3, NULL, 'Comida', 'activo', NULL),
-(483, 'Pastel de Chocolate', 'Delicioso pastel de chocolate con cobertura de ganache', 4, NULL, 'Comida', 'activo', NULL),
-(484, 'Galletas de Avena', 'Galletas de avena y pasas', 2, NULL, 'Comida', 'activo', NULL),
-(485, 'Donut de Vainilla', 'Donut clásico con glaseado de vainilla', 2, NULL, 'Comida', 'activo', NULL),
-(486, 'WEBONES', 'esto es la descripcion', 100000000, '2024-06-25', 'Comida', 'activo', 'uploads\\1719312630002-1719195684022-Foto documento.jpg');
+(466, 'Café Espressa', 'Café espresso con una intensa crema', 3, NULL, 'Bebida', 'activo', 'uploads/cafe.jpg'),
+(467, 'Café American', 'Café americano suave y equilibrado', 2, NULL, 'Bebida', 'inactivo', NULL),
+(468, 'Café Latte', 'Café latte con espuma de leche cremosa', 3, NULL, 'Bebida', 'inactivo', NULL),
+(469, 'Café Mocha', 'Café mocha con chocolate y crema batida', 4, NULL, 'Bebida', 'inactivo', NULL),
+(470, 'Capuchino', 'Capuchino con una perfecta mezcla de café y leche', 3, NULL, 'Bebida', 'activo', 'uploads/capu.jpg'),
+(471, 'Té Verde', 'Té verde japonés caliente', 3, NULL, 'Comida', 'activo', 'uploads\\te.jpg'),
+(472, 'Té Negro', 'Té negro aromático y robusto', 2, NULL, 'Bebida', 'inactivo', NULL),
+(473, 'Jugo de Naranja Natural', 'Jugo de naranja fresco recién exprimido', 4, NULL, 'Bebida', 'activo', 'uploads\\jug.jpg'),
+(474, 'Limonada', 'Refrescante limonada con hielo', 3, NULL, 'Bebida', 'activo', 'uploads\\lim.jpg'),
+(475, 'Agua Mineral', 'Agua mineral natural', 2, NULL, 'Bebida', 'activo', 'uploads\\agu.jpg'),
+(476, 'Croissant de Mantequilla', 'Croissant de hojaldre con mantequilla', 2, NULL, 'Comida', 'activo', 'uploads\\caisa.jpg'),
+(477, 'Sándwich de Pollo', 'Sándwich con filete de pollo y vegetales frescos', 4, NULL, 'Comida', 'activo', 'uploads\\san.jpg'),
+(478, 'Ensalada César', 'Ensalada con pollo a la parrilla, lechuga romana y aderezo césar', 5, NULL, 'Comida', 'activo', 'uploads\\ensa.jpg'),
+(479, 'Pizza Margherita', 'Pizza tradicional italiana con salsa de tomate, mozzarella y albahaca', 8, NULL, 'Comida', 'activo', 'uploads\\piz.jpg'),
+(480, 'Hamburguesa Clásica', 'Hamburguesa de carne con queso cheddar y salsa especial', 7, NULL, 'Comida', 'activo', 'uploads\\ham.jpg');
 
 -- --------------------------------------------------------
 
@@ -524,14 +470,14 @@ INSERT INTO `productos` (`id_producto`, `nombre`, `descripcion`, `precio`, `fech
 --
 DROP VIEW IF EXISTS `producto_cantidad_pedidos`;
 CREATE TABLE IF NOT EXISTS `producto_cantidad_pedidos` (
-`id_producto` int
-,`nombre` varchar(255)
-,`descripcion` varchar(255)
-,`precio` int
+`cantidad_pedidos` bigint
 ,`categoria` varchar(25)
+,`descripcion` varchar(255)
 ,`estado` varchar(25)
+,`id_producto` int
 ,`imagen` varchar(255)
-,`cantidad_pedidos` bigint
+,`nombre` varchar(255)
+,`precio` int
 );
 
 -- --------------------------------------------------------
@@ -545,7 +491,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `id_rol` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
   PRIMARY KEY (`id_rol`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `roles`
