@@ -503,15 +503,6 @@ INSERT INTO `roles` (`id_rol`, `nombre`) VALUES
 (3, 'Superusuario');
 
 -- --------------------------------------------------------
-
---
--- Estructura para la vista `producto_cantidad_pedidos`
---
-DROP TABLE IF EXISTS `producto_cantidad_pedidos`;
-
-DROP VIEW IF EXISTS `producto_cantidad_pedidos`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `producto_cantidad_pedidos`  AS SELECT `p`.`id_producto` AS `id_producto`, `p`.`nombre` AS `nombre`, `p`.`descripcion` AS `descripcion`, `p`.`precio` AS `precio`, `p`.`categoria` AS `categoria`, `p`.`estado` AS `estado`, `p`.`imagen` AS `imagen`, count(`pp`.`id_producto`) AS `cantidad_pedidos` FROM (`productos` `p` left join `pedido_producto` `pp` on((`p`.`id_producto` = `pp`.`id_producto`))) GROUP BY `p`.`id_producto`, `p`.`nombre`, `p`.`descripcion`, `p`.`precio`, `p`.`categoria`, `p`.`estado`, `p`.`imagen``imagen`  ;
-
 --
 -- Restricciones para tablas volcadas
 --
