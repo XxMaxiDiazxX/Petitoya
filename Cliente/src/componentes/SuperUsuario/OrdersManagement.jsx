@@ -31,12 +31,7 @@ const OrdersManagement = () => {
   const handleUpdateOrderStatus = async (idPedido, nuevoEstado) => {
     try {
       await axios.put(`http://localhost:3001/super/${idPedido}`, { nuevoEstado });
-      const updatedOrders = orders.map(order => {
-        if (order.id_pedido === idPedido) {
-          return { ...order, estado: nuevoEstado };
-        }
-        return order;
-      });
+      const updatedOrders = orders.filter(order => order.id_pedido !== idPedido);
       setOrders(updatedOrders);
       setError(null);
       toast.success(`El estado del pedido ${idPedido} se ha actualizado a ${nuevoEstado}.`);

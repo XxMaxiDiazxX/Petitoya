@@ -1,7 +1,40 @@
-// EditarProductoModal.js
-import React from 'react';
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const EditarProductoModal = ({ productoSeleccionado, mostrarModal, handleEditarProducto, setMostrarModal, setProductoSeleccionado }) => {
+  // Estado para manejar la previsualización de la imagen y el archivo seleccionado
+  const [imagenPreview, setImagenPreview] = useState(productoSeleccionado.imagenSrc || '');
+  const [imagenFile, setImagenFile] = useState(null);
+
+  // Maneja el cambio en el campo de imagen
+  const handleImagenChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Crear una URL de objeto para la previsualización
+      const fileUrl = URL.createObjectURL(file);
+      setImagenPreview(fileUrl);
+      setImagenFile(file);
+    }
+  };
+
+  // Maneja el envío del formulario
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Crear un FormData para enviar la imagen junto con otros datos del producto
+    const formData = new FormData();
+    formData.append('nombre', productoSeleccionado.nombre);
+    formData.append('descripcion', productoSeleccionado.descripcion);
+    formData.append('precio', productoSeleccionado.precio);
+    formData.append('categoria', productoSeleccionado.categoria);
+
+    if (imagenFile) {
+      formData.append('imagen', imagenFile);
+    }
+
+    handleEditarProducto(formData);
+  };
+
   // Verifica si productoSeleccionado es null o undefined
   if (!productoSeleccionado) {
     return null; // O puedes mostrar un mensaje indicando que no hay producto seleccionado
@@ -30,7 +63,6 @@ const EditarProductoModal = ({ productoSeleccionado, mostrarModal, handleEditarP
               <button
                 type="button"
                 className="close"
-                data-dismiss="modal"
                 aria-label="Close"
                 onClick={() => setMostrarModal(false)}
               >
@@ -38,7 +70,37 @@ const EditarProductoModal = ({ productoSeleccionado, mostrarModal, handleEditarP
               </button>
             </div>
             <div className="modal-body">
-              <form onSubmit={handleEditarProducto}>
+              <form onSubmit={handleSubmit}>
+                {/* Mostrar imagen actual */}
+                {productoSeleccionado.imagenSrc && (
+                  <div className="mb-3">
+                    <img
+                      src={productoSeleccionado.imagenSrc}
+                      alt="Imagen del producto"
+                      style={{ maxWidth: '100%', maxHeight: '200px' }}
+                    />
+                  </div>
+                )}
+
+                {/* Campo para seleccionar nueva imagen */}
+                <div className="form-group">
+                  <label htmlFor="imagen">Imagen:</label>
+                  <input
+                    type="file"
+                    className="form-control"
+                    id="imagen"
+                    accept="image/*"
+                    onChange={handleImagenChange}
+                  />
+                  {imagenPreview && (
+                    <img
+                      src={imagenPreview}
+                      alt="Previsualización"
+                      style={{ maxWidth: '100%', maxHeight: '200px', marginTop: '10px' }}
+                    />
+                  )}
+                </div>
+
                 {/* Campos de entrada para la edición del producto */}
                 <div className="form-group">
                   <label htmlFor="nombre">Nombre:</label>
@@ -51,7 +113,6 @@ const EditarProductoModal = ({ productoSeleccionado, mostrarModal, handleEditarP
                   />
                 </div>
 
-                {/* Agrega campos similares para otros detalles del producto (descripcion, precio, etc.) */}
                 <div className="form-group">
                   <label htmlFor="descripcion">Descripción:</label>
                   <input

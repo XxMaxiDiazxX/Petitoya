@@ -7,24 +7,41 @@ import EditarProductoModal from '../AdminSupremo/EditarProductoModal';
 import EliminarProducto from '../AdminSupremo/DesactivarProducto';
 import HabilitarProducto from '../AdminSupremo/HabilitarProducto';
 import PedidoModalMenu from './PedidoModalMenu';
-import { ToastContainer, toast } from 'react-toastify'; // Importar ToastContainer y toast
-import 'react-toastify/dist/ReactToastify.css'; // Estilos CSS para react-toastify
-import '../../styles/menu/Menu.scss'; // Importa tu archivo de estilos SASS o CSS
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import '../../styles/menu/Menu.scss';
 
 const apiUrl = 'http://localhost:3001/';
 
 export const Menu = () => {
     const { isLoggedIn, role, user } = useAuth();
-    const [productosActivos, setProductosActivos] = useState(true); // Estado para alternar entre productos activos e inactivos
+    const [productosActivos, setProductosActivos] = useState(true);
     const [productos, setProductos] = useState([]);
     const [productosInactivos, setProductosInactivos] = useState([]);
     const [productoSeleccionado, setProductoSeleccionado] = useState(null);
     const [mostrarModal, setMostrarModal] = useState(false);
     const [mostrarPedidoModal, setMostrarPedidoModal] = useState(false);
+    const [notification, setNotification] = useState(null); // Estado adicional para manejar notificaciones
 
     useEffect(() => {
         fetchProductos();
-    }, [productosActivos]); // Actualizar productos cuando cambie la opción activos/inactivos
+    }, [productosActivos]);
+
+    useEffect(() => {
+        // Mostrar la notificación si existe
+        if (notification) {
+            toast[notification.type](notification.message, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            setNotification(null); // Limpiar la notificación después de mostrarla
+        }
+    }, [notification]); // Dependencia en `notification`
 
     const fetchProductos = async () => {
         try {
@@ -45,112 +62,44 @@ export const Menu = () => {
 
     const handleEditarProducto = async () => {
         try {
-            await axios.put(
-                `${apiUrl}products/${productoSeleccionado.id_producto}`,
-                productoSeleccionado
-            );
-
-            fetchProductos();
-
-            // Mostrar notificación de éxito
-            toast.success('Producto editado exitosamente', {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            await axios.put(`${apiUrl}products/${productoSeleccionado.id_producto}`, productoSeleccionado);
+            setMostrarModal(false); // Cerrar el modal
+            setNotification({ type: 'success', message: 'Producto editado exitosamente' }); // Configurar notificación
         } catch (error) {
             console.error('Error al editar el producto:', error);
-            // Mostrar notificación de error
-            toast.error('Error al editar el producto', {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            setNotification({ type: 'error', message: 'Error al editar el producto' }); // Configurar notificación
         }
+    };
+    
+    const handleAbrirEditarProductoModal = (producto) => {
+        setProductoSeleccionado(producto);
+        setMostrarModal(true);
     };
 
     const handleProductoDesactivado = async (idProducto) => {
         try {
-            await axios.put(
-                `${apiUrl}products/desactivar/${idProducto}`
-            );
-
-            // Actualiza la lista de productos activos después de desactivar
+            await axios.put(`${apiUrl}products/desactivar/${idProducto}`);
             const updatedProductos = productos.filter(p => p.id_producto !== idProducto);
             setProductos(updatedProductos);
-
-            // Mostrar notificación de éxito
-            toast.success('Producto desactivado exitosamente', {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            setNotification({ type: 'success', message: 'Producto desactivado exitosamente' }); // Configurar notificación
         } catch (error) {
             console.error('Error al desactivar el producto:', error);
-            // Mostrar notificación de error
-            toast.error('Error al desactivar el producto', {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            setNotification({ type: 'error', message: 'Error al desactivar el producto' }); // Configurar notificación
         }
     };
 
     const handleProductoHabilitado = async (idProducto) => {
         try {
-            await axios.put(
-                `${apiUrl}products/habilitar/${idProducto}`
-            );
-
-            // Actualiza la lista de productos inactivos después de habilitar
+            await axios.put(`${apiUrl}products/habilitar/${idProducto}`);
             const updatedProductosInactivos = productosInactivos.filter(p => p.id_producto !== idProducto);
             setProductosInactivos(updatedProductosInactivos);
-
-            // Mostrar notificación de éxito
-            toast.success('Producto habilitado exitosamente', {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            setNotification({ type: 'success', message: 'Producto habilitado exitosamente' }); // Configurar notificación
         } catch (error) {
             console.error('Error al habilitar el producto:', error);
-            // Mostrar notificación de error
-            toast.error('Error al habilitar el producto', {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            setNotification({ type: 'error', message: 'Error al habilitar el producto' }); // Configurar notificación
         }
     };
 
-    const handleAbrirEditarProductoModal = (producto) => {
-        setProductoSeleccionado(producto);
-        setMostrarModal(true);
-    }
 
     const handleAbrirPedidoModal = (producto) => {
         if (!isLoggedIn) {
@@ -164,7 +113,7 @@ export const Menu = () => {
 
     return (
         <div className='content'>
-            <ToastContainer /> {/* Contenedor de las notificaciones */}
+            <ToastContainer />
             {role !== 2 && role !== 3 && (
                 <div className="row">
                     <div className="col-md-6 col-lg-6">
@@ -265,7 +214,6 @@ export const Menu = () => {
                                                     setProductos={setProductosInactivos}
                                                     onProductoHabilitado={handleProductoHabilitado}
                                                 />
-
                                             )}
                                         </td>
                                     </tr>

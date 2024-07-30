@@ -4,22 +4,25 @@ const path = require('path');
 const app = express();
 
 
+
+
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const cartRoutes = require('./routes/cartRoutes');
 const statsRoutes = require('./routes/statsRoutes');
-const superUsRouter = require('./routes/superUsRoutes')
+const superUsRouter = require('./routes/superUsRoutes');
 
 
 // Middlewares
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000'
+}));
 app.use(express.json());
 
 
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
 // Rutas
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/auth', authRoutes);
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);

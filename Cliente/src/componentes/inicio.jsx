@@ -26,20 +26,11 @@ export const PaginaPrincipal = () => {
         <Routes>
           <Route path="/" element={<Inicio />} />
           <Route path="menu" element={<Menu />} />
-          <Route path="pedidos" element={
-            isLoggedIn && isAdmin ? (
-              <>
-                {/* interfaz de pedidos para Admins */}
-              </>
-            ) : (
-              <Pedidos />
-            )
-          }
-          />
+          <Route path="pedidos" element={<Pedidos />}/>
           <Route path='carrito' element={<Carrito />} />
           <Route path="admin" element={<RutaPrivadaAdmin element={<AgrSu />} />} />
           <Route path='*' element={<PageNotFound />} />
-          <Route path='superusuario' element={<OrdersManagement />} />
+          <Route path='superusuario' element={<RutaPrivadaAdmin element={<OrdersManagement /> } />} />
         </Routes>
       </div>
       <PieDePagina />
