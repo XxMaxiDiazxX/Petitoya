@@ -33,7 +33,6 @@ const RutaPrivadaAdmin = ({ element }) => {
     // Verificar si el usuario está autenticado y es un administrador
     if (!isLoggedIn || (role !== 3 && role !== 2)) {
       // Si no, redirigir al inicio o a otra página
-      // Puedes ajustar la ruta según tus necesidades
       navigate('/');
     }
   }, [isLoggedIn, role, navigate]);
