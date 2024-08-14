@@ -71,6 +71,8 @@ Realizar un atributo para la tabla productos, que almacene el numero de compras,
 Realizar apartado de estados de los pedidos, los activos y los inactivos
 MOSTRAR LOS PRODUCTOS POR ESTADISTICA PERO SE NECESITA MODIFICAR LA BASE DE DATOS
 hacer el icono de carrito en la barra
+(14/57/2024) Se realizo modificacion en la modal para modificar el producto (imagenes, el formuario, para quesea mas completo y no muy simple) 
+(14/57/2024) Se modifico el contexto de mantener el inicio de sesion para que tenga una expiracion de tiempo, por inactividad, por no pulsacion durante 30 minutos, y por no volver a la pagina antes de 24 horas
 
 ---------------------- CAMBIOS SUARIÑO ------------------------
 

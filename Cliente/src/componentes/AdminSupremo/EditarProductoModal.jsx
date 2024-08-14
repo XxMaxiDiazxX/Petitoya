@@ -68,7 +68,7 @@ const EditarProductoModal = ({
     descripcion: Yup.string().required("La descripción es obligatoria"),
     precio: Yup.number()
       .required("El precio es obligatorio")
-      .positive("El precio debe ser un número positivo"),
+      .positive("Tiene que ser un número valido"),
     categoria: Yup.string().required("La categoría es obligatoria"),
     imagen: Yup.mixed()
       .test("fileSize", "El archivo debe ser una imagen", (value) => {
