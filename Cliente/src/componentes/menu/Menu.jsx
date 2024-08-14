@@ -64,25 +64,7 @@ export const Menu = () => {
     setProductosActivos(activos);
   };
 
-  const handleEditarProducto = async () => {
-    try {
-      await axios.put(
-        `${apiUrl}products/${productoSeleccionado.id_producto}`,
-        productoSeleccionado
-      );
-      setMostrarModal(false); // Cerrar el modal
-      setNotification({
-        type: "success",
-        message: "Producto editado exitosamente",
-      }); // Configurar notificación
-    } catch (error) {
-      console.error("Error al editar el producto:", error);
-      setNotification({
-        type: "error",
-        message: "Error al editar el producto",
-      }); // Configurar notificación
-    }
-  };
+
 
   const handleAbrirEditarProductoModal = (producto) => {
     console.log(producto)
@@ -282,9 +264,9 @@ export const Menu = () => {
         <EditarProductoModal
           productoSeleccionado={productoSeleccionado}
           mostrarModal={mostrarModal}
-          handleEditarProducto={handleEditarProducto}
           setMostrarModal={setMostrarModal}
           setProductoSeleccionado={setProductoSeleccionado}
+          setNotification={setNotification}
         />
       )}
 

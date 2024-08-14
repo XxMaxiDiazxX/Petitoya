@@ -59,3 +59,15 @@
 2024-07-17T18:39:27.214Z - [31MERROR[39M: [31mError al registrar usuario: (intermediate value) is not iterable[39m
 2024-07-17T18:41:04.792Z - [31MERROR[39M: [31mError al registrar usuario: (intermediate value) is not iterable[39m
 2024-07-17T19:53:29.371Z - [31MERROR[39M: [31mError al registrar usuario: (intermediate value) is not iterable[39m
+2024-08-14T19:51:53.647Z - [31MERROR[39M: [31mError al actualizar el producto: ER_SP_WRONG_NO_OF_ARGS: Incorrect number of arguments for PROCEDURE petitoya.ModificarProducto; expected 5, got 6[39m
+2024-08-14T20:38:07.610Z - [31MERROR[39M: [31mError al eliminar la imagen anterior: ENOENT: no such file or directory, unlink 'C:\Users\APRENDIZSENA\Desktop\Webos\Petitoya\server\controllers\uploads\1723667772896-hamster.jfif'[39m
+2024-08-14T20:38:42.290Z - [31MERROR[39M: [31mError al eliminar la imagen anterior: ENOENT: no such file or directory, unlink 'C:\Users\APRENDIZSENA\Desktop\Webos\Petitoya\server\controllers\uploads\1723667887600-images.jfif'[39m
+2024-08-14T20:39:52.093Z - [31MERROR[39M: [31mError al eliminar la imagen anterior: ENOENT: no such file or directory, unlink 'C:\Users\APRENDIZSENA\Desktop\Webos\Petitoya\server\controllers\uploads\1723667922283-perro.jpeg'[39m
+2024-08-14T20:41:33.931Z - [31MERROR[39M: [31mError al eliminar la imagen anterior: ENOENT: no such file or directory, unlink 'C:\Users\APRENDIZSENA\Desktop\Webos\Petitoya\server\controllers\uploads\1723667992083-descarga.jfif'[39m
+2024-08-14T20:44:01.171Z - [31MERROR[39M: [31mError al eliminar la imagen anterior: ENOENT: no such file or directory, unlink 'C:\Users\APRENDIZSENA\Desktop\Webos\Petitoya\server\controllers\uploads\1723668093909-Depositphotos_2186038_l-2015.jpg'[39m
+2024-08-14T20:47:12.593Z - [31MERROR[39M: [31mError al eliminar la imagen anterior: ENOENT: no such file or directory, unlink 'C:\Users\APRENDIZSENA\Desktop\Webos\Petitoya\server\controllers\uploads\1723668241160-perro.jpeg'[39m
+2024-08-14T20:47:27.309Z - [31MERROR[39M: [31mError al eliminar la imagen anterior: ENOENT: no such file or directory, unlink 'C:\Users\APRENDIZSENA\Desktop\Webos\Petitoya\server\controllers\uploads\1723668432584-perro.jpeg'[39m
+2024-08-14T20:47:49.491Z - [31MERROR[39M: [31mError al eliminar la imagen anterior: ENOENT: no such file or directory, unlink 'C:\Users\APRENDIZSENA\Desktop\Webos\Petitoya\server\controllers\uploads\1723668447304-images.jfif'[39m
+2024-08-14T20:49:03.181Z - [31MERROR[39M: [31mError al eliminar la imagen anterior: ENOENT: no such file or directory, unlink 'C:\Users\APRENDIZSENA\Desktop\Webos\Petitoya\server\controllers\uploads\1723668469482-perro.jpeg'[39m
+2024-08-14T20:52:07.365Z - [31MERROR[39M: [31mError al eliminar la imagen anterior: ENOENT: no such file or directory, unlink 'C:\Users\APRENDIZSENA\Desktop\Webos\Petitoya\server\controllers\uploads\1723668543174-perro.jpeg'[39m
+2024-08-14T20:57:04.932Z - [31MERROR[39M: [31mError al eliminar la imagen anterior: ENOENT: no such file or directory, unlink 'C:\Users\APRENDIZSENA\Desktop\Webos\Petitoya\server\uploads\1723668968298-images.jfif'[39m

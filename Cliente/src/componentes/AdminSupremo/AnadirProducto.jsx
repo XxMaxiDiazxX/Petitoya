@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 
 const AnadirProducto = ({ setProductos }) => {
   const [idExistError, setIdExistError] = useState("");
-  const [selectedFile, setSelectedFile] = useState(null); // Estado para almacenar el archivo seleccionado
+  const [selectedFile, setSelectedFile] = useState(null);
 
   // Función para manejar el envío del formulario
   const handleSubmit = async (values, { resetForm }) => {
@@ -29,7 +29,7 @@ const AnadirProducto = ({ setProductos }) => {
         formData.append("descripcion", values.descripcion);
         formData.append("precio", values.precio);
         formData.append("categoria", values.categoria);
-        formData.append("imagen", selectedFile); // Utilizamos el archivo seleccionado almacenado en el estado
+        formData.append("imagen", selectedFile);
 
         // Enviar solicitud POST al servidor
         await axios.post("http://localhost:3001/products", formData, {
@@ -46,6 +46,7 @@ const AnadirProducto = ({ setProductos }) => {
 
         // Limpiar los campos después de una inserción exitosa
         resetForm();
+        setSelectedFile(null); // Limpia el archivo seleccionado
 
         toast.success("Producto añadido exitosamente", {
           position: "top-right",
@@ -56,12 +57,10 @@ const AnadirProducto = ({ setProductos }) => {
           draggable: true,
           progress: undefined,
         });
-
-        console.log("Producto añadido exitosamente");
       }
     } catch (error) {
       console.error("Error al añadir el producto", error);
-      toast.success("Producto añadido exitosamente", {
+      toast.error("Error al añadir el producto", {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -73,15 +72,10 @@ const AnadirProducto = ({ setProductos }) => {
     }
   };
 
-  // Utiliza useEffect para forzar la actualización después de que se establezca el estado
-  useEffect(() => {
-    // Puedes agregar lógica adicional aquí si es necesario
-  }, [idExistError]);
-
-  const [mostrarFormulario, setMostrarFormulario] = useState(false); // Nuevo estado para controlar la visibilidad del formulario de añadir producto
+  const [mostrarFormulario, setMostrarFormulario] = useState(false);
 
   const handleAgregarProducto = () => {
-    setMostrarFormulario(!mostrarFormulario); // Alternar entre mostrar u ocultar el formulario al hacer clic en el botón
+    setMostrarFormulario(!mostrarFormulario);
   };
 
   const validationSchema = Yup.object().shape({

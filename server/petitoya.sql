@@ -140,10 +140,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `InhabilitarUsuario` (IN `p_id_clien
 END$$
 
 DROP PROCEDURE IF EXISTS `ModificarProducto`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ModificarProducto` (IN `p_id_producto` VARCHAR(20), IN `p_nombre` VARCHAR(50), IN `p_descripcion` TEXT, IN `p_precio` DECIMAL(10,2), IN `p_categoria` VARCHAR(50))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ModificarProducto` (IN `p_id_producto` INT, IN `p_nombre` VARCHAR(255), IN `p_descripcion` TEXT, IN `p_precio` DECIMAL(10,2), IN `p_categoria` VARCHAR(255), IN `p_imagen` VARCHAR(255))   BEGIN
     UPDATE productos
-    SET nombre = p_nombre, descripcion = p_descripcion, precio = p_precio, categoria = p_categoria
-    WHERE id_producto = p_id_producto;
+    SET 
+        nombre = p_nombre,
+        descripcion = p_descripcion,
+        precio = p_precio,
+        categoria = p_categoria,
+        imagen = COALESCE(p_imagen, imagen) -- Solo actualiza si se proporciona nueva imagen
+    WHERE 
+        id_producto = p_id_producto;
 END$$
 
 DROP PROCEDURE IF EXISTS `ModificarUsuario`$$
