@@ -2,11 +2,11 @@
 @import "../node_modules/bootstrap/scss/variables";
 @import "../node_modules/bootstrap/scss/variables-dark";
 
-
+// Definir los colores personalizados
 $bont: #614E3B;
 $mostaza: #f2eddb;
 
-// Create your own map
+// Crear un mapa de colores personalizado
 $custom-colors: (
   "Barra": #D0B389,
   "Barra2": #614E3B,
@@ -14,6 +14,9 @@ $custom-colors: (
   "naranj": #FF7D00,
   "input": rgb(255, 255, 255),
 );
+
+// Merge the maps to include custom colors into theme colors
+$theme-colors: map-merge($theme-colors, $custom-colors);
 
 .no-padding {
   padding-left: 0;
@@ -45,7 +48,6 @@ $custom-colors: (
   }
 }
 
-
 .cont-cont {
   height: 100%;
   width: 100%;
@@ -54,7 +56,6 @@ $custom-colors: (
   display: flex;
   background-color: #614E3B;
 }
-
 
 main {
   justify-content: center;
@@ -66,7 +67,6 @@ main {
     display: block;
   }
 }
-
 
 .comidas,
 .bebidas {
@@ -143,13 +143,9 @@ main {
   }
 }
 
-
 .texto-titulo {
   color: $mostaza;
 }
-
-
-// styles.scss
 
 @font-face {
   font-family: 'Alfa Slab One';
@@ -164,7 +160,6 @@ main {
   font-weight: normal;
   font-style: normal;
 }
-
 
 .cuerpo {
   font-family: 'Alfa Slab One', sans-serif;
@@ -187,7 +182,6 @@ main {
   color: #78290F;
 }
 
-// Otros estilos...
 .fondito {
   background-image: url("../img/registro/libreta.png");
   background-size: 100% 99%;
@@ -208,21 +202,19 @@ main {
   background-position: center;
 }
 
-// Estilos para el contenedor del carousel
 .carousel-container {
   max-width: 500px; // Ajusta el ancho máximo del carousel según tu diseño
   margin: 0 auto;   // Centra el carousel horizontalmente
   margin-top: 15px;
 }
 
-// Estilos para las imágenes dentro de cada slide del carousel
 .carousel-item-image {
   width: 100%; // Ajusta el ancho de las imágenes al 100% del contenedor del slide
   height: 90%; // Mantén la altura automática para mantener la proporción de la imagen
 }
 
-.request-reset-password, .verify-and-reset-password{
-  background-color :#D0B389;
+.request-reset-password, .verify-and-reset-password {
+  background-color: #D0B389;
   background-image: url("../img/error/fondo.jpg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -234,12 +226,11 @@ main {
 }
 
 .password {
-  background-color :#D0B389;
-  border: 5px solid grey; // Borde sólido de 2px y color gris claro
+  background-color: #D0B389;
+  border: 5px solid grey; // Borde sólido de 5px y color gris claro
   border-radius: 10px;
-  padding-left: 50pxpx;
+  padding-left: 50px;
 }
-
 
 .custom-button {
   background-color: rgb(244, 240, 239) !important;
@@ -264,11 +255,12 @@ main {
   height: 300px;
 }
 
+.table-img {
+  width: 80px; // Ajusta el tamaño según tus necesidades
+  height: 80px; // Ajusta el tamaño según tus necesidades
+  border-radius: 50%;
+  object-fit: cover; // Asegura que la imagen se ajuste sin distorsión
+}
 
-//d-flex flex-column justify-content-center align-items-center w-100 h-100
-
-// Merge the maps
-$theme-colors: map-merge($theme-colors, $custom-colors);
-
-
+// Importar Bootstrap después de los estilos personalizados para evitar conflictos
 @import '../../node_modules/bootstrap/scss/bootstrap.scss';

@@ -64,10 +64,8 @@ export const Menu = () => {
     setProductosActivos(activos);
   };
 
-
-
   const handleAbrirEditarProductoModal = (producto) => {
-    console.log(producto)
+    console.log(producto);
     setProductoSeleccionado(producto);
     setMostrarModal(true);
   };
@@ -203,7 +201,7 @@ export const Menu = () => {
             <table className="table table-striped mt-4">
               <thead>
                 <tr>
-                  <th scope="col">Imagen</th>{" "}
+                  <th scope="col">Imagen</th>
                   <th scope="col">Nombre</th>
                   <th scope="col">Descripción</th>
                   <th scope="col">Precio</th>
@@ -218,11 +216,9 @@ export const Menu = () => {
                         <img
                           src={`${apiUrl}${producto.imagenSrc}`}
                           alt={producto.nombre}
-                          className="img-fluid"
-                          style={{ maxWidth: "100px", height: "auto" }} // Ajusta el tamaño de la imagen
+                          className="table-img"
                         />
-                      </td>{" "}
-                      {/* Nueva celda para mostrar la imagen */}
+                      </td>
                       <td>{producto.nombre}</td>
                       <td>{producto.descripcion}</td>
                       <td>{producto.precio}</td>

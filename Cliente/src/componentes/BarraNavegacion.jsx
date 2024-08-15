@@ -82,10 +82,12 @@ export const BarraNavegacion = () => {
             <Nav className="ml-auto">
               {isLoggedIn && (
                 <>
+                {role === 1 && (
                   <Nav.Link as={Link} to="carrito" className="text-white cuerpo" onClick={() => setLinksNavExpanded(false)}>
-                    <span className="d-lg-none">Carrito</span>
-                    <img src={FaShoppingCart} height="40" alt="Carrito" className="d-none d-lg-block" />
-                  </Nav.Link>
+                  <span className="d-lg-none">Carrito</span>
+                  <img src={FaShoppingCart} height="40" alt="Carrito" className="d-none d-lg-block" />
+                </Nav.Link>
+                )}
                   <Nav.Link as={Link} to="#action/3.2" className="d-lg-none text-white cuerpo" onClick={() => setUserNavExpanded(false)}>Configuración</Nav.Link>
                   <Nav.Link as={Link} to="#" className="d-lg-none text-white cuerpo" onClick={() => { handleLogout(); setUserNavExpanded(false); }}>Cerrar Sesión</Nav.Link>
                 </>
