@@ -1,4 +1,6 @@
-const Producto = ({ nombre, descripcion, precio, imagenSrc, onClick }) => {
+import React from "react";
+
+const Producto = React.memo(({ nombre, descripcion, precio, imagenSrc, onClick }) => {
   // Verificar si imagenSrc tiene un valor antes de usarlo
   console.log(imagenSrc);
   if (!imagenSrc) {
@@ -22,6 +24,6 @@ const Producto = ({ nombre, descripcion, precio, imagenSrc, onClick }) => {
       </div>
     </div>
   );
-};
+});
 
 export default Producto;

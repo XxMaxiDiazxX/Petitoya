@@ -6,8 +6,6 @@ import { Inicio } from './inicio/Inicio';
 import { Pedidos } from './pedidos/Pedidos';
 import { PieDePagina } from './PieDePagina';
 import RutaPrivadaAdmin from './autenticacion/RutaPriavadaAdmin';
-import Admin from './AdminSupremo/Admin';
-import { useAuth } from './autenticacion/AuthContext';
 import PageNotFound from './error/NotFoundPage';
 import Carrito from './pedidos/Carrito';
 import { AgrSu } from './Administrador/AgrSu';
@@ -15,8 +13,6 @@ import OrdersManagement from './superusuario/OrdersManagement';
 
 
 export const PaginaPrincipal = () => {
-
-  const { isLoggedIn, logout, isAdmin, user } = useAuth();
 
   return (
     <div className="d-flex flex-column" style={{ minHeight: '100vh' }}>
