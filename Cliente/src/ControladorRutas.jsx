@@ -1,9 +1,9 @@
 import React from 'react';
 import { PaginaPrincipal } from './componentes/inicio';
 import './styles/custom.scss';
-import { Login } from './componentes/Usuario/Login';
+import { Login } from './componentes/usuario/Login';
 import { Registro } from './componentes/Usuario/Registro';
-import ValidacionToken from './componentes/Usuario/ValidacionToken';
+import ValidacionToken from './componentes/usuario/ValidacionToken';
 import PageNotFound from './componentes/error/NotFoundPage';
 import { Routes, Route } from 'react-router-dom';
 import { VerifyAndResetPassword } from './componentes/Usuario/Restablecimiento';

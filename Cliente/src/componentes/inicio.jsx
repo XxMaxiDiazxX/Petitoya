@@ -11,7 +11,7 @@ import { useAuth } from './autenticacion/AuthContext';
 import PageNotFound from './error/NotFoundPage';
 import Carrito from './pedidos/Carrito';
 import { AgrSu } from './Administrador/AgrSu';
-import OrdersManagement from './SuperUsuario/OrdersManagement';
+import OrdersManagement from './superusuario/OrdersManagement';
 
 
 export const PaginaPrincipal = () => {
