@@ -53,6 +53,7 @@ https://medium.com/@diego.coder/construyendo-aplicaciones-seguras-con-node-js-y-
 
 # Casos de uso
 
+# para que no me renderice toda la pagina al actualizar, solo me detecte el componente que se actualizo y solo que se renderice este
 
 ------------------- CAMBIOS JOHANSHITO --------------------------------
 

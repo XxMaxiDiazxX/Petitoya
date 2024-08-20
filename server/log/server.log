@@ -73,3 +73,7 @@
 2024-08-14T20:49:03.181Z - [31MERROR[39M: [31mError al eliminar la imagen anterior: ENOENT: no such file or directory, unlink 'C:\Users\APRENDIZSENA\Desktop\Webos\Petitoya\server\controllers\uploads\1723668469482-perro.jpeg'[39m
 2024-08-14T20:52:07.365Z - [31MERROR[39M: [31mError al eliminar la imagen anterior: ENOENT: no such file or directory, unlink 'C:\Users\APRENDIZSENA\Desktop\Webos\Petitoya\server\controllers\uploads\1723668543174-perro.jpeg'[39m
 2024-08-14T20:57:04.932Z - [31MERROR[39M: [31mError al eliminar la imagen anterior: ENOENT: no such file or directory, unlink 'C:\Users\APRENDIZSENA\Desktop\Webos\Petitoya\server\uploads\1723668968298-images.jfif'[39m
+2024-08-20T21:03:14.692Z - [31MERROR[39M: [31mError al verificar la contraseña: bcrypt is not defined[39m
+2024-08-20T21:06:46.905Z - [31MERROR[39M: [31mError al verificar la contraseña: data and hash arguments required[39m
+2024-08-20T21:06:51.821Z - [31MERROR[39M: [31mError al verificar la contraseña: data and hash arguments required[39m
+2024-08-20T21:06:53.007Z - [31MERROR[39M: [31mError al verificar la contraseña: data and hash arguments required[39m
