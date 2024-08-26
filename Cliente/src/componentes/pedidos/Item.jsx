@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Pedido from './Pedido'; // Asegúrate de importar el componente Pedido
 import '../../styles/pedidos/Item.scss'; // Importa el archivo SCSS para los estilos personalizados
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export const Item = ({ id_cliente }) => {
   const [pedidos, setPedidos] = useState([]);
@@ -9,7 +10,7 @@ export const Item = ({ id_cliente }) => {
   useEffect(() => {
     const fetchPedidos = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/orders/cliente/${id_cliente}`);
+        const response = await axios.get(`${apiUrl}/orders/cliente/${id_cliente}`);
         setPedidos(response.data);
       } catch (error) {
         console.error('Error fetching Pedidos:', error);

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
-const apiUrl = 'http://localhost:3001/';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const useProductos = (productosActivos) => {
   const [productos, setProductos] = useState([]);
@@ -9,7 +9,7 @@ const useProductos = (productosActivos) => {
 
   const fetchProductos = useCallback(async () => {
     try {
-      const response = await axios.get(`${apiUrl}products`);
+      const response = await axios.get(`${apiUrl}/products`);
       const activos = response.data.filter(
         (producto) => producto.estado !== 'inactivo'
       );
@@ -30,7 +30,7 @@ const useProductos = (productosActivos) => {
 
   const desactivarProducto = useCallback(async (idProducto) => {
     try {
-      await axios.put(`${apiUrl}products/desactivar/${idProducto}`);
+      await axios.put(`${apiUrl}/products/desactivar/${idProducto}`);
       setProductos((prev) =>
         prev.filter((producto) => producto.id_producto !== idProducto)
       );
@@ -41,7 +41,7 @@ const useProductos = (productosActivos) => {
 
   const habilitarProducto = useCallback(async (idProducto) => {
     try {
-      await axios.put(`${apiUrl}products/habilitar/${idProducto}`);
+      await axios.put(`${apiUrl}/products/habilitar/${idProducto}`);
       setProductosInactivos((prev) =>
         prev.filter((producto) => producto.id_producto !== idProducto)
       );

@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap'; // Importa los componentes de Bootstrap necesarios
 import '../../styles/menu/PedidoModalMenu.scss'; // Ajusta la ruta a tu archivo SCSS
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const validationSchema = Yup.object().shape({
   codigo_verificacion: Yup.string()
@@ -37,7 +38,7 @@ export const VerifyAndResetPassword = () => {
         initialValues={{ id_cliente, codigo_verificacion: '', nueva_contrasena: '', confirmar_contrasena: '' }}
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
-          axios.post('http://localhost:3001/auth/verify-code-and-reset-password', values)
+          axios.post(`${apiUrl}/auth/verify-code-and-reset-password`, values)
             .then(response => {
               setMessage('Contraseña cambiada exitosamente.');
               navigate('/');

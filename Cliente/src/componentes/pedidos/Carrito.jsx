@@ -4,7 +4,7 @@ import { useAuth } from "../autenticacion/AuthContext";
 import { Table } from "react-bootstrap";
 import "../../styles/Inicio/Carrito.scss";
 
-const apiUrl = "http://localhost:3001/";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const Carrito = () => {
   const [carrito, setCarrito] = useState([]);
@@ -15,7 +15,7 @@ const Carrito = () => {
       const fetchCarrito = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:3001/cart/${user.id}`
+            `${apiUrl}/cart/${user.id}`
           );
           setCarrito(response.data);
           console.log(response.data);
@@ -34,7 +34,7 @@ const Carrito = () => {
 
   const handleCantidadChange = async (id_producto, cantidad) => {
     try {
-      await axios.post(`http://localhost:3001/cart`, {
+      await axios.post(`${apiUrl}/cart`, {
         id_cliente: user.id,
         id_producto,
         cantidad,
@@ -52,7 +52,7 @@ const Carrito = () => {
   const handleEliminarProducto = async (id_producto) => {
     try {
       await axios.delete(
-        `http://localhost:3001/cart/${user.id}/${id_producto}`
+        `${apiUrl}/cart/${user.id}/${id_producto}`
       );
       setCarrito((prevCarrito) =>
         prevCarrito.filter((item) => item.id_producto !== id_producto)
@@ -67,7 +67,7 @@ const Carrito = () => {
 
   const handleRealizarPedido = async () => {
     try {
-      const response = await axios.post(`http://localhost:3001/orders`, {
+      const response = await axios.post(`${apiUrl}/orders`, {
         id_cliente: user.id,
         productos: carrito,
       });
@@ -107,7 +107,7 @@ const Carrito = () => {
                   <tr key={producto.id_producto}>
                     <td>
                       <img
-                        src={`${apiUrl}${producto.imagen}`}
+                        src={`${apiUrl}/${producto.imagen}`}
                         alt={producto.nombre}
                         className="table-img"
                       />
@@ -148,7 +148,7 @@ const Carrito = () => {
             {carrito.map((producto) => (
               <div key={producto.id_producto} className="carrito-item-mobile">
                 <img
-                  src={`${apiUrl}${producto.imagen}`}
+                  src={`${apiUrl}/${producto.imagen}`}
                   alt={producto.nombre}
                   style={{ maxHeight: "200px", objectFit: "cover" }}
                   />

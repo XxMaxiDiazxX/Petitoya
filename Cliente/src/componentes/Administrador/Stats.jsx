@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export const EstadisticasVentas = () => {
   const [productosMasComprados, setProductosMasComprados] = useState([]);
@@ -13,11 +14,11 @@ export const EstadisticasVentas = () => {
     const fetchData = async () => {
       try {
         const [masCompradosRes, menosCompradosRes, diariasRes, semanalesRes, mensualesRes] = await Promise.all([
-          axios.get('http://localhost:3001/stats/mascomprados'),
-          axios.get('http://localhost:3001/stats/menoscomprados'),
-          axios.get('http://localhost:3001/stats/diarias'),
-          axios.get('http://localhost:3001/stats/semanales'),
-          axios.get('http://localhost:3001/stats/mensuales')
+          axios.get(`${apiUrl}/stats/mascomprados`),
+          axios.get(`${apiUrl}/stats/menoscomprados`),
+          axios.get(`${apiUrl}/stats/diarias`),
+          axios.get(`${apiUrl}/stats/semanales`),
+          axios.get(`${apiUrl}/stats/mensuales`)
         ]);
 
         setProductosMasComprados(masCompradosRes.data);

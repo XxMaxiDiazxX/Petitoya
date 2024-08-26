@@ -3,6 +3,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const AnadirProducto = ({ setProductos }) => {
   const [idExistError, setIdExistError] = useState("");
@@ -13,7 +14,7 @@ const AnadirProducto = ({ setProductos }) => {
     try {
       // Verificar si el ID ya existe
       const idExistResponse = await axios.get(
-        `http://localhost:3001/products/${values.id_producto}`
+        `${apiUrl}/products/${values.id_producto}`
       );
 
       if (idExistResponse.data.length > 0) {
@@ -32,14 +33,14 @@ const AnadirProducto = ({ setProductos }) => {
         formData.append("imagen", selectedFile);
 
         // Enviar solicitud POST al servidor
-        await axios.post("http://localhost:3001/products", formData, {
+        await axios.post(`${apiUrl}/products`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
 
         // Obtener la lista actualizada de productos después de la inserción
-        const response = await axios.get("http://localhost:3001/products");
+        const response = await axios.get(`${apiUrl}/products`);
 
         // Actualizar el estado local con la nueva lista de productos
         setProductos(response.data);
@@ -109,7 +110,12 @@ const AnadirProducto = ({ setProductos }) => {
                 <div className="row">
                   <div className="mb-1 col-md">
                     <label className="form-label">Nombre:</label>
-                    <Field type="text" name="nombre" className="form-control" />
+                    <Field 
+                      type="text"
+                      name="nombre"
+                      className="form-control"
+                      maxlength="50"
+                    />
                     <ErrorMessage
                       name="nombre"
                       component="div"

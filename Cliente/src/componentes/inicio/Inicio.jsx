@@ -3,40 +3,59 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Producto } from "./Producto";
 import Carusel from "./Carusel";
-import PedidoModalInicio from "./PedidoModalInicio";
+import PedidoModalMenu from "../menu/PedidoModalMenu";
 import { useAuth } from "../autenticacion/AuthContext";
+import { ToastContainer, toast } from "react-toastify";
 import "../../styles/Inicio/Inicio.scss"; // Importar los estilos SCSS
 
-
-const apiUrl = 'http://localhost:3001/';
-
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export const Inicio = () => {
-  const { user } = useAuth() || { user: null };
+  const { user, isLoggedIn } = useAuth();
   const [mostrarPedidoModal, setMostrarPedidoModal] = useState(false);
   const [productos, setProductos] = useState([]);
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
+  const [notification, setNotification] = useState(null);
 
   useEffect(() => {
     const obtenerProductosMenosUsados = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/products/leastused');
-        console.log('Respuesta del servidor:', response.data);
+        const response = await axios.get(
+          `${apiUrl}/products/leastused`
+        );
+        console.log("Respuesta del servidor:", response.data);
 
         if (response.data.length > 0) {
-          const productosActivos = response.data.filter(producto => producto.estado !== 'inactivo');
-          console.log('Productos activos:', productosActivos);
+          const productosActivos = response.data.filter(
+            (producto) => producto.estado !== "inactivo"
+          );
+          console.log("Productos activos:", productosActivos);
           setProductos(productosActivos.slice(0, 8)); // Limitar a 8 productos
         } else {
-          console.log('No se encontraron productos.');
+          console.log("No se encontraron productos.");
         }
       } catch (error) {
-        console.error('Error al obtener los productos menos usados:', error);
+        console.error("Error al obtener los productos menos usados:", error);
       }
     };
 
     obtenerProductosMenosUsados();
   }, []);
+
+  useEffect(() => {
+    if (notification) {
+      toast[notification.type](notification.message, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      setNotification(null);
+    }
+  }, [notification]);
 
   const handleAbrirPedidoModal = (producto) => {
     setProductoSeleccionado(producto);
@@ -44,26 +63,34 @@ export const Inicio = () => {
   };
 
   // Filtrar productos por categoría
-  const productosComidas = productos.filter(producto => producto.categoria === 'Comida');
-  const productosBebidas = productos.filter(producto => producto.categoria === 'Bebida');
+  const productosComidas = productos.filter(
+    (producto) => producto.categoria === "Comida"
+  );
+  const productosBebidas = productos.filter(
+    (producto) => producto.categoria === "Bebida"
+  );
 
   return (
     <>
+      <ToastContainer />
       <div className="sugerencias container text-center">
-      <Carusel/>
+        <Carusel />
         <h2 className="mt-3 bg-barra3 cuerpo text-white">Sugerencias</h2>
         <div className="row">
           {/* Mostrar productos de Comidas */}
           <div className="col-12 col-lg-6 mb-4">
             <h4 className="cuerpo">Comidas</h4>
             <div className="row">
-              {productosComidas.map(producto => (
-                <div key={producto.id_producto} className="col-12 col-sm-6 col-md-4 col-lg-6 mb-4">
+              {productosComidas.map((producto) => (
+                <div
+                  key={producto.id_producto}
+                  className="col-12 col-sm-6 col-md-4 col-lg-6 mb-4"
+                >
                   <Producto
                     nombre={producto.nombre}
                     descripcion={producto.descripcion}
                     precio={producto.precio}
-                    imagenSrc={`${apiUrl}${producto.imagenSrc}`}
+                    imagenSrc={`${apiUrl}/${producto.imagenSrc}`}
                     onClick={() => handleAbrirPedidoModal(producto)}
                   />
                 </div>
@@ -74,13 +101,16 @@ export const Inicio = () => {
           <div className="col-12 col-lg-6 mb-4">
             <h4 className="cuerpo">Bebidas</h4>
             <div className="row">
-              {productosBebidas.map(producto => (
-                <div key={producto.id_producto} className="col-12 col-sm-6 col-md-4 col-lg-6 mb-4">
+              {productosBebidas.map((producto) => (
+                <div
+                  key={producto.id_producto}
+                  className="col-12 col-sm-6 col-md-4 col-lg-6 mb-4"
+                >
                   <Producto
                     nombre={producto.nombre}
                     descripcion={producto.descripcion}
                     precio={producto.precio}
-                    imagenSrc={`${apiUrl}${producto.imagenSrc}`}
+                    imagenSrc={`${apiUrl}/${producto.imagenSrc}`}
                     onClick={() => handleAbrirPedidoModal(producto)}
                   />
                 </div>
@@ -90,14 +120,14 @@ export const Inicio = () => {
         </div>
       </div>
       {mostrarPedidoModal && productoSeleccionado && (
-        <PedidoModalInicio
+        <PedidoModalMenu
           producto={productoSeleccionado}
           mostrarModal={mostrarPedidoModal}
           setMostrarModal={setMostrarPedidoModal}
-          id_cliente={user ? user.id : null}  // Aquí se asegura de que user y user.id estén definidos
+          id_cliente={user ? user.id : null} // Aquí se asegura de que user y user.id estén definidos
+          isLoggedIn={isLoggedIn}
         />
       )}
     </>
   );
 };
-

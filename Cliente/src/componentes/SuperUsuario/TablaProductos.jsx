@@ -55,7 +55,7 @@ export const TablaProductos = ({
               <tr key={producto.id_producto}>
                 <td>
                   <img
-                    src={`${apiUrl}${producto.imagenSrc}`}
+                    src={`${apiUrl}/${producto.imagenSrc}`}
                     alt={producto.nombre}
                     className="table-img"
                   />

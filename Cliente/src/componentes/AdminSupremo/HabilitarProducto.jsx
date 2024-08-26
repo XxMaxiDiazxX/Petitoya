@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Modal } from 'react-bootstrap';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const HabilitarProducto = ({ id_producto, onProductoHabilitado, setProductos }) => {
   const [mostrarModal, setMostrarModal] = useState(false);
@@ -9,10 +10,10 @@ const HabilitarProducto = ({ id_producto, onProductoHabilitado, setProductos }) 
   const handleHabilitarProducto = async (idProducto) => {
     try {
       // Enviar solicitud PUT al servidor para habilitar el producto
-      await axios.put(`http://localhost:3001/products/habilitar/${idProducto}`);
+      await axios.put(`${apiUrl}/products/habilitar/${idProducto}`);
 
       // Actualiza la lista de productos después de habilitar
-      const response = await axios.get('http://localhost:3001/products');
+      const response = await axios.get(`${apiUrl}/products`);
       setProductos(response.data);
 
       // Llama a la función onProductoHabilitado para notificar al componente padre

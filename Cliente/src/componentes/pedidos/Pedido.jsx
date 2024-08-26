@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Button, Table } from 'react-bootstrap';
 import axios from 'axios';
 import '../../styles/pedidos/Item.scss'; // Asegúrate de importar el archivo SCSS correcto
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const Pedido = ({ id_pedido, estado, fecha_compra, total_pagar }) => {
   const [showModal, setShowModal] = useState(false);
@@ -15,7 +16,7 @@ const Pedido = ({ id_pedido, estado, fecha_compra, total_pagar }) => {
 
   const fetchDetalles = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/orders/detalles/${id_pedido}`);
+      const response = await axios.get(`${apiUrl}/orders/detalles/${id_pedido}`);
       setDetalles(response.data);
     } catch (error) {
       console.error('Error fetching detalles:', error);

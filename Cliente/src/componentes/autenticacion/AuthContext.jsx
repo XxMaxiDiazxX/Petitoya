@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [sessionStartTime, setSessionStartTime] = useState(null);
 
-  const sessionTimeout = 24 * 60 * 60 * 1000; // Tiempo de sesión en milisegundos (24 horas)
+  const sessionTimeout = 10 * 60 * 1000; // Tiempo de sesión en milisegundos (24 horas)
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");

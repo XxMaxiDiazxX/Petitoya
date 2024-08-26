@@ -5,6 +5,7 @@ import { Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import EstadisticasVentas from './Stats';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export const AgrSu = () => {
     const initialValues = {
@@ -44,7 +45,7 @@ export const AgrSu = () => {
     const navigate = useNavigate();
 
     const onSubmit = (values, { setSubmitting, resetForm }) => {
-        axios.post('http://localhost:3001/auth/registerSu', values)
+        axios.post(`${apiUrl}/auth/registerSu`, values)
             .then(response => {
                 console.log('Registro exitoso:', response.data);
                 setRegistrationSuccess(true);

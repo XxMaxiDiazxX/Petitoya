@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as Yup from 'yup';
-
+const apiUrl = import.meta.env.VITE_API_URL;
 export const Registro = () => {
     const initialValues = {
         nombre: '',
@@ -45,7 +45,7 @@ export const Registro = () => {
 
     const onSubmit = async (values, { setSubmitting }) => {
         try {
-            const response = await axios.post('http://localhost:3001/auth/register', values);
+            const response = await axios.post(`${apiUrl}/auth/register`, values);
             console.log('Registro exitoso:', response.data);
             handleSuccessfulRegistration(response.data);
         } catch (error) {
@@ -93,6 +93,7 @@ export const Registro = () => {
                                         name="nombre"
                                         className="form-control bg-input usua"
                                         placeholder="Ingrese su nombre"
+                                        maxlength="40"
                                     />
                                     <ErrorMessage name="nombre" component="span" className="error" />
                                 </Col>
@@ -103,6 +104,7 @@ export const Registro = () => {
                                         name="apellido"
                                         className="form-control bg-input usua"
                                         placeholder="Ingrese su apellido"
+                                        maxlength="40"
                                     />
                                     <ErrorMessage name="apellido" component="span" className="error" />
                                 </Col>
@@ -115,6 +117,7 @@ export const Registro = () => {
                                         name="documento"
                                         className="form-control bg-input usua"
                                         placeholder="Ingrese su documento"
+                                        maxlength="20"
                                     />
                                     <ErrorMessage name="documento" component="span" className="error" />
                                 </Col>
@@ -125,6 +128,7 @@ export const Registro = () => {
                                         name="telefono"
                                         className="form-control bg-input usua"
                                         placeholder="Ingrese su teléfono"
+                                        maxlength="50"
                                     />
                                     <ErrorMessage name="telefono" component="span" className="error" />
                                 </Col>
@@ -137,6 +141,7 @@ export const Registro = () => {
                                         name="contrasena"
                                         className="form-control bg-input contra"
                                         placeholder="Ingrese su contraseña"
+                                        maxlength="50"
                                     />
                                     <ErrorMessage name="contrasena" component="span" className="error" />
                                 </Col>
@@ -148,6 +153,7 @@ export const Registro = () => {
                                         name="correo_electronico"
                                         className="form-control bg-input usua"
                                         placeholder="Ingrese su correo electrónico"
+                                        maxlength="100"
                                     />
                                     <ErrorMessage name="correo_electronico" component="span" className="error" />
                                 </Col>
@@ -160,6 +166,7 @@ export const Registro = () => {
                                         name="confirmar_contrasena"
                                         className="form-control bg-input contra"
                                         placeholder="Ingrese su contraseña"
+                                        maxlength="50"
                                     />
                                     <ErrorMessage name="confirmar_contrasena" component="span" className="error" />
                                 </Col>

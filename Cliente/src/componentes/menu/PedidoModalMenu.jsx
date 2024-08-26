@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css"; // Estilos CSS para react-toasti
 import "../../styles/menu/PedidoModalMenu.scss"; // Importa el archivo de estilos
 import { useAuth } from "../autenticacion/AuthContext";
 
-const apiUrl = "http://localhost:3001/";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export const PedidoModalMenu = ({
   producto,
@@ -15,7 +15,7 @@ export const PedidoModalMenu = ({
   isLoggedIn,
 }) => {
   const [cantidad, setCantidad] = useState(1); // Inicializar con 1 para evitar valores cero
-  const urlImagen = `${apiUrl}${producto.imagenSrc}`;
+  const urlImagen = `${apiUrl}/${producto.imagenSrc}`;
   const modalRef = useRef(null);
 
 
@@ -31,7 +31,7 @@ export const PedidoModalMenu = ({
     }
 
     try {
-      await axios.post("http://localhost:3001/cart", {
+      await axios.post(`${apiUrl}/cart`, {
         id_cliente,
         id_producto: producto.id_producto,
         cantidad,
@@ -74,13 +74,13 @@ export const PedidoModalMenu = ({
     }
 
     try {
-      await axios.post("http://localhost:3001/cart", {
+      await axios.post(`${apiUrl}/cart`, {
         id_cliente,
         id_producto: producto.id_producto,
         cantidad,
       });
 
-      const response = await axios.post("http://localhost:3001/orders", {
+      const response = await axios.post(`${apiUrl}/orders`, {
         id_cliente,
       });
 

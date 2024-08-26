@@ -8,6 +8,8 @@ import { useAuth } from '../autenticacion/AuthContext';
 import Cuchillo from '../../img/inicioSesion/cuchillo.png';
 import Tenedor from '../../img/inicioSesion/tenedor.png';
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export const Login = () => {
   const [error, setError] = useState('');
 
@@ -58,7 +60,7 @@ export const Login = () => {
                     .required('Campo requerido'),
                   })}
                   onSubmit={(values, { setSubmitting }) => {
-                    axios.post('http://localhost:3001/auth/login', values)
+                    axios.post(`${apiUrl}/auth/login`, values)
                       .then(response => {
                         if (response.data && response.data.user) {
                           console.log('Inicio de sesión exitoso:', response.data.user, response.data.user.role);
@@ -91,6 +93,7 @@ export const Login = () => {
                         name="documento"
                         className="form-control form-control-"
                         placeholder="Tu Documento"
+                        maxlength="20"
                       />
                     </div>
                     <ErrorMessage name="documento" component="div" className="text-danger fs-6 lh-1" />
@@ -102,6 +105,7 @@ export const Login = () => {
                         name="contrasena"
                         className="form-control"
                         placeholder="Tu contraseña"
+                        maxlength="50"
                       />
                       <ErrorMessage name="contrasena" component="div" className="text-danger fs-6 lh-1" />
                     </div>

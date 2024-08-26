@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap'; // Importa los componentes de Bootstrap necesarios
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export const ValidacionToken = () => {
   const [error, setError] = useState('');
@@ -24,7 +25,7 @@ export const ValidacionToken = () => {
                 .required('Correo electrónico es obligatorio'),
             })}
             onSubmit={(values, { setSubmitting, setFieldValue }) => {
-              axios.post('http://localhost:3001/auth/request-password-reset', values)
+              axios.post(`${apiUrl}/auth/request-password-reset`, values)
                 .then(response => {
                   setMessage('Se ha enviado un código de verificación a tu correo electrónico.');
                   setFieldValue('id_cliente', response.data.id_cliente);

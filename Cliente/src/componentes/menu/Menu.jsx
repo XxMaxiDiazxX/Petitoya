@@ -6,10 +6,9 @@ import EditarProductoModal from "../AdminSupremo/EditarProductoModal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../styles/menu/Menu.scss";
-
+import PedidoModalMenu from "./PedidoModalMenu";
 import TablaProductos from "../superusuario/TablaProductos";
-
-const apiUrl = "http://localhost:3001/";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export const Menu = () => {
   const { isLoggedIn, role, user } = useAuth();
@@ -42,9 +41,13 @@ export const Menu = () => {
 
   const fetchProductos = async () => {
     try {
-      const response = await axios.get(`${apiUrl}products`);
-      const activos = response.data.filter((producto) => producto.estado !== "inactivo");
-      const inactivos = response.data.filter((producto) => producto.estado === "inactivo");
+      const response = await axios.get(`${apiUrl}/products`);
+      const activos = response.data.filter(
+        (producto) => producto.estado !== "inactivo"
+      );
+      const inactivos = response.data.filter(
+        (producto) => producto.estado === "inactivo"
+      );
 
       setProductos(activos);
       setProductosInactivos(inactivos);
@@ -64,8 +67,10 @@ export const Menu = () => {
 
   const handleProductoDesactivado = async (idProducto) => {
     try {
-      await axios.put(`${apiUrl}products/desactivar/${idProducto}`);
-      const updatedProductos = productos.filter((p) => p.id_producto !== idProducto);
+      await axios.put(`${apiUrl}/products/desactivar/${idProducto}`);
+      const updatedProductos = productos.filter(
+        (p) => p.id_producto !== idProducto
+      );
       setProductos(updatedProductos);
       setNotification({
         type: "success",
@@ -82,8 +87,10 @@ export const Menu = () => {
 
   const handleProductoHabilitado = async (idProducto) => {
     try {
-      await axios.put(`${apiUrl}products/habilitar/${idProducto}`);
-      const updatedProductosInactivos = productosInactivos.filter((p) => p.id_producto !== idProducto);
+      await axios.put(`${apiUrl}/products/habilitar/${idProducto}`);
+      const updatedProductosInactivos = productosInactivos.filter(
+        (p) => p.id_producto !== idProducto
+      );
       setProductosInactivos(updatedProductosInactivos);
       setNotification({
         type: "success",
@@ -123,7 +130,7 @@ export const Menu = () => {
                       nombre={producto.nombre}
                       descripcion={producto.descripcion}
                       precio={producto.precio}
-                      imagenSrc={`${apiUrl}${producto.imagenSrc}`}
+                      imagenSrc={`${apiUrl}/${producto.imagenSrc}`}
                       onClick={() => handleAbrirPedidoModal(producto)}
                     />
                   </div>
@@ -141,7 +148,7 @@ export const Menu = () => {
                       nombre={producto.nombre}
                       descripcion={producto.descripcion}
                       precio={producto.precio}
-                      imagenSrc={`${apiUrl}${producto.imagenSrc}`}
+                      imagenSrc={`${apiUrl}/${producto.imagenSrc}`}
                       onClick={() => handleAbrirPedidoModal(producto)}
                     />
                   </div>
@@ -174,6 +181,7 @@ export const Menu = () => {
           setMostrarModal={setMostrarModal}
           setProductoSeleccionado={setProductoSeleccionado}
           setNotification={setNotification}
+          fetchProductos={fetchProductos} // Pasar fetchProductos aquí
         />
       )}
 

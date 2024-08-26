@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Modal, Button, Table } from 'react-bootstrap';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const OrdersManagement = () => {
   const [ordersType, setOrdersType] = useState('pendiente');
@@ -17,7 +18,7 @@ const OrdersManagement = () => {
   }, [ordersType]);
 
   const fetchOrders = async (type) => {
-    let url = `http://localhost:3001/super/${type}`;
+    let url = `${apiUrl}/super/${type}`;
     try {
       const response = await axios.get(url);
       setOrders(response.data);
@@ -30,7 +31,7 @@ const OrdersManagement = () => {
 
   const handleUpdateOrderStatus = async (idPedido, nuevoEstado) => {
     try {
-      await axios.put(`http://localhost:3001/super/${idPedido}`, { nuevoEstado });
+      await axios.put(`${apiUrl}/super/${idPedido}`, { nuevoEstado });
       const updatedOrders = orders.filter(order => order.id_pedido !== idPedido);
       setOrders(updatedOrders);
       setError(null);
@@ -53,7 +54,7 @@ const OrdersManagement = () => {
 
   const fetchDetalles = async (idPedido) => {
     try {
-      const response = await axios.get(`http://localhost:3001/orders/detalles/${idPedido}`);
+      const response = await axios.get(`${apiUrl}/orders/detalles/${idPedido}`);
       setDetalles(response.data);
     } catch (error) {
       console.error('Error fetching detalles:', error);

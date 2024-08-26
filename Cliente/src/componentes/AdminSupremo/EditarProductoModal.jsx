@@ -3,7 +3,7 @@ import axios from "axios";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-const apiUrl = "http://localhost:3001/";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const EditarProductoModal = ({
   productoSeleccionado,
@@ -11,20 +11,19 @@ const EditarProductoModal = ({
   setMostrarModal,
   setProductoSeleccionado,
   setNotification,
+  fetchProductos,
 }) => {
   const [imagenPreview, setImagenPreview] = useState("");
   const modalRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
 
-  // Efecto para actualizar la previsualización cuando se seleccione un producto
   useEffect(() => {
     if (productoSeleccionado) {
-      const urlImagen = `${apiUrl}${productoSeleccionado.imagenSrc}`;
+      const urlImagen = `${apiUrl}/${productoSeleccionado.imagenSrc}`;
       setImagenPreview(urlImagen);
     }
   }, [productoSeleccionado]);
 
-  // Manejador de clics fuera del modal
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -41,19 +40,34 @@ const EditarProductoModal = ({
     };
   }, [mostrarModal, setMostrarModal]);
 
+  useEffect(() => {
+    return () => {
+      if (imagenPreview.startsWith("blob:")) {
+        URL.revokeObjectURL(imagenPreview);
+      }
+    };
+  }, [imagenPreview]);
+
   const handleEditarProducto = async (formData) => {
     try {
-      await axios.put(`${apiUrl}products/${productoSeleccionado.id_producto}`, formData, {
+      await axios.put(`${apiUrl}/products/${productoSeleccionado.id_producto}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-
-      setMostrarModal(false);
+  
       setNotification({
         type: "success",
         message: "Producto editado exitosamente",
       });
+      
+      setMostrarModal(false);
+      setProductoSeleccionado(null); // Para limpiar el producto seleccionado
+  
+      if (fetchProductos) {
+        fetchProductos(); // Actualiza la lista de productos después de la edición
+      }
+  
     } catch (error) {
       console.error("Error al editar el producto:", error);
       setNotification({
@@ -62,7 +76,8 @@ const EditarProductoModal = ({
       });
     }
   };
-
+    
+  
   const validationSchema = Yup.object().shape({
     nombre: Yup.string().required("El nombre es obligatorio"),
     descripcion: Yup.string().required("La descripción es obligatoria"),
@@ -71,27 +86,26 @@ const EditarProductoModal = ({
       .positive("Tiene que ser un número valido"),
     categoria: Yup.string().required("La categoría es obligatoria"),
     imagen: Yup.mixed()
-      .test("fileSize", "El archivo debe ser una imagen", (value) => {
-        if (!value) return true; // Si no hay archivo, no es obligatorio
+      .test("fileSize", "El archivo debe ser una imagen válida", (value) => {
+        if (!value) return true; 
         const validTypes = ["image/jpeg", "image/png", "image/gif"];
         return validTypes.includes(value.type);
-      })
+      }),
   });
-  
+
   const handleSubmit = (values, { resetForm }) => {
     const formData = new FormData();
     formData.append("nombre", values.nombre);
     formData.append("descripcion", values.descripcion);
     formData.append("precio", values.precio);
     formData.append("categoria", values.categoria);
-
+  
     if (selectedFile) {
       formData.append("imagen", selectedFile);
     }
-
+  
     handleEditarProducto(formData);
     resetForm();
-    setMostrarModal(false);
   };
 
   if (!productoSeleccionado) {
@@ -131,7 +145,7 @@ const EditarProductoModal = ({
               role="document"
               ref={modalRef}
             >
-              <div className="modal-content red">
+              <div className="modal-content">
                 <div className="">
                   {imagenPreview && (
                     <img
@@ -167,7 +181,8 @@ const EditarProductoModal = ({
                                 const file = event.currentTarget.files[0];
                                 setSelectedFile(file);
                                 setFieldValue("imagen", file);
-                                setImagenPreview(URL.createObjectURL(file));
+                                const previewUrl = URL.createObjectURL(file);
+                                setImagenPreview(previewUrl);
                               }}
                             />
                             <ErrorMessage name="imagen" component="div" className="text-danger" />
@@ -180,6 +195,7 @@ const EditarProductoModal = ({
                               className="form-control"
                               id="nombre"
                               name="nombre"
+                              maxlength="50"
                             />
                             <ErrorMessage name="nombre" component="div" className="text-danger" />
                           </div>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Modal } from 'react-bootstrap';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const EliminarProducto = ({ id_producto, onProductoEliminado, setProductos }) => {
   const [mostrarModal, setMostrarModal] = useState(false);
@@ -9,10 +10,10 @@ const EliminarProducto = ({ id_producto, onProductoEliminado, setProductos }) =>
   const handleDesactivarProducto = async (idProducto) => {
     try {
       // Enviar solicitud PUT al servidor para desactivar el producto
-      await axios.put(`http://localhost:3001/products/desactivar/${idProducto}`);
+      await axios.put(`${apiUrl}/products/desactivar/${idProducto}`);
 
       // Actualiza la lista de productos después de desactivar
-      const response = await axios.get('http://localhost:3001/products');
+      const response = await axios.get(`${apiUrl}/products`);
       setProductos(response.data);
 
       // Llama a la función onProductoEliminado para notificar al componente padre

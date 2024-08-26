@@ -1,7 +1,7 @@
 import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import imagen1 from '../../img/error/fondo.jpg';
-const apiUrl = 'http://localhost:3001/';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const Carusel = () => {
   return (
