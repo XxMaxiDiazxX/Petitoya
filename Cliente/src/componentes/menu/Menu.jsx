@@ -3,7 +3,7 @@ import axios from "axios";
 import Producto from "./Producto";
 import { useAuth } from "../autenticacion/AuthContext";
 import EditarProductoModal from "../AdminSupremo/EditarProductoModal";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../styles/menu/Menu.scss";
 import PedidoModalMenu from "./PedidoModalMenu";
@@ -117,7 +117,6 @@ export const Menu = () => {
 
   return (
     <div className="content">
-      <ToastContainer />
       {role !== 2 && role !== 3 && (
         <div className="row">
           <div className="col-md-6 col-lg-6">

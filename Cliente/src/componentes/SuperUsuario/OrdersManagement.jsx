@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Modal, Button, Table } from 'react-bootstrap';
 import { toast, ToastContainer } from 'react-toastify';
+import io from 'socket.io-client';
 import 'react-toastify/dist/ReactToastify.css';
+
 const apiUrl = import.meta.env.VITE_API_URL;
+const socket = io(apiUrl); // Ajusta la URL según tu configuración
 
 const OrdersManagement = () => {
   const [ordersType, setOrdersType] = useState('pendiente');
@@ -15,6 +18,15 @@ const OrdersManagement = () => {
 
   useEffect(() => {
     fetchOrders(ordersType);
+
+    // Listener for socket notifications
+    socket.on('notificacion', (data) => {
+      toast.info(data.mensaje);
+    });
+
+    return () => {
+      socket.off('notificacion'); // Clean up listener on component unmount
+    };
   }, [ordersType]);
 
   const fetchOrders = async (type) => {

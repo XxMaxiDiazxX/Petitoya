@@ -5,7 +5,7 @@ import { Producto } from "./Producto";
 import Carusel from "./Carusel";
 import PedidoModalMenu from "../menu/PedidoModalMenu";
 import { useAuth } from "../autenticacion/AuthContext";
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 import "../../styles/Inicio/Inicio.scss"; // Importar los estilos SCSS
 
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -72,7 +72,6 @@ export const Inicio = () => {
 
   return (
     <>
-      <ToastContainer />
       <div className="sugerencias container text-center">
         <Carusel />
         <h2 className="mt-3 bg-barra3 cuerpo text-white">Sugerencias</h2>
