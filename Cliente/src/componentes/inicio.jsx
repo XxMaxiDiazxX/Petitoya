@@ -8,13 +8,11 @@ import { PieDePagina } from "./PieDePagina";
 import RutaPrivadaAdmin from "./autenticacion/RutaPriavadaAdmin";
 import PageNotFound from "./error/NotFoundPage";
 import Carrito from "./pedidos/Carrito";
-import { AgrSu } from "./Administrador/AgrSu";
+import { AgrSu } from "./administrador/AgrSu";
 import OrdersManagement from "./superusuario/OrdersManagement";
 import io from "socket.io-client"; // Importa Socket.IO Client
 import { useAuth } from "./autenticacion/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
-
-
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -27,15 +25,15 @@ export const PaginaPrincipal = () => {
   useEffect(() => {
     if (isLoggedIn) {
       // Unirse a la sala del usuario al conectar
-      socket.emit('joinRoom', user.id);
-  
-      socket.on('connect', () => {
-        console.log('Conectado a Socket.IO');
+      socket.emit("joinRoom", user.id);
+
+      socket.on("connect", () => {
+        console.log("Conectado a Socket.IO");
       });
-  
-      socket.on('notificacion', (data) => {
+
+      socket.on("notificacion", (data) => {
         toast.info(data.mensaje, {
-          position: 'top-right',
+          position: "top-right",
           autoClose: 10000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -44,19 +42,19 @@ export const PaginaPrincipal = () => {
           progress: undefined,
         });
       });
-  
+
       return () => {
         // Limpieza de eventos cuando el componente se desmonte
-        socket.off('connect');
-        socket.off('notificacion');
+        socket.off("connect");
+        socket.off("notificacion");
       };
     } else {
       // Si no está autenticado, puedes limpiar eventos o manejar casos específicos para invitados
-      socket.off('connect');
-      socket.off('notificacion');
+      socket.off("connect");
+      socket.off("notificacion");
     }
   }, [isLoggedIn]);
-  
+
   return (
     <div className="d-flex flex-column" style={{ minHeight: "100vh" }}>
       <BarraNavegacion />
@@ -78,7 +76,7 @@ export const PaginaPrincipal = () => {
         </Routes>
       </div>
       <PieDePagina />
-      
+
       {/* ToastContainer para notificaciones */}
       <ToastContainer />
     </div>

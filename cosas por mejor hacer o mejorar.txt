@@ -28,8 +28,6 @@ Prioridad:
 
 # validar la actualizacion de el usuario, y que el admin solo ponga cuando en la creacion de ese usuario, que no se pueda cambiar el estado
 
-# realizar que solo aparesca la validacion del codigo de cambio de contraseña, cuando sea valido ya aparesca la creacion de la nueva contraseña ademas de tambien darle diseño
-
 # AJUSTAR BIEN EL FRONENT PAR QUE SE VEA BIEN
 
 # se cambio la verificacion del usuario no existente, se cierra el server
@@ -53,7 +51,7 @@ https://medium.com/@diego.coder/construyendo-aplicaciones-seguras-con-node-js-y-
 
 # Casos de uso
 
-# para que no me renderice toda la pagina al actualizar, solo me detecte el componente que se actualizo y solo que se renderice este
+# notificacion al telefono del cliente para que revise el estado del pedido
 
 ------------------- CAMBIOS JOHANSHITO --------------------------------
 
@@ -72,9 +70,10 @@ Realizar un atributo para la tabla productos, que almacene el numero de compras,
 Realizar apartado de estados de los pedidos, los activos y los inactivos
 MOSTRAR LOS PRODUCTOS POR ESTADISTICA PERO SE NECESITA MODIFICAR LA BASE DE DATOS
 hacer el icono de carrito en la barra
-(14/57/2024) Se realizo modificacion en la modal para modificar el producto (imagenes, el formuario, para quesea mas completo y no muy simple) 
-(14/57/2024) Se modifico el contexto de mantener el inicio de sesion para que tenga una expiracion de tiempo, por inactividad, por no pulsacion durante 30 minutos, y por no volver a la pagina antes de 24 horas
-
+(14/7/2024) Se realizo modificacion en la modal para modificar el producto (imagenes, el formuario, para quesea mas completo y no muy simple) 
+(14/7/2024) Se modifico el contexto de mantener el inicio de sesion para que tenga una expiracion de tiempo, por inactividad, por no pulsacion durante 30 minutos, y por no volver a la pagina antes de 24 horas
+(27/8/2024) actualizar cproductos ya no es problema para notificacion
+(27/8/2024) Se realizo un socket para envio de notificacion al cliente para que sepa el estado del pedido
 ---------------------- CAMBIOS SUARIÑO ------------------------
 
 

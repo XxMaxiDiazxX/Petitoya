@@ -93,7 +93,7 @@ export const Login = () => {
                         name="documento"
                         className="form-control form-control-"
                         placeholder="Tu Documento"
-                        maxlength="20"
+                        maxLength="20"
                       />
                     </div>
                     <ErrorMessage name="documento" component="div" className="text-danger fs-6 lh-1" />
@@ -105,7 +105,7 @@ export const Login = () => {
                         name="contrasena"
                         className="form-control"
                         placeholder="Tu contraseña"
-                        maxlength="50"
+                        maxLength="50"
                       />
                       <ErrorMessage name="contrasena" component="div" className="text-danger fs-6 lh-1" />
                     </div>

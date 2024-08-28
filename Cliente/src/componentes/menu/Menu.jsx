@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Producto from "./Producto";
 import { useAuth } from "../autenticacion/AuthContext";
-import EditarProductoModal from "../AdminSupremo/EditarProductoModal";
+import EditarProductoModal from "../adminsupremo/EditarProductoModal";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../styles/menu/Menu.scss";

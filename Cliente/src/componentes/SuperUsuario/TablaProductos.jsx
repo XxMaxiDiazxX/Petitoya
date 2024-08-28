@@ -1,7 +1,7 @@
 import React from "react";
-import EliminarProducto from "../AdminSupremo/DesactivarProducto";
-import HabilitarProducto from "../AdminSupremo/HabilitarProducto";
-import AnadirProducto from "../AdminSupremo/AnadirProducto";
+import EliminarProducto from "../adminsupremo/DesactivarProducto";
+import HabilitarProducto from "../adminsupremo/HabilitarProducto";
+import AnadirProducto from "../adminsupremo/AnadirProducto";
 
 export const TablaProductos = ({
   productosActivos,

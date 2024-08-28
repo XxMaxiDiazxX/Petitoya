@@ -3,7 +3,6 @@ import axios from "axios";
 import { toast } from "react-toastify"; // Importar toast y ToastContainer
 import "react-toastify/dist/ReactToastify.css"; // Estilos CSS para react-toastify
 import "../../styles/menu/PedidoModalMenu.scss"; // Importa el archivo de estilos
-import { useAuth } from "../autenticacion/AuthContext";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
