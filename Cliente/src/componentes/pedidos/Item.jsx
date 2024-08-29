@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Pedido from './Pedido'; // Asegúrate de importar el componente Pedido
+import PedidoTable from './PedidoTable'; // Importa el nuevo componente PedidoTable
 import '../../styles/pedidos/Item.scss'; // Importa el archivo SCSS para los estilos personalizados
+
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export const Item = ({ id_cliente }) => {
@@ -17,7 +19,6 @@ export const Item = ({ id_cliente }) => {
   useEffect(() => {
     filterPedidos(pedidos, ordersType);
   }, [ordersType, pedidos]);
-
 
   const fetchPedidos = async () => {
     try {
@@ -78,16 +79,20 @@ export const Item = ({ id_cliente }) => {
         </div>
       </div>
       <div className="row">
-        {filteredPedidos.map(pedido => (
-          <div key={pedido.id_pedido} className="col-md-6 col-lg-4 mb-4">
-            <Pedido
-              id_pedido={pedido.id_pedido}
-              estado={pedido.estado}
-              fecha_compra={pedido.fecha_compra}
-              total_pagar={pedido.monto_total} // Nueva prop total_pagar
-            />
-          </div>
-        ))}
+        {ordersType === 'entregado' ? (
+          <PedidoTable pedidos={filteredPedidos} />
+        ) : (
+          filteredPedidos.map(pedido => (
+            <div key={pedido.id_pedido} className="col-md-6 col-lg-4 mb-4">
+              <Pedido
+                id_pedido={pedido.id_pedido}
+                estado={pedido.estado}
+                fecha_compra={pedido.fecha_compra}
+                total_pagar={pedido.monto_total} // Nueva prop total_pagar
+              />
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
