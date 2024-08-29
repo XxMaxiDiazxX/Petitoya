@@ -14,25 +14,26 @@ import io from "socket.io-client"; // Importa Socket.IO Client
 import { useAuth } from "./autenticacion/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
 
-
 const apiUrl = import.meta.env.VITE_API_URL;
-
-// Conecta con el servidor de Socket.IO
-const socket = io(`${apiUrl}`);
 
 export const PaginaPrincipal = () => {
   const { isLoggedIn, user } = useAuth();
+  const [socket, setSocket] = useState(null);
 
   useEffect(() => {
     if (isLoggedIn) {
-      // Unirse a la sala del usuario al conectar
-      socket.emit("joinRoom", user.id);
+      // Conectar con el servidor de Socket.IO solo si el usuario está autenticado
+      const socketInstance = io(`${apiUrl}`);
+      setSocket(socketInstance);
 
-      socket.on("connect", () => {
+      // Unirse a la sala del usuario al conectar
+      socketInstance.emit("joinRoom", user.id);
+
+      socketInstance.on("connect", () => {
         console.log("Conectado a Socket.IO");
       });
 
-      socket.on("notificacion", (data) => {
+      socketInstance.on("notificacion", (data) => {
         toast.info(data.mensaje, {
           position: "top-right",
           autoClose: false,
@@ -47,15 +48,19 @@ export const PaginaPrincipal = () => {
 
       return () => {
         // Limpieza de eventos cuando el componente se desmonte
-        socket.off("connect");
-        socket.off("notificacion");
+        socketInstance.off("connect");
+        socketInstance.off("notificacion");
+        socketInstance.disconnect();
       };
     } else {
-      // Si no está autenticado, puedes limpiar eventos o manejar casos específicos para invitados
-      socket.off("connect");
-      socket.off("notificacion");
+      // Si no está autenticado, asegúrate de limpiar el socket si existe
+      if (socket) {
+        socket.off("connect");
+        socket.off("notificacion");
+        socket.disconnect();
+      }
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, user, socket]);
 
   return (
     <div className="d-flex flex-column" style={{ minHeight: "100vh" }}>
@@ -80,7 +85,7 @@ export const PaginaPrincipal = () => {
       <PieDePagina />
 
       {/* ToastContainer para notificaciones */}
-      <ToastContainer  />
+      <ToastContainer />
     </div>
   );
 };

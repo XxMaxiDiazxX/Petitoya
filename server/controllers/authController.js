@@ -35,9 +35,13 @@ exports.login = async (req, res) => {
   const { documento, contrasena } = req.body;
 
   try {
+    // Primero, verifica si el usuario existe
     const user = await authService.autenticarUsuario(documento);
-    if (user) {
+
+    if (user && user.contrasena) {
+      // Luego, verifica la contraseña
       const match = await bcrypt.compare(contrasena, user.contrasena);
+      
       if (match) {
         const userResponse = {
           id: documento,
@@ -49,13 +53,14 @@ exports.login = async (req, res) => {
         return res.status(401).json({ error: 'Usuario y/o contraseña incorrectas' });
       }
     } else {
-      return res.status(404).json({ error: 'Usuario no encontrado' });
+      return res.status(404).json({ error: 'Usuario no encontrado o datos incompletos' });
     }
   } catch (error) {
     logger.error('Error al verificar la contraseña:', error);
     return res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
+
 
 exports.requestPasswordReset = async (req, res) => {
   const { correo_electronico } = req.body;

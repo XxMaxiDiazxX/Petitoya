@@ -4,6 +4,7 @@ import { Modal, Button, Table } from 'react-bootstrap';
 import { toast} from 'react-toastify';
 import io from 'socket.io-client';
 import 'react-toastify/dist/ReactToastify.css';
+import PedidoTable from '../pedidos/PedidoTable';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const socket = io(apiUrl); // Ajusta la URL según tu configuración
@@ -121,11 +122,21 @@ const OrdersManagement = () => {
             >
               Por Entrega
             </button>
+            <button
+              type="button"
+              className={`btn ${ordersType === 'entregado' ? 'custom-button' : 'btn-secondary'}`}
+              onClick={() => changeOrdersType('entregado')}
+            >
+              Entregado
+            </button>
           </div>
         </div>
       </div>
       <div className="row">
-        {orders.map(order => (
+      {ordersType === 'entregado' ? (
+          <PedidoTable pedidos={orders} />
+        ) : (
+        orders.map(order => (
           <div key={order.id_pedido} className="col-md-6 mb-4">
             <div className="card" onClick={(event) => handleDivClick(event, order)} style={{ cursor: 'pointer' }}>
               <div className="card-body">
@@ -165,7 +176,8 @@ const OrdersManagement = () => {
               </div>
             </div>
           </div>
-        ))}
+        ))
+      )}
       </div>
       {error && <div className="alert alert-danger mt-3">{error}</div>}
 
@@ -177,7 +189,7 @@ const OrdersManagement = () => {
           <Modal.Body>
             <h5>{`Pedido ID: ${selectedOrder.id_pedido}`}</h5>
             <p>{`Estado: ${selectedOrder.estado}`}</p>
-            <p>{`Total a Pagar: $${selectedOrder.total_pagar}`}</p>
+            <p>{`Total a Pagar: $${selectedOrder.monto_total}`}</p>
             <p>{`Fecha de Compra: ${formatDate(selectedOrder.fecha_compra)}`}</p>
             <h6>Productos:</h6>
             {detalles.length > 0 ? (

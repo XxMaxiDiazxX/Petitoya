@@ -23,7 +23,7 @@ const getOrdersByState = (estado, callback) => {
   let queryParams = [];
 
   if (estado) {
-    const validStates = ["pendiente", "en proceso", "por entrega"];
+    const validStates = ["pendiente", "en proceso", "por entrega", "entregado"];
     if (!validStates.includes(estado)) {
       return callback(new Error("Estado no válido"), null);
     }
@@ -32,7 +32,7 @@ const getOrdersByState = (estado, callback) => {
   }
 
   const query = `
-    SELECT id_pedido, id_cliente, estado, fecha_compra
+    SELECT id_pedido, id_cliente, estado, fecha_compra, monto_total
     FROM pedidos
     ${whereClause};
   `;

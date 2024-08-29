@@ -3,7 +3,6 @@ const crypto = require("crypto");
 const db = require("../models/db");
 const logger = require("../utils/logger");
 const { sendPasswordChangeEmail } = require("../utils/emailService");
-const { getIo } = require("../utils/socket");
 
 // Encriptar contrasena
 const encriptarContrasena = async (contrasena) => {
@@ -90,7 +89,12 @@ const autenticarUsuario = (documento) => {
           (err, result) => {
             if (err) return reject(err);
             if (result && result.length > 0) {
-              resolve(result[0]);
+              const user = result[0];
+              if (user.contrasena && user.nombre && user.id_rol) {
+                resolve(user);
+              } else {
+                resolve(null);
+              }
             } else {
               resolve(null);
             }
@@ -100,6 +104,7 @@ const autenticarUsuario = (documento) => {
     );
   });
 };
+
 
 // Solicitar restablecimiento de contraseña
 const solicitarRestablecimientoContrasena = (correo_electronico) => {
