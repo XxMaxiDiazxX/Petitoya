@@ -10,18 +10,24 @@ export const Item = ({ id_cliente }) => {
   const [ordersType, setOrdersType] = useState('pendiente'); // Default filter
 
   useEffect(() => {
-    const fetchPedidos = async () => {
-      try {
-        const response = await axios.get(`${apiUrl}/orders/cliente/${id_cliente}`);
-        setPedidos(response.data);
-        filterPedidos(response.data, 'pendiente'); // Initial filter on first load
-      } catch (error) {
-        console.error('Error fetching Pedidos:', error);
-      }
-    };
+    fetchPedidos(ordersType);
+  }, [ordersType]);
 
-    fetchPedidos();
-  }, [id_cliente]);
+  // useEffect to re-filter pedidos whenever ordersType changes
+  useEffect(() => {
+    filterPedidos(pedidos, ordersType);
+  }, [ordersType, pedidos]);
+
+
+  const fetchPedidos = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/orders/cliente/${id_cliente}`);
+      setPedidos(response.data);
+      filterPedidos(response.data, ordersType); // Initial filter on first load
+    } catch (error) {
+      console.error('Error fetching Pedidos:', error);
+    }
+  };
 
   const filterPedidos = (pedidos, status) => {
     const filtered = pedidos.filter(pedido => pedido.estado === status);
@@ -30,7 +36,6 @@ export const Item = ({ id_cliente }) => {
 
   const changeOrdersType = (type) => {
     setOrdersType(type);
-    filterPedidos(pedidos, type);
   };
 
   return (

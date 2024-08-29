@@ -14,6 +14,7 @@ import io from "socket.io-client"; // Importa Socket.IO Client
 import { useAuth } from "./autenticacion/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
 
+
 const apiUrl = import.meta.env.VITE_API_URL;
 
 // Conecta con el servidor de Socket.IO
@@ -79,7 +80,7 @@ export const PaginaPrincipal = () => {
       <PieDePagina />
 
       {/* ToastContainer para notificaciones */}
-      <ToastContainer />
+      <ToastContainer  />
     </div>
   );
 };

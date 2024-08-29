@@ -90,15 +90,6 @@ const autenticarUsuario = (documento) => {
           (err, result) => {
             if (err) return reject(err);
             if (result && result.length > 0) {
-              // Enviar una notificación
-              const io = getIo();
-              if (io) {
-                io.emit("notificacion", {
-                  mensaje: "Usuario autenticado exitosamente",
-                });
-              } else {
-                console.error("La instancia de 'io' es undefined.");
-              }
               resolve(result[0]);
             } else {
               resolve(null);

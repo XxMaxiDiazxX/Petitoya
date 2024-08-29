@@ -1,21 +1,24 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 
 const RutaPrivadaAdmin = ({ element }) => {
   const { isLoggedIn, role } = useAuth();
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    // Verificar si el usuario está autenticado y es un administrador
-    if (!isLoggedIn || (role !== 3 && role !== 2)) {
-      // Si no, redirigir al inicio o a otra página
-      navigate('/');
-    }
-  }, [isLoggedIn, role, navigate]);
+  // Verificación de estado inicial
+  if (isLoggedIn === null || role === null) {
+    // Mostrar un componente de carga o un estado inicial mientras se recuperan los datos
+    return <div>Cargando...</div>;
+  }
 
-  // Si el usuario está autenticado y es un administrador, mostrar el componente
-  return isLoggedIn && (role === 3 || role === 2) ? element : <Navigate to="/" />;
+  // Verificar si el usuario está autenticado y es un administrador
+  if (!isLoggedIn || !(role === 3 || role === 2)) {
+    // Redirigir al inicio si el usuario no está autenticado o no tiene el rol adecuado
+    return <Navigate to="/" />;
+  }
+
+  // Si el usuario está autenticado y tiene el rol adecuado, mostrar el componente
+  return element;
 };
 
 export default RutaPrivadaAdmin;

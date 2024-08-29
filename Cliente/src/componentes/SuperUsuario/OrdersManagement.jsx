@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Modal, Button, Table } from 'react-bootstrap';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast} from 'react-toastify';
 import io from 'socket.io-client';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -17,17 +17,24 @@ const OrdersManagement = () => {
   const [detalles, setDetalles] = useState([]);
 
   useEffect(() => {
+    // Fetch orders when ordersType changes
     fetchOrders(ordersType);
-
-    // Listener for socket notifications
-    socket.on('notificacion', (data) => {
-      toast.info(data.mensaje);
-    });
-
-    return () => {
-      socket.off('notificacion'); // Clean up listener on component unmount
-    };
   }, [ordersType]);
+
+  useEffect(() => {
+    // Listener for socket notifications
+    const handleNotification = (data) => {
+      toast.info(data.mensaje, {
+        closeOnClick: true,
+      });
+    };
+
+    socket.on('notificacion', handleNotification);
+  
+    return () => {
+      socket.off('notificacion', handleNotification); // Cleanup listener on unmount
+    };
+  }, []); // Empty dependency array ensures this runs only once
 
   const fetchOrders = async (type) => {
     let url = `${apiUrl}/super/${type}`;
@@ -84,7 +91,7 @@ const OrdersManagement = () => {
       handleShowModal(order);
     }
   };
-
+    
   return (
     <div className="container mt-5">
       <div className="row mb-3">
@@ -161,7 +168,6 @@ const OrdersManagement = () => {
         ))}
       </div>
       {error && <div className="alert alert-danger mt-3">{error}</div>}
-      <ToastContainer />
 
       {selectedOrder && (
         <Modal show={showModal} onHide={() => setShowModal(false)} centered>
