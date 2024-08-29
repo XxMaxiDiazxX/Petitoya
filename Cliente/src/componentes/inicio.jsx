@@ -34,12 +34,13 @@ export const PaginaPrincipal = () => {
       socket.on("notificacion", (data) => {
         toast.info(data.mensaje, {
           position: "top-right",
-          autoClose: 10000,
+          autoClose: false,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
+          className: "important-toast",
         });
       });
 

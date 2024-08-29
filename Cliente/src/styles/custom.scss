@@ -18,6 +18,13 @@ $custom-colors: (
 // Merge the maps to include custom colors into theme colors
 $theme-colors: map-merge($theme-colors, $custom-colors);
 
+.important-toast {
+  background-color: antiquewhite; /* Color de fondo */
+  color: #614E3B; /* Color del texto */
+  font-weight: bold; /* Texto en negrita */
+}
+
+
 .no-padding {
   padding-left: 0;
   padding-right: 0;
