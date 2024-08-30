@@ -21,7 +21,7 @@ export const PaginaPrincipal = () => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (isLoggedIn && user) {  // Verifica si isLoggedIn es true y si user no es null
       // Conectar con el servidor de Socket.IO solo si el usuario está autenticado
       const socketInstance = io(`${apiUrl}`);
       setSocket(socketInstance);
@@ -52,15 +52,14 @@ export const PaginaPrincipal = () => {
         socketInstance.off("notificacion");
         socketInstance.disconnect();
       };
-    } else {
+    } else if (socket) {
       // Si no está autenticado, asegúrate de limpiar el socket si existe
-      if (socket) {
-        socket.off("connect");
-        socket.off("notificacion");
-        socket.disconnect();
-      }
+      socket.off("connect");
+      socket.off("notificacion");
+      socket.disconnect();
+      setSocket(null);  // Limpiar el estado del socket
     }
-  }, [isLoggedIn, user, socket]);
+  }, [isLoggedIn, user]);  // Remueve `socket` de las dependencias
 
   return (
     <div className="d-flex flex-column" style={{ minHeight: "100vh" }}>
