@@ -26,13 +26,13 @@ export const Login = () => {
 
   return (
     <div className="login">
-      <div className="container-sm p-0 row rounded-4 custom-height">
-        <div className="conte container-sm rounded-4 col d-flex flex-column justify-content-center align-items-center">
-          {/* Agrega las imágenes a la izquierda y derecha del formulario */}
-          <div className="container fondoTabla " style={{ width: "60%", height: "100%", paddingRight: "15%" }}>
-            <div className="row h-100 d-flex justify-content-center align-items-center ">
+      <div className="container-sm p-0 row rounded-4 custom-height text-center text-white">
+          {/* Contenedor del formulario */}
+          <h1 className=''>webos</h1>
+          <div className="container fondoTabla red">
+            <div className="row h-100 d-flex justify-content-center align-items-center">
               {/* Imagen a la izquierda */}
-              <div className="col-md-3" style={{ maxWidth: "100px" }}>
+              <div className="col-md-3 hide-on-small" style={{ maxWidth: "100px" }}>
                 <img
                   src={Tenedor}
                   alt="Tenedor"
@@ -42,22 +42,20 @@ export const Login = () => {
               </div>
               {/* Formulario en el centro */}
               <div className="col-md-6" style={{ height: "100%", padding: "20px" }}>
-
-
-                <h4 className="text-center text-white cuerpo" style={{ fontSize: "45px" }}>Inicio Sesion</h4>
-
+                <h4 className="text-center text-white cuerpo" style={{ fontSize: "30px" }}>Inicio Sesión</h4>
 
                 <Formik
                   initialValues={{ documento: '', contrasena: '' }}
                   validationSchema={Yup.object({
+                    documento: Yup.string().required('Campo requerido'),
                     contrasena: Yup
-                    .string()
-                    .min(6, 'La contrasena debe tener al menos 6 caracteres')
-                    .matches(
+                      .string()
+                      .min(6, 'La contraseña debe tener al menos 6 caracteres')
+                      .matches(
                         /^(?=.*\d)(?=.*[A-Z])(?=.*[\W_]).*$/,
-                        'La contrasena debe contener al menos un numero, una letra mayuscula y un caracter especial'
-                    )
-                    .required('Campo requerido'),
+                        'La contraseña debe contener al menos un número, una letra mayúscula y un carácter especial'
+                      )
+                      .required('Campo requerido'),
                   })}
                   onSubmit={(values, { setSubmitting }) => {
                     axios.post(`${apiUrl}/auth/login`, values)
@@ -80,8 +78,7 @@ export const Login = () => {
                       })
                       .finally(() => {
                         setSubmitting(false);
-                      }
-                    );
+                      });
                   }}
                 >
                   <Form className='container-sm d-grid text-center labe naranj' style={{ fontWeight: "bold", fontSize: "20px" }}>
@@ -91,20 +88,19 @@ export const Login = () => {
                       <Field
                         type="text"
                         name="documento"
-                        className="form-control form-control-"
+                        className="form-control"
                         placeholder="Tu Documento"
                         maxLength="20"
                       />
+                      <ErrorMessage name="documento" component="div" className="text-danger fs-6 lh-1" />
                     </div>
-                    <ErrorMessage name="documento" component="div" className="text-danger fs-6 lh-1" />
-
                     <div className="form-group mb-4">
-                      <label htmlFor="contrasena">Contrasena</label>
+                      <label htmlFor="contrasena">Contraseña</label>
                       <Field
                         type="password"
                         name="contrasena"
                         className="form-control"
-                        placeholder="Tu contraseña"
+                        placeholder="Tu Contraseña"
                         maxLength="50"
                       />
                       <ErrorMessage name="contrasena" component="div" className="text-danger fs-6 lh-1" />
@@ -114,7 +110,7 @@ export const Login = () => {
                     </div>
                   </Form>
                 </Formik>
-                <div className="container-sm d-flex align-items-center justify-content-center cuerpo" style={{}}>
+                <div className="container-sm d-flex align-items-center justify-content-center cuerpo">
                   <Link to="/inicio" className='btn text-white bg-naranj border-0 mx-4'>Invitado</Link>
                   <Link to="/registro" className='btn text-white bg-naranj border-0 mx-4'>Registro</Link>
                 </div>
@@ -123,7 +119,7 @@ export const Login = () => {
                 </div>
               </div>
               {/* Imagen a la derecha */}
-              <div className="col-md-3" style={{ maxWidth: "100px" }}>
+              <div className="col-md-3 hide-on-small" style={{ maxWidth: "100px" }}>
                 <img
                   src={Cuchillo}
                   alt="Cuchillo"
@@ -132,11 +128,9 @@ export const Login = () => {
                 />
               </div>
             </div>
-
           </div>
-
-        </div>
       </div>
+
     </div>
   );
 };

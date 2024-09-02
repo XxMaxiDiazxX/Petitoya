@@ -9,6 +9,7 @@ const orderRoutes = require("./routes/orderRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const statsRoutes = require("./routes/statsRoutes");
 const superUsRouter = require("./routes/superUsRoutes");
+const adminRouter = require("./routes/adminRoutes")
 const { setupSocketIo } = require("./utils/socket");
 
 const app = express();
@@ -27,6 +28,7 @@ app.use("/orders", orderRoutes);
 app.use("/cart", cartRoutes);
 app.use("/stats", statsRoutes);
 app.use("/super", superUsRouter);
+app.use("/admin", adminRouter);
 
 // Iniciar el servidor
 const PORT = 3001;

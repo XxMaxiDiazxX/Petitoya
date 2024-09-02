@@ -24,6 +24,26 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
   font-weight: bold; /* Texto en negrita */
 }
 
+@media (max-width: 995px) {
+  .hide-on-small {
+    display: none !important;
+  }
+}
+
+.container.fondoTabla.red {
+  width: 60%;
+  height: 100%;
+  padding-right: 15%;
+}
+
+/* Ajustes para pantallas menores a 995px */
+@media (max-width: 995px) {
+  .container.fondoTabla.red {
+    width: auto; /* Ajusta el ancho al contenido */
+    padding-right: 0; /* Elimina el padding derecho */
+  }
+}
+
 
 .no-padding {
   padding-left: 0;

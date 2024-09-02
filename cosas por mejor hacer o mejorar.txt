@@ -23,6 +23,8 @@ Prioridad:
  # Manuales
  # UML
  # Eliminar empleados (interfaz gerente) o modificarlos
+ # modificacion de la realizacion del pedido (agregar opciones de formas de pago), y confirmacion de realizacion del pedido. que eso me falta
+ # Automatizar el control al proceso de ventas diarias, y la realización de informes que permitan evaluar el rendimiento del negocio, teniendo en cuenta la captura del costo de producción, el precio de venta, las cantidades vendidas y la diferencia entre el costo de producción y el total de unidades vendidas * precio de venta.
 
 # Modificar el diccionario de datos
 
@@ -52,6 +54,7 @@ https://medium.com/@diego.coder/construyendo-aplicaciones-seguras-con-node-js-y-
 # Casos de uso
 
 # notificacion al telefono del cliente para que revise el estado del pedido
+
 
 ------------------- CAMBIOS JOHANSHITO --------------------------------
 
