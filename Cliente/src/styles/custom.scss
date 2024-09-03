@@ -30,7 +30,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
   }
 }
 
-.container.fondoTabla.red {
+.container.fondoTabla {
   width: 60%;
   height: 100%;
   padding-right: 15%;
@@ -38,7 +38,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 
 /* Ajustes para pantallas menores a 995px */
 @media (max-width: 995px) {
-  .container.fondoTabla.red {
+  .container.fondoTabla {
     width: auto; /* Ajusta el ancho al contenido */
     padding-right: 0; /* Elimina el padding derecho */
   }

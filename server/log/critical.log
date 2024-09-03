@@ -83,3 +83,7 @@
 2024-08-29T21:20:31.791Z - [31MERROR[39M: [31mError al verificar la contraseña: data and hash arguments required[39m
 2024-08-29T21:21:50.591Z - [31MERROR[39M: [31mError al verificar la contraseña: data and hash arguments required[39m
 2024-08-29T21:22:59.781Z - [31MERROR[39M: [31mError al verificar la contraseña: data and hash arguments required[39m
+2024-09-03T17:30:24.801Z - [31MERROR[39M: [31mError al eliminar el superusuario: ER_BAD_FIELD_ERROR: Unknown column 'id' in 'where clause'[39m
+2024-09-03T17:30:24.803Z - [31MERROR[39M: [31mError al eliminar superusuario con ID 1025884475: ER_BAD_FIELD_ERROR: Unknown column 'id' in 'where clause'[39m
+2024-09-03T17:32:32.144Z - [31MERROR[39M: [31mError al eliminar el superusuario: ER_BAD_FIELD_ERROR: Unknown column 'documento' in 'where clause'[39m
+2024-09-03T17:32:32.147Z - [31MERROR[39M: [31mError al eliminar superusuario con ID 1025884475: ER_BAD_FIELD_ERROR: Unknown column 'documento' in 'where clause'[39m

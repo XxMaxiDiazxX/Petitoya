@@ -23,7 +23,12 @@ exports.registerSu = async (req, res) => {
   const { documento, nombre, correo_electronico, telefono, contrasena } = req.body;
 
   try {
-    await authService.registrarUsuario(documento, nombre, correo_electronico, telefono, contrasena, 3);
+    const { error } = await authService.verificarDatosUnicos(documento, correo_electronico, telefono);
+    if (error) {
+      return res.status(400).json({ error });
+    }
+
+    await authService.registrarUsuario(documento, nombre, correo_electronico, telefono, contrasena, 2);
     res.status(200).json({ message: 'Registro exitoso' });
   } catch (error) {
     logger.error('Error al registrar usuario:', error);
@@ -61,6 +66,18 @@ exports.login = async (req, res) => {
   }
 };
 
+exports.updateUserController = async (req, res) => {
+  const userData = req.body; // Los datos del usuario enviados en la solicitud
+
+  authService.actualizarUsuario(userData, (err, result) => {
+    if (err) {
+      console.error('Error al actualizar el usuario:', err);
+      res.status(500).json({ error: 'Error al actualizar el usuario' });
+    } else {
+      res.status(200).json({ message: 'Usuario actualizado exitosamente', data: result });
+    }
+  });
+};
 
 exports.requestPasswordReset = async (req, res) => {
   const { correo_electronico } = req.body;

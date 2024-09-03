@@ -158,8 +158,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `ModificarUsuario` (IN `p_id_cliente
     SET
         nombre = p_nombre,
         correo_electronico = p_correo_electronico,
-        telefono = p_telefono,
-        id_rol = p_id_rol
+        telefono = p_telefono
     WHERE
         id_cliente = p_id_cliente;
 END$$

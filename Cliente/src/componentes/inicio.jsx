@@ -5,11 +5,16 @@ import { Menu } from "./menu/Menu";
 import { Inicio } from "./inicio/Inicio";
 import { Pedidos } from "./pedidos/Pedidos";
 import { PieDePagina } from "./PieDePagina";
+import OrdersManagement from "./superusuario/OrdersManagement";
+import Carrito from "./pedidos/Carrito";
+import ActualizarUsuario from "./usuario/ActualizarUsuario";
+
+
+
+
 import RutaPrivadaAdmin from "./autenticacion/RutaPriavadaAdmin";
 import PageNotFound from "./error/NotFoundPage";
-import Carrito from "./pedidos/Carrito";
 import { AgrSu } from "./administrador/AgrSu";
-import OrdersManagement from "./superusuario/OrdersManagement";
 import io from "socket.io-client"; // Importa Socket.IO Client
 import { useAuth } from "./autenticacion/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
@@ -70,6 +75,7 @@ export const PaginaPrincipal = () => {
           <Route path="menu" element={<Menu />} />
           <Route path="pedidos" element={<Pedidos />} />
           <Route path="carrito" element={<Carrito />} />
+          <Route path="configuracion" element={<ActualizarUsuario/>} />
           <Route
             path="admin"
             element={<RutaPrivadaAdmin element={<AgrSu />} />}

@@ -84,7 +84,9 @@ cambio de contraseña ya encripta la contraseña nueva
 manejo de las imagenes de los productos
 admin puede agregar empleados
 realizar el feellback de la pagina de error
-realiazr que el administrado registe los superusuario (empleados) 
+realiazr que el administrado registe los superusuario (empleados)
+Dookerizar el proyecto
+realizacion de variable virtual para modificar las solicitudes HTTP
 
 DELIMITER //
 

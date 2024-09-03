@@ -28,8 +28,7 @@ export const Login = () => {
     <div className="login">
       <div className="container-sm p-0 row rounded-4 custom-height text-center text-white">
           {/* Contenedor del formulario */}
-          <h1 className=''>webos</h1>
-          <div className="container fondoTabla red">
+          <div className="container fondoTabla d-flex justify-content-center align-items-center">
             <div className="row h-100 d-flex justify-content-center align-items-center">
               {/* Imagen a la izquierda */}
               <div className="col-md-3 hide-on-small" style={{ maxWidth: "100px" }}>
@@ -41,7 +40,7 @@ export const Login = () => {
                 />
               </div>
               {/* Formulario en el centro */}
-              <div className="col-md-6" style={{ height: "100%", padding: "20px" }}>
+              <div className="col-md-6 " style={{ height: "100%", padding: "20px" }}>
                 <h4 className="text-center text-white cuerpo" style={{ fontSize: "30px" }}>Inicio Sesión</h4>
 
                 <Formik
@@ -81,7 +80,7 @@ export const Login = () => {
                       });
                   }}
                 >
-                  <Form className='container-sm d-grid text-center labe naranj' style={{ fontWeight: "bold", fontSize: "20px" }}>
+                  <Form className='container-sm d-grid text-center labe naranj ' style={{ fontWeight: "bold", fontSize: "20px" }}>
                     {error && <div className="text-danger fs-6 lh-1">{error}</div>}
                     <div className='form-group mb-4'>
                       <label htmlFor="documento">Documento</label>

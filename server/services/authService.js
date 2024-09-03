@@ -105,6 +105,35 @@ const autenticarUsuario = (documento) => {
   });
 };
 
+const actualizarUsuario = (userData, callback) => {
+  const { id_cliente, nombre, correo_electronico, telefono } = userData; // Extracción de los campos necesarios del objeto userData
+
+  // Consulta para obtener los datos actuales del usuario
+  db.query('SELECT nombre, correo_electronico, telefono FROM clientes WHERE id_cliente = ?', [id_cliente], (err, result) => {
+    if (err) {
+      logger.error('Error al obtener los datos actuales del usuario:', err);
+      callback(err, null);
+    } else {
+      const currentUserData = result[0];
+      console.log('Datos actuales del usuario:', currentUserData); // Muestra los datos actuales del usuario
+
+      // Llamada al procedimiento almacenado para actualizar el usuario
+      db.query(
+        'CALL ModificarUsuario(?, ?, ?, ?)',
+        [id_cliente, nombre, correo_electronico, telefono], // Proporciona los parámetros en el orden correcto
+        (err, result) => {
+          if (err) {
+            logger.error('Error al actualizar el usuario:', err);
+            callback(err, null);
+          } else {
+            callback(null, result);
+          }
+        }
+      );
+    }
+  });
+};
+
 
 // Solicitar restablecimiento de contraseña
 const solicitarRestablecimientoContrasena = (correo_electronico) => {
@@ -161,6 +190,7 @@ module.exports = {
   verificarDatosUnicos,
   registrarUsuario,
   autenticarUsuario,
+  actualizarUsuario,
   solicitarRestablecimientoContrasena,
   verificarCodigoYRestablecerContrasena,
 };

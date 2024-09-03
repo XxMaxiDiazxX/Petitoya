@@ -7,16 +7,21 @@ import ValidacionToken from './componentes/usuario/ValidacionToken';
 import PageNotFound from './componentes/error/NotFoundPage';
 import { Routes, Route } from 'react-router-dom';
 import { VerifyAndResetPassword } from './componentes/usuario/Restablecimiento';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const ControladorRutas = () => {
   return (
-    <Routes>
-      <Route exact path="/" element={<Login />} />
-      <Route path="/registro" element={<Registro />} />
-      <Route path="/reset-password" element={<ValidacionToken />} />
-      <Route path="/verify-code" element={<VerifyAndResetPassword />} />
-      <Route path="/inicio/*" element={<PaginaPrincipal />} />
-      <Route path="*" element={<PageNotFound />} />
-    </Routes>
+    <>
+      <ToastContainer />
+      <Routes>
+        <Route exact path="/" element={<Login />} />
+        <Route path="/registro" element={<Registro />} />
+        <Route path="/reset-password" element={<ValidacionToken />} />
+        <Route path="/verify-code" element={<VerifyAndResetPassword />} />
+        <Route path="/inicio/*" element={<PaginaPrincipal />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    </>
   );
 };

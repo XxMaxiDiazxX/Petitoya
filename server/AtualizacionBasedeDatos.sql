@@ -215,9 +215,8 @@ CREATE PROCEDURE ModificarUsuario(
     IN p_id_cliente VARCHAR(20),
     IN p_nombre VARCHAR(50),
     IN p_correo_electronico VARCHAR(255),
-    IN p_telefono VARCHAR(15),
-    IN p_id_rol INT
-)
+    IN p_telefono VARCHAR(15)
+    )
 BEGIN
     UPDATE clientes
     SET
