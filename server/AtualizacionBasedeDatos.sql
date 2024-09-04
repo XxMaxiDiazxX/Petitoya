@@ -172,6 +172,7 @@ END //
 CREATE PROCEDURE CrearUsuario(
     IN p_id_cliente VARCHAR(20),
     IN p_nombre VARCHAR(50),
+    IN p_apellido VARCHAR(50),
     IN p_correo_electronico VARCHAR(255),
     IN p_telefono VARCHAR(15),
     IN p_contrasena VARCHAR(255),
@@ -181,6 +182,7 @@ BEGIN
     INSERT INTO clientes (
         id_cliente,
         nombre,
+        apellido,
         correo_electronico,
         telefono,
         contrasena,
@@ -189,6 +191,7 @@ BEGIN
     VALUES (
         p_id_cliente,
         p_nombre,
+        p_apellido,
         p_correo_electronico,
         p_telefono,
         p_contrasena,
@@ -214,6 +217,7 @@ END //
 CREATE PROCEDURE ModificarUsuario(
     IN p_id_cliente VARCHAR(20),
     IN p_nombre VARCHAR(50),
+    IN p_apellido VARCHAR(50),
     IN p_correo_electronico VARCHAR(255),
     IN p_telefono VARCHAR(15)
     )
@@ -221,9 +225,9 @@ BEGIN
     UPDATE clientes
     SET
         nombre = p_nombre,
+        apellido = p_apellido
         correo_electronico = p_correo_electronico,
         telefono = p_telefono,
-        id_rol = p_id_rol
     WHERE
         id_cliente = p_id_cliente;
 END //

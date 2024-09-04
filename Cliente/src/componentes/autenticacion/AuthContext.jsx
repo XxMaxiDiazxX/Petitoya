@@ -58,6 +58,19 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const updateUser = (updatedUserData) => {
+    try {
+      if (updatedUserData) {
+        setUser(updatedUserData);
+        localStorage.setItem("user", JSON.stringify(updatedUserData));
+      } else {
+        console.error("Datos de usuario inválidos para la actualización.");
+      }
+    } catch (error) {
+      console.error("Error al actualizar el usuario:", error);
+    }
+  };
+
   const logout = () => {
     try {
       setUser(null);
@@ -105,7 +118,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, role, isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ user, role, isLoggedIn, login, logout, updateUser  }}>
       {children}
     </AuthContext.Provider>
   );

@@ -79,10 +79,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `CrearProducto` (IN `p_id_producto` 
 END$$
 
 DROP PROCEDURE IF EXISTS `CrearUsuario`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `CrearUsuario` (IN `p_id_cliente` VARCHAR(20), IN `p_nombre` VARCHAR(50), IN `p_correo_electronico` VARCHAR(255), IN `p_telefono` VARCHAR(15), IN `p_contrasena` VARCHAR(255), IN `p_id_rol` INT)   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CrearUsuario` (IN `p_id_cliente` VARCHAR(20), IN `p_nombre` VARCHAR(50), IN `p_apellido` VARCHAR(50), IN `p_correo_electronico` VARCHAR(255), IN `p_telefono` VARCHAR(15), IN `p_contrasena` VARCHAR(255), IN `p_id_rol` INT)   BEGIN
     INSERT INTO clientes (
         id_cliente,
         nombre,
+        apellido,
         correo_electronico,
         telefono,
         contrasena,
@@ -91,6 +92,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `CrearUsuario` (IN `p_id_cliente` VA
     VALUES (
         p_id_cliente,
         p_nombre,
+        p_apellido,
         p_correo_electronico,
         p_telefono,
         p_contrasena,
@@ -153,10 +155,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `ModificarProducto` (IN `p_id_produc
 END$$
 
 DROP PROCEDURE IF EXISTS `ModificarUsuario`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ModificarUsuario` (IN `p_id_cliente` VARCHAR(20), IN `p_nombre` VARCHAR(50), IN `p_correo_electronico` VARCHAR(255), IN `p_telefono` VARCHAR(15), IN `p_id_rol` INT)   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ModificarUsuario` (IN `p_id_cliente` VARCHAR(20), IN `p_nombre` VARCHAR(50), IN `p_apellido` VARCHAR(50), IN `p_correo_electronico` VARCHAR(255), IN `p_telefono` VARCHAR(15))   BEGIN
     UPDATE clientes
     SET
         nombre = p_nombre,
+        apellido = p_apellido,
         correo_electronico = p_correo_electronico,
         telefono = p_telefono
     WHERE

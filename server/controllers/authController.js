@@ -2,8 +2,22 @@ const authService = require('../services/authService');
 const logger = require('../utils/logger');
 const bcrypt = require('bcrypt');
 
+exports.obtenerUsuarioPorId = (req, res) => {
+  const id_cliente = req.params.id_cliente;
+
+  authService.getUserById(id_cliente, (err, user) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    if (!user) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+    res.json(user);
+  });
+};
+
 exports.register = async (req, res) => {
-  const { documento, nombre, correo_electronico, telefono, contrasena } = req.body;
+  const { documento, nombre, apellido, correo_electronico, telefono, contrasena } = req.body;
 
   try {
     const { error } = await authService.verificarDatosUnicos(documento, correo_electronico, telefono);
@@ -11,7 +25,7 @@ exports.register = async (req, res) => {
       return res.status(400).json({ error });
     }
 
-    await authService.registrarUsuario(documento, nombre, correo_electronico, telefono, contrasena, 1);
+    await authService.registrarUsuario(documento, nombre, apellido, correo_electronico, telefono, contrasena, 1);
     res.status(200).json({ message: 'Registro exitoso' });
   } catch (error) {
     logger.error('Error al registrar usuario:', error);
@@ -50,7 +64,7 @@ exports.login = async (req, res) => {
       if (match) {
         const userResponse = {
           id: documento,
-          username: user.nombre,
+          nombre: user.nombre,
           role: user.id_rol
         };
         return res.status(200).json({ message: 'Inicio de sesión exitoso', user: userResponse });

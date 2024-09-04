@@ -3,7 +3,7 @@ const logger = require('../utils/logger');
 
 const getSuperUsuarios = (callback) => {
   const sql = 'SELECT * FROM clientes WHERE id_rol = ?';
-  const values = [2]; // '2' es el id_rol para superusuarios
+  const values = [3];
 
   db.query(sql, values, (err, rows) => {
     if (err) {

@@ -52,10 +52,33 @@ const verificarDatosUnicos = (documento, correo_electronico, telefono) => {
   });
 };
 
+const getUserById = (id_cliente, callback) => {
+  // Consulta para obtener los datos del usuario por id_cliente
+  db.query(
+    'SELECT nombre, correo_electronico, telefono FROM clientes WHERE id_cliente = ?',
+    [id_cliente],
+    (err, result) => {
+      if (err) {
+        logger.error('Error al obtener el usuario:', err);
+        callback(err, null);
+      } else {
+        if (result.length > 0) {
+          // Retorna los datos del usuario si se encontró un registro
+          callback(null, result[0]);
+        } else {
+          // Retorna un error si no se encontró el usuario
+          callback(new Error('Usuario no encontrado'), null);
+        }
+      }
+    }
+  );
+};
+
 // Registrar un nuevo usuario
 const registrarUsuario = async (
   documento,
   nombre,
+  apellido,
   correo_electronico,
   telefono,
   contrasena,
@@ -63,9 +86,10 @@ const registrarUsuario = async (
 ) => {
   try {
     const hashedPassword = await encriptarContrasena(contrasena);
-    await db.query("CALL CrearUsuario(?, ?, ?, ?, ?, ?)", [
+    await db.query("CALL CrearUsuario(?, ?, ?, ?, ?, ?, ?)", [
       documento,
       nombre,
+      apellido,
       correo_electronico,
       telefono,
       hashedPassword,
@@ -106,7 +130,7 @@ const autenticarUsuario = (documento) => {
 };
 
 const actualizarUsuario = (userData, callback) => {
-  const { id_cliente, nombre, correo_electronico, telefono } = userData; // Extracción de los campos necesarios del objeto userData
+  const { id_cliente, nombre, apellido, correo_electronico, telefono } = userData; // Extracción de los campos necesarios del objeto userData
 
   // Consulta para obtener los datos actuales del usuario
   db.query('SELECT nombre, correo_electronico, telefono FROM clientes WHERE id_cliente = ?', [id_cliente], (err, result) => {
@@ -119,8 +143,8 @@ const actualizarUsuario = (userData, callback) => {
 
       // Llamada al procedimiento almacenado para actualizar el usuario
       db.query(
-        'CALL ModificarUsuario(?, ?, ?, ?)',
-        [id_cliente, nombre, correo_electronico, telefono], // Proporciona los parámetros en el orden correcto
+        'CALL ModificarUsuario(?, ?, ?, ?, ?)',
+        [id_cliente, nombre, apellido, correo_electronico, telefono], // Proporciona los parámetros en el orden correcto
         (err, result) => {
           if (err) {
             logger.error('Error al actualizar el usuario:', err);
@@ -193,4 +217,5 @@ module.exports = {
   actualizarUsuario,
   solicitarRestablecimientoContrasena,
   verificarCodigoYRestablecerContrasena,
+  getUserById,
 };
