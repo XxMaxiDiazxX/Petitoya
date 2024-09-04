@@ -81,9 +81,10 @@ exports.login = async (req, res) => {
 };
 
 exports.updateUserController = async (req, res) => {
-  const userData = req.body; // Los datos del usuario enviados en la solicitud
+  const id_cliente = req.params.id_cliente;
+  const { nombre, apellido, correo_electronico, telefono } = req.body;
 
-  authService.actualizarUsuario(userData, (err, result) => {
+  authService.actualizarUsuario({id_cliente, nombre, apellido, correo_electronico, telefono} , (err, result) => {
     if (err) {
       console.error('Error al actualizar el usuario:', err);
       res.status(500).json({ error: 'Error al actualizar el usuario' });

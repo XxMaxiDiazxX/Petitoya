@@ -14,7 +14,7 @@ const ActualizarUsuario = () => {
   const { user, updateUser } = useAuth(); // Obtén el usuario y la función de actualización del contexto
   const [loading, setLoading] = useState(false);
   const [initialValues, setInitialValues] = useState({
-    username: '',
+    nombre: '',
     apellido: '',
     correo_electronico: '',
     telefono: ''
@@ -27,8 +27,9 @@ const ActualizarUsuario = () => {
         try {
           setLoading(true);
           const response = await axios.get(`${apiUrl}/auth/consultar-user-id/${user.id}`);
+          console.log(response)
           setInitialValues({
-            username: response.data.nombre || '',
+            nombre: response.data.nombre || '',
             apellido: response.data.apellido || '',
             correo_electronico: response.data.correo_electronico || '',
             telefono: response.data.telefono || ''
@@ -45,7 +46,7 @@ const ActualizarUsuario = () => {
   }, [user?.id]);
 
   const validationSchema = Yup.object().shape({
-    username: Yup.string().matches(/[A-Za-z]+/, 'Ingrese un nombre válido').required('Campo requerido'),
+    nombre: Yup.string().matches(/[A-Za-z]+/, 'Ingrese un nombre válido').required('Campo requerido'),
     apellido: Yup.string().matches(/[A-Za-z]+/, 'Ingrese un apellido válido').required('Campo requerido'),
     correo_electronico: Yup.string().email('Ingrese un correo electrónico válido').required('Campo requerido'),
     telefono: Yup.string().matches(/^[0-9]+$/, 'Ingrese un teléfono válido').required('Campo requerido'),
@@ -56,6 +57,7 @@ const ActualizarUsuario = () => {
     try {
       if (user?.id) {
         const response = await axios.put(`${apiUrl}/auth/actualizar-usuario/${user.id}`, values);
+        console.log("Response:", response);
         updateUser({ ...user, ...values });
         toast.success('Usuario actualizado exitosamente');
       } else {
@@ -86,9 +88,9 @@ const ActualizarUsuario = () => {
           <Form>
             <Row className="mb-3">
               <Col>
-                <label htmlFor="username">Nombre</label>
-                <Field type="text" name="username" className="form-control" />
-                <ErrorMessage name="username" component="div" className="text-danger" />
+                <label htmlFor="nombre">Nombre</label>
+                <Field type="text" name="nombre" className="form-control" />
+                <ErrorMessage name="nombre" component="div" className="text-danger" />
               </Col>
               <Col>
                 <label htmlFor="apellido">Apellido</label>
