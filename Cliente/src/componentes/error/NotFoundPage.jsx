@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import Fondo from '../../img/error/Fondo.jpg'
+import Fondo from '../../img/error/fondo.jpg'
 
 const PageNotFound = () => {
   return (

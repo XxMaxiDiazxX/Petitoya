@@ -260,6 +260,7 @@ DROP TABLE IF EXISTS `clientes`;
 CREATE TABLE IF NOT EXISTS `clientes` (
   `id_cliente` varchar(20) NOT NULL,
   `nombre` varchar(50) NOT NULL,
+    `apellido` varchar(50) NOT NULL,
   `correo_electronico` varchar(255) NOT NULL,
   `telefono` varchar(15) DEFAULT NULL,
   `contrasena` varchar(255) NOT NULL,

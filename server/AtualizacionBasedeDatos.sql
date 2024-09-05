@@ -225,9 +225,9 @@ BEGIN
     UPDATE clientes
     SET
         nombre = p_nombre,
-        apellido = p_apellido
+        apellido = p_apellido,
         correo_electronico = p_correo_electronico,
-        telefono = p_telefono,
+        telefono = p_telefono
     WHERE
         id_cliente = p_id_cliente;
 END //

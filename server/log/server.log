@@ -102,3 +102,5 @@
 2024-09-04T02:06:38.608Z - [31MERROR[39M: [31mError al registrar usuario: Error al encriptar la contraseña[39m
 2024-09-04T02:06:40.005Z - [31MERROR[39M: [31mError al registrar usuario: Error al encriptar la contraseña[39m
 2024-09-04T02:08:24.507Z - [31MERROR[39M: [31mError al registrar usuario: Error al encriptar la contraseña[39m
+2024-09-05T16:55:00.580Z - [31MERROR[39M: [31mError al obtener el usuario: ER_BAD_FIELD_ERROR: Unknown column 'apellido' in 'field list'[39m
+2024-09-05T16:55:00.585Z - [31MERROR[39M: [31mError al obtener el usuario: ER_BAD_FIELD_ERROR: Unknown column 'apellido' in 'field list'[39m
