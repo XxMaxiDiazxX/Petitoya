@@ -3,6 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify"; // Importar toast y ToastContainer
 import "react-toastify/dist/ReactToastify.css"; // Estilos CSS para react-toastify
 import "../../styles/menu/PedidoModalMenu.scss"; // Importa el archivo de estilos
+import { Modal } from "react-bootstrap"; // Importa Modal de react-bootstrap
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -14,10 +15,10 @@ export const PedidoModalMenu = ({
   isLoggedIn,
 }) => {
   const [cantidad, setCantidad] = useState(1); // Inicializar con 1 para evitar valores cero
+  const [mostrarConfirmacionAgregar, setMostrarConfirmacionAgregar] = useState(false);
+  const [mostrarConfirmacionPedido, setMostrarConfirmacionPedido] = useState(false);
   const urlImagen = `${apiUrl}/${producto.imagenSrc}`;
   const modalRef = useRef(null);
-
-
 
   const handleModalClick = (e) => {
     e.stopPropagation();
@@ -113,22 +114,16 @@ export const PedidoModalMenu = ({
     }
   };
 
-  useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        setMostrarModal(false);
-      }
-    };
 
-    if (mostrarModal) {
-      document.addEventListener("mousedown", handleOutsideClick);
-    }
+  const confirmarAgregarAlCarrito = () => {
+    handleAddToCart();
+    setMostrarConfirmacionAgregar(false);
+  };
 
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
-  }, [mostrarModal, setMostrarModal]);
-
+  const confirmarRealizarPedido = () => {
+    handlePlaceOrder();
+    setMostrarConfirmacionPedido(false);
+  };
 
   return (
     <div>
@@ -164,11 +159,18 @@ export const PedidoModalMenu = ({
         <div
           className="modal-dialog modal-dialog-centered"
           role="document"
-          ref={modalRef}
         >
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">Realizar Pedido</h5>
+              <button
+                type="button"
+                className="close"
+                aria-label="Close"
+                onClick={() => setMostrarModal(false)}
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
             <div className="modal-body">
               <img
@@ -198,14 +200,14 @@ export const PedidoModalMenu = ({
                   <button
                     type="button"
                     className="btn btn-primary custom-button1"
-                    onClick={handleAddToCart}
+                    onClick={() => setMostrarConfirmacionAgregar(true)}
                   >
                     Añadir al Carrito
                   </button>
                   <button
                     type="button"
                     className="btn btn-success custom-button1"
-                    onClick={handlePlaceOrder}
+                    onClick={() => setMostrarConfirmacionPedido(true)}
                   >
                     Realizar Pedido
                   </button>
@@ -215,6 +217,52 @@ export const PedidoModalMenu = ({
           </div>
         </div>
       </div>
+
+      <Modal show={mostrarConfirmacionAgregar} onHide={() => setMostrarConfirmacionAgregar(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmar Añadir al Carrito</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          ¿Estás seguro de que deseas añadir el producto al carrito?
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className="btn custom-button1"
+            onClick={() => setMostrarConfirmacionAgregar(false)}
+          >
+            Cancelar
+          </button>
+          <button
+            className="btn custom-button2"
+            onClick={confirmarAgregarAlCarrito}
+          >
+            Confirmar
+          </button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={mostrarConfirmacionPedido} onHide={() => setMostrarConfirmacionPedido(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmar Pedido</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          ¿Estás seguro de que deseas realizar el pedido con los productos actuales? Una vez realizado el pedido, no se podrá cancelar.
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className="btn custom-button1"
+            onClick={() => setMostrarConfirmacionPedido(false)}
+          >
+            Cancelar
+          </button>
+          <button
+            className="btn custom-button2"
+            onClick={confirmarRealizarPedido}
+          >
+            Confirmar Pedido
+          </button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

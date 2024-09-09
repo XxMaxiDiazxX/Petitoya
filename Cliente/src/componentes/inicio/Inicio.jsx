@@ -22,13 +22,11 @@ export const Inicio = () => {
     const obtenerProductosMenosUsados = async () => {
       try {
         const response = await axios.get(`${apiUrl}/products/leastused`);
-        console.log("Respuesta del servidor:", response.data);
   
         if (response.data.length > 0) {
           const productosActivos = response.data.filter(
             (producto) => producto.estado !== "inactivo"
           );
-          console.log("Productos activos:", productosActivos);
           setProductos(productosActivos.slice(0, 8)); // Limitar a 8 productos
         } else {
           console.log("No se encontraron productos.");

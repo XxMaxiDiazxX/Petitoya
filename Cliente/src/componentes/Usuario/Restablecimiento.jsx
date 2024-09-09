@@ -4,6 +4,8 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap'; // Importa los componentes de Bootstrap necesarios
+import { toast } from 'react-toastify'; // Importa Toastify
+import 'react-toastify/dist/ReactToastify.css'; // Importa los estilos de Toastify
 import '../../styles/menu/PedidoModalMenu.scss'; // Ajusta la ruta a tu archivo SCSS
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -25,75 +27,76 @@ const validationSchema = Yup.object().shape({
 export const VerifyAndResetPassword = () => {
   const location = useLocation();
   const { id_cliente } = location.state || {};
-  const [error, setError] = useState('');
-  const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
   return (
-    <Container className="verify-and-reset-password d-flex flex-column justify-content-center">
-      <Row className="password justify-content-center">
-        <Col md={6} className="justify-content-center">
-      <h2 className="text-center mb-4">Recuperación de Contraseña</h2>
-      <Formik
-        initialValues={{ id_cliente, codigo_verificacion: '', nueva_contrasena: '', confirmar_contrasena: '' }}
-        validationSchema={validationSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          axios.post(`${apiUrl}/auth/verify-code-and-reset-password`, values)
-            .then(response => {
-              setMessage('Contraseña cambiada exitosamente.');
-              navigate('/');
-            })
-            .catch(error => {
-              setError(error.response ? error.response.data.error : error.message);
-            })
-            .finally(() => {
-              setSubmitting(false);
-            });
-        }}
-      >
-        <Form className="w-100">
-          {error && <div className="alert alert-danger">{error}</div>}
-          {message && <div className="alert alert-success">{message}</div>}
-          <div className="mb-3">
-            <label htmlFor="codigo_verificacion" className="form-label">Código de Verificación</label>
-            <Field
-              type="text"
-              name="codigo_verificacion"
-              id="codigo_verificacion"
-              className="form-control"
-              placeholder="Código de Verificación"
-            />
-            <ErrorMessage name="codigo_verificacion" component="div" className="text-danger" />
+    <Container fluid className="verify-and-reset-password d-flex flex-column justify-content-center min-vh-100 p-3">
+      <Row className="justify-content-center">
+        <Col md={8} lg={6} xl={4}>
+          <div className="password p-4 rounded shadow-sm">
+            <h2 className="text-center mb-4">Recuperación de Contraseña</h2>
+            <Formik
+              initialValues={{ id_cliente, codigo_verificacion: '', nueva_contrasena: '', confirmar_contrasena: '' }}
+              validationSchema={validationSchema}
+              onSubmit={(values, { setSubmitting }) => {
+                axios.post(`${apiUrl}/auth/verify-code-and-reset-password`, values)
+                  .then(response => {
+                    toast.success('Contraseña cambiada exitosamente.');
+                    navigate('/');
+                  })
+                  .catch(error => {
+                    const errorMessage = error.response ? error.response.data.error : error.message;
+                    toast.error(errorMessage);
+                  })
+                  .finally(() => {
+                    setSubmitting(false);
+                  });
+              }}
+            >
+              <Form>
+                <div className="mb-3">
+                  <label htmlFor="codigo_verificacion" className="form-label">Código de Verificación</label>
+                  <Field
+                    type="text"
+                    name="codigo_verificacion"
+                    id="codigo_verificacion"
+                    className="form-control"
+                    placeholder="Código de Verificación"
+                  />
+                  <ErrorMessage name="codigo_verificacion" component="div" className="text-danger mt-1" />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="nueva_contrasena" className="form-label">Nueva Contraseña</label>
+                  <Field
+                    type="password"
+                    name="nueva_contrasena"
+                    id="nueva_contrasena"
+                    className="form-control"
+                    placeholder="Nueva Contraseña"
+                  />
+                  <ErrorMessage name="nueva_contrasena" component="div" className="text-danger mt-1" />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="confirmar_contrasena" className="form-label">Confirmar Contraseña</label>
+                  <Field
+                    type="password"
+                    name="confirmar_contrasena"
+                    id="confirmar_contrasena"
+                    className="form-control"
+                    placeholder="Confirmar Contraseña"
+                  />
+                  <ErrorMessage name="confirmar_contrasena" component="div" className="text-danger mt-1" />
+                </div>
+                <div className="d-flex justify-content-center">
+                  <Button type="submit" className="btn custom-button2">Restablecer Contraseña</Button>
+                </div>
+              </Form>
+            </Formik>
           </div>
-          <div className="mb-3">
-            <label htmlFor="nueva_contrasena" className="form-label">Nueva Contraseña</label>
-            <Field
-              type="password"
-              name="nueva_contrasena"
-              id="nueva_contrasena"
-              className="form-control"
-              placeholder="Nueva Contraseña"
-            />
-            <ErrorMessage name="nueva_contrasena" component="div" className="text-danger" />
-          </div>
-          <div className='mb-3'>
-            <label htmlFor="confirmar_contrasena" className="form-label">Confirmar Contraseña</label>
-            <Field
-              type="password"
-              name="confirmar_contrasena"
-              id="confirmar_contrasena"
-              className="form-control"
-              placeholder="Confirmar Contraseña"
-            />
-            <ErrorMessage name="confirmar_contrasena" component="div" className="text-danger" />
-          </div>
-          <div className='mx-4 d-flex align-items-center justify-content-center cuerpo text-uppercase text-uppercase'>
-            <button type="submit" className='bg-naranj border-0'>Restablecer Contraseña</button>
-          </div>
-        </Form>
-      </Formik>
-      </Col>
+        </Col>
       </Row>
     </Container>
   );
 };
+
+export default VerifyAndResetPassword;

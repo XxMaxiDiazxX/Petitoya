@@ -19,6 +19,7 @@ setupSocketIo(server);
 // Middlewares
 app.use(cors({ origin: "*" }));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Rutas
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));

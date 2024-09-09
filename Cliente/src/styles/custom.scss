@@ -131,6 +131,98 @@ main {
   }
 }
 
+.carrito-container {
+  .table-header {
+    background-color: #f8f9fa;
+    text-transform: uppercase;
+  }
+
+  .table-img {
+    max-width: 50px;
+    max-height: 50px;
+    border-radius: 5px;
+  }
+
+  .carrito-item-mobile {
+    background-color: #fff;
+    border: 1px solid #e1e1e1;
+  }
+
+  .carrito-item-mobile img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+
+
+}
+
+// Producto.scss
+.producto {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+}
+
+.producto-img-container {
+  flex: 0 0 120px; // Tamaño fijo en pantallas grandes
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.producto-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%; // Redondear imagen en pantallas grandes
+  object-fit: cover; /* Cubre el contenedor sin distorsionar la imagen */
+}
+
+// En modo celular, hacer la imagen más grande y quitar el borde redondeado
+@media (max-width: 767px) {
+  .producto {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .producto-img-container {
+    flex: none;
+    width: 100%;
+    padding: 0;
+  }
+
+  .producto-img {
+    width: 100%;
+    height: auto;
+    border-radius: 0; // Quitar borde redondeado en pantallas pequeñas
+  }
+
+  .producto-info {
+    margin-top: 1rem;
+  }
+}
+
+/* PedidoModalMenu.scss */
+
+/* Estilo general para el botón de cerrar */
+.modal .close {
+  font-size: 1.5rem; // Ajusta el tamaño del ícono de cerrar
+  color: #000; // Cambia el color del ícono si es necesario
+  background: none; // Elimina el fondo
+  border: none; // Elimina el borde
+  outline: none; // Elimina el contorno
+  cursor: pointer; // Muestra el cursor pointer cuando se pasa sobre el ícono
+}
+
+/* Opcional: Añadir estilo al botón de cerrar cuando se pasa el ratón sobre él */
+.modal .close:hover {
+  color: #007bff; // Cambia el color al pasar el ratón sobre el ícono
+}
+
+
 // Producto.module.scss
 
 .custom-card {
@@ -246,10 +338,6 @@ main {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
 }
 
 .password {

@@ -36,7 +36,7 @@ const Pedido = ({ id_pedido, estado, fecha_compra, total_pagar }) => {
         <p className="card-text">{`Total a Pagar: $${total_pagar}`}</p> {/* Mostrar total a pagar */}
         <p className="card-text">{`Fecha de Compra: ${formatDate(fecha_compra)}`}</p>
         <div className="btn-group mt-2">
-          <Button variant="primary" onClick={handleShowModal}>
+          <Button className='custom-button2' onClick={handleShowModal}>
             Ver Detalles
           </Button>
         </div>
@@ -78,7 +78,7 @@ const Pedido = ({ id_pedido, estado, fecha_compra, total_pagar }) => {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
+          <Button className='custom-button2' onClick={() => setShowModal(false)}>
             Cerrar
           </Button>
         </Modal.Footer>

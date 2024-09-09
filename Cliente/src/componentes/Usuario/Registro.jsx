@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import { useState } from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -23,7 +22,9 @@ export const Registro = () => {
   const validationSchema = Yup.object().shape({
     nombre: Yup.string().matches(/[A-Za-z]+/, 'Ingrese un nombre válido').required('Campo requerido'),
     apellido: Yup.string().matches(/[A-Za-z]+/, 'Ingrese un apellido válido').required('Campo requerido'),
-    documento: Yup.number().required('Campo requerido'),
+    documento: Yup.number()
+      .min(0, "El documento no puede ser negativo") // Asegura que el número sea positivo
+      .required("Campo requerido"),
     correo_electronico: Yup.string().email('Ingrese un correo electrónico válido').required('Campo requerido'),
     contrasena: Yup.string()
       .min(6, 'La contraseña debe tener al menos 6 caracteres')
@@ -105,6 +106,8 @@ export const Registro = () => {
                     className="form-control bg-input usua"
                     placeholder="Ingrese su documento"
                     maxLength="20"
+                    min="0" // Esto asegura que no se puedan ingresar números negativos
+                    step="1" // Esto asegura que solo se puedan ingresar enteros
                   />
                   <ErrorMessage name="documento" component="span" className="error" />
                 </Col>

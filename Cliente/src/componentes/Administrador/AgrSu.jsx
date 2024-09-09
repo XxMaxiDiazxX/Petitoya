@@ -4,8 +4,11 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Row, Col, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import { toast } from "react-toastify"; // Asegúrate de tener react-toastify importado
+
 import EstadisticasVentas from "./Stats";
 import ConsultarSuper from "./ConsultarSuper";
+import AgregarCaruselItem from "./AgregarCaruselItem";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -27,7 +30,9 @@ export const AgrSu = () => {
     apellido: Yup.string()
       .matches(/[A-Za-z]+/, "Ingrese un apellido válido")
       .required("Campo requerido"),
-    documento: Yup.number().required("Campo requerido"),
+    documento: Yup.number()
+      .min(0, "El documento no puede ser negativo") // Asegura que el número sea positivo
+      .required("Campo requerido"),
     correo_electronico: Yup.string()
       .email("Ingrese un correo electrónico válido")
       .required("Campo requerido"),
@@ -46,20 +51,18 @@ export const AgrSu = () => {
 
   const [registrationError, setRegistrationError] = useState(null);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
-  const navigate = useNavigate();
 
   const onSubmit = (values, { setSubmitting, resetForm }) => {
     axios
       .post(`${apiUrl}/auth/registerSu`, values)
       .then((response) => {
-        console.log("Registro exitoso:", response.data);
+        toast.success('Registro exitoso');
         setRegistrationSuccess(true);
         resetForm();
-        // Opcional: Navegar a otra página o realizar acciones adicionales después del registro
-        // navigate('/dashboard'); // Ejemplo de navegación a otra página
       })
       .catch((error) => {
         console.error("Error de registro:", error.response?.data);
+        toast.error(error.response?.data?.error || "Error de registro");
         setRegistrationError(
           error.response?.data?.error || "Error de registro"
         );
@@ -87,142 +90,111 @@ export const AgrSu = () => {
             onSubmit={onSubmit}
             validationSchema={validationSchema}
           >
-            <Form
-              className="fondito p-4 text-center labe naranj"
-              style={{ width: "65%", fontSize: "20px" }}
-            >
-              {registrationError && (
-                <div className="alert alert-danger" role="alert">
-                  {registrationError}
-                </div>
-              )}
-              {registrationSuccess && (
-                <div className="alert alert-success" role="alert">
-                  Usuario registrado correctamente
-                </div>
-              )}
-              <Row className="mb-3 d-flex align-items-center ">
-                <Col className="mx-4">
-                  <label htmlFor="nombre">Nombre:</label>
-                  <Field
-                    type="text"
-                    name="nombre"
-                    className="form-control bg-input usua"
-                    placeholder="Ingrese su nombre"
-                  />
-                  <ErrorMessage
-                    name="nombre"
-                    component="span"
-                    className="error"
-                  />
-                </Col>
-                <Col className="mx-4">
-                  <label htmlFor="apellido">Apellido:</label>
-                  <Field
-                    type="text"
-                    name="apellido"
-                    className="form-control bg-input usua"
-                    placeholder="Ingrese su apellido"
-                  />
-                  <ErrorMessage
-                    name="apellido"
-                    component="span"
-                    className="error"
-                  />
-                </Col>
-              </Row>
-              <Row className="mb-3 d-flex align-items-center">
-                <Col className="mx-4">
-                  <label htmlFor="documento">Documento:</label>
-                  <Field
-                    type="number"
-                    name="documento"
-                    className="form-control bg-input usua"
-                    placeholder="Ingrese su documento"
-                  />
-                  <ErrorMessage
-                    name="documento"
-                    component="span"
-                    className="error"
-                  />
-                </Col>
-                <Col className="mx-4">
-                  <label htmlFor="telefono">Teléfono:</label>
-                  <Field
-                    type="tel"
-                    name="telefono"
-                    className="form-control bg-input usua"
-                    placeholder="Ingrese su teléfono"
-                  />
-                  <ErrorMessage
-                    name="telefono"
-                    component="span"
-                    className="error"
-                  />
-                </Col>
-              </Row>
-              <Row className="mb-3 d-flex align-items-center">
-                <Col className="mx-4">
-                  <label htmlFor="contrasena">Contraseña:</label>
-                  <Field
-                    type="password"
-                    name="contrasena"
-                    className="form-control bg-input contra"
-                    placeholder="Ingrese su contraseña"
-                  />
-                  <ErrorMessage
-                    name="contrasena"
-                    component="span"
-                    className="error"
-                  />
-                </Col>
+            {({ isSubmitting }) => (
+              <Form className="fondito p-4 text-center labe naranj" style={{ width: "65%", fontSize: "20px" }}>
+                <Row className="mb-3 d-flex align-items-center">
+                  <Col className='mx-4'>
+                    <label htmlFor="nombre">Nombre:</label>
+                    <Field
+                      type="text"
+                      name="nombre"
+                      className="form-control bg-input usua"
+                      placeholder="Ingrese su nombre"
+                      maxLength="30"
+                    />
+                    <ErrorMessage name="nombre" component="span" className="error" />
+                  </Col>
+                  <Col className='mx-4'>
+                    <label htmlFor="apellido">Apellido:</label>
+                    <Field
+                      type="text"
+                      name="apellido"
+                      className="form-control bg-input usua"
+                      placeholder="Ingrese su apellido"
+                      maxLength="30"
+                    />
+                    <ErrorMessage name="apellido" component="span" className="error" />
+                  </Col>
+                </Row>
+                <Row className="mb-3 d-flex align-items-center">
+                  <Col className='mx-4'>
+                    <label htmlFor="documento">Documento:</label>
+                    <Field
+                      type="number"
+                      name="documento"
+                      className="form-control bg-input usua"
+                      placeholder="Ingrese su documento"
+                      maxLength="20"
+                      min="0" // Esto asegura que no se puedan ingresar números negativos
+                      step="1" // Esto asegura que solo se puedan ingresar enteros
+                    />
+                    <ErrorMessage name="documento" component="span" className="error" />
+                  </Col>
+                  <Col className='mx-4'>
+                    <label htmlFor="telefono">Teléfono:</label>
+                    <Field
+                      type="tel"
+                      name="telefono"
+                      className="form-control bg-input usua"
+                      placeholder="Ingrese su teléfono"
+                      maxLength="20"
+                    />
+                    <ErrorMessage name="telefono" component="span" className="error" />
+                  </Col>
+                </Row>
+                <Row className="mb-3 d-flex align-items-center">
+                  <Col className='mx-4'>
+                    <label htmlFor="contrasena">Contraseña:</label>
+                    <Field
+                      type="password"
+                      name="contrasena"
+                      className="form-control bg-input contra"
+                      placeholder="Ingrese su contraseña"
+                      maxLength="50"
+                    />
+                    <ErrorMessage name="contrasena" component="span" className="error" />
+                  </Col>
 
-                <Col className="mx-4">
-                  <label htmlFor="correo_electronico">
-                    Correo Electrónico:
-                  </label>
-                  <Field
-                    type="email"
-                    name="correo_electronico"
-                    className="form-control bg-input usua"
-                    placeholder="Ingrese su correo electrónico"
-                  />
-                  <ErrorMessage
-                    name="correo_electronico"
-                    component="span"
-                    className="error"
-                  />
-                </Col>
-              </Row>
-              <Row className="mb-3 d-flex align-items-center">
-                <Col className="mx-4">
-                  <label htmlFor="confirmar_contrasena">
-                    Confirmar Contraseña:
-                  </label>
-                  <Field
-                    type="password"
-                    name="confirmar_contrasena"
-                    className="form-control bg-input contra"
-                    placeholder="Ingrese su contraseña"
-                  />
-                  <ErrorMessage
-                    name="confirmar_contrasena"
-                    component="span"
-                    className="error"
-                  />
-                </Col>
-                <Col className="mx-4 d-flex align-items-center justify-content-center">
-                  <Button type="submit" className="border-0 custom-button2">
-                    REGISTRARSE
-                  </Button>
-                </Col>
-              </Row>
-            </Form>
+                  <Col className='mx-4'>
+                    <label htmlFor="correo_electronico">Correo Electrónico:</label>
+                    <Field
+                      type="email"
+                      name="correo_electronico"
+                      className="form-control bg-input usua"
+                      placeholder="Ingrese su correo electrónico"
+                      maxLength="100"
+                    />
+                    <ErrorMessage name="correo_electronico" component="span" className="error" />
+                  </Col>
+                </Row>
+                <Row className="mb-3 d-flex align-items-center">
+                  <Col className='mx-4'>
+                    <label htmlFor="confirmar_contrasena">Confirmar Contraseña:</label>
+                    <Field
+                      type="password"
+                      name="confirmar_contrasena"
+                      className="form-control bg-input contra"
+                      placeholder="Ingrese su contraseña"
+                      maxLength="50"
+                    />
+                    <ErrorMessage name="confirmar_contrasena" component="span" className="error" />
+                  </Col>
+                  <Col className='mx-4 d-flex align-items-center justify-content-center cuerpo text-uppercase'>
+                    <Button type="submit" className='custom-button2 border-0' disabled={isSubmitting}>
+                      REGISTRAR
+                    </Button>
+                  </Col>
+                </Row>
+              </Form>
+            )}
           </Formik>
         </Col>
       </div>
+      <AgregarCaruselItem />
       <ConsultarSuper />
       <EstadisticasVentas />
     </>
   );
 };
+
+export default AgrSu;

@@ -184,6 +184,37 @@ const getLeastUsedProducts = (callback) => {
   });
 };
 
+
+
+
+// Almacena en memoria para este ejemplo
+let carouselItems = [];
+
+const addCarouselItem = (itemData, callback) => {
+  try {
+    const newItem = {
+      id: Date.now(), // Generar un ID único
+      ...itemData,
+    };
+
+    carouselItems.push(newItem);
+    callback(null, newItem);
+  } catch (error) {
+    callback(error, null);
+  }
+  console.log(carouselItems)
+};
+
+const getCarouselItems = (callback) => {
+  console.log('Datos en getCarouselItems:', carouselItems); // Añadido para depuración
+  try {
+    callback(null, carouselItems);
+  } catch (error) {
+    callback(error, null);
+  }
+};
+
+
 module.exports = {
   getProducts,
   getProductsByCategory,
@@ -193,4 +224,6 @@ module.exports = {
   deactivateProduct,
   activateProduct,
   getLeastUsedProducts,
+  addCarouselItem,
+  getCarouselItems,
 };

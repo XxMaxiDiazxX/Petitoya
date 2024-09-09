@@ -34,7 +34,7 @@ exports.register = async (req, res) => {
 };
 
 exports.registerSu = async (req, res) => {
-  const { documento, nombre, correo_electronico, telefono, contrasena } = req.body;
+  const { documento, nombre, apellido, correo_electronico, telefono, contrasena } = req.body;
 
   try {
     const { error } = await authService.verificarDatosUnicos(documento, correo_electronico, telefono);
@@ -42,7 +42,7 @@ exports.registerSu = async (req, res) => {
       return res.status(400).json({ error });
     }
 
-    await authService.registrarUsuario(documento, nombre, correo_electronico, telefono, contrasena, 2);
+    await authService.registrarUsuario(documento, nombre, apellido, correo_electronico, telefono, contrasena, 3);
     res.status(200).json({ message: 'Registro exitoso' });
   } catch (error) {
     logger.error('Error al registrar usuario:', error);

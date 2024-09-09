@@ -1,9 +1,7 @@
-// ActualizarUsuario.jsx
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import { Button, Row, Col } from 'react-bootstrap';
+import { Button, Row, Col, Modal } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import { useAuth } from '../autenticacion/AuthContext';
@@ -19,6 +17,7 @@ const ActualizarUsuario = () => {
     correo_electronico: '',
     telefono: ''
   });
+  const [mostrarModalConfirmacion, setMostrarModalConfirmacion] = useState(false); // Nuevo estado para el modal
 
   // Obtén los datos del usuario al cargar el componente
   useEffect(() => {
@@ -27,7 +26,7 @@ const ActualizarUsuario = () => {
         try {
           setLoading(true);
           const response = await axios.get(`${apiUrl}/auth/consultar-user-id/${user.id}`);
-          console.log(response)
+          console.log(response);
           setInitialValues({
             nombre: response.data.nombre || '',
             apellido: response.data.apellido || '',
@@ -53,13 +52,18 @@ const ActualizarUsuario = () => {
   });
 
   const onSubmit = async (values, { setSubmitting }) => {
+    setMostrarModalConfirmacion(true); // Muestra el modal de confirmación en lugar de actualizar directamente
+  };
+
+  const handleConfirmarActualizacion = async () => {
     setLoading(true);
     try {
       if (user?.id) {
-        const response = await axios.put(`${apiUrl}/auth/actualizar-usuario/${user.id}`, values);
+        const response = await axios.put(`${apiUrl}/auth/actualizar-usuario/${user.id}`, initialValues);
         console.log("Response:", response);
-        updateUser({ ...user, ...values });
+        updateUser({ ...user, ...initialValues });
         toast.success('Usuario actualizado exitosamente');
+        setMostrarModalConfirmacion(false); // Cierra el modal después de la actualización
       } else {
         toast.error('ID de usuario no disponible');
       }
@@ -71,8 +75,11 @@ const ActualizarUsuario = () => {
       }
     } finally {
       setLoading(false);
-      setSubmitting(false);
     }
+  };
+
+  const handleCancelarActualizacion = () => {
+    setMostrarModalConfirmacion(false); // Solo cierra el modal sin actualizar
   };
 
   return (
@@ -84,7 +91,7 @@ const ActualizarUsuario = () => {
         onSubmit={onSubmit}
         enableReinitialize // Asegura que los valores iniciales se actualicen cuando cambien
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, values }) => (
           <Form>
             <Row className="mb-3">
               <Col>
@@ -110,12 +117,30 @@ const ActualizarUsuario = () => {
                 <ErrorMessage name="telefono" component="div" className="text-danger" />
               </Col>
             </Row>
-            <Button type="submit" className="btn btn-primary" disabled={isSubmitting || loading}>
+            <Button type="submit" className="btn custom-button2" disabled={isSubmitting || loading}>
               {loading ? 'Actualizando...' : 'Actualizar Usuario'}
             </Button>
           </Form>
         )}
       </Formik>
+
+      {/* Modal de confirmación para actualización */}
+      <Modal show={mostrarModalConfirmacion} onHide={() => setMostrarModalConfirmacion(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmar actualización</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          ¿Estás seguro de que deseas actualizar la información del usuario?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button className='custom-button1' onClick={handleCancelarActualizacion}>
+            Cancelar
+          </Button>
+          <Button className="custom-button2" onClick={handleConfirmarActualizacion}>
+            Confirmar
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

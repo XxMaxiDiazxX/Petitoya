@@ -104,3 +104,22 @@
 2024-09-04T02:08:24.507Z - [31MERROR[39M: [31mError al registrar usuario: Error al encriptar la contraseña[39m
 2024-09-05T16:55:00.580Z - [31MERROR[39M: [31mError al obtener el usuario: ER_BAD_FIELD_ERROR: Unknown column 'apellido' in 'field list'[39m
 2024-09-05T16:55:00.585Z - [31MERROR[39M: [31mError al obtener el usuario: ER_BAD_FIELD_ERROR: Unknown column 'apellido' in 'field list'[39m
+2024-09-09T06:41:21.737Z - [31MERROR[39M: [31mError al restablecer la contraseña: Código de verificación inválido o expirado[39m
+2024-09-09T06:41:52.266Z - [31MERROR[39M: [31mError al restablecer la contraseña: Código de verificación inválido o expirado[39m
+2024-09-09T06:44:58.238Z - [31MERROR[39M: [31mError al restablecer la contraseña: Código de verificación inválido o expirado[39m
+2024-09-09T06:44:59.938Z - [31MERROR[39M: [31mError al restablecer la contraseña: Código de verificación inválido o expirado[39m
+2024-09-09T06:45:00.402Z - [31MERROR[39M: [31mError al restablecer la contraseña: Código de verificación inválido o expirado[39m
+2024-09-09T06:45:00.553Z - [31MERROR[39M: [31mError al restablecer la contraseña: Código de verificación inválido o expirado[39m
+2024-09-09T06:45:00.704Z - [31MERROR[39M: [31mError al restablecer la contraseña: Código de verificación inválido o expirado[39m
+2024-09-09T06:45:00.866Z - [31MERROR[39M: [31mError al restablecer la contraseña: Código de verificación inválido o expirado[39m
+2024-09-09T06:45:00.985Z - [31MERROR[39M: [31mError al restablecer la contraseña: Código de verificación inválido o expirado[39m
+2024-09-09T08:43:44.754Z - [31MERROR[39M: [31mError al registrar usuario: Error al encriptar la contraseña[39m
+2024-09-09T08:44:00.684Z - [31MERROR[39M: [31mError al registrar usuario: Error al encriptar la contraseña[39m
+2024-09-09T08:44:18.747Z - [31MERROR[39M: [31mError al registrar usuario: Error al encriptar la contraseña[39m
+2024-09-09T08:44:21.636Z - [31MERROR[39M: [31mError al registrar usuario: Error al encriptar la contraseña[39m
+2024-09-09T08:48:25.326Z - [31MERROR[39M: [31mError al registrar usuario: Error al encriptar la contraseña[39m
+2024-09-09T08:51:20.633Z - [31MERROR[39M: [31mError al registrar usuario: Error al encriptar la contraseña[39m
+2024-09-09T08:56:04.373Z - [31MERROR[39M: [31mError al registrar usuario: Error al encriptar la contraseña[39m
+2024-09-09T08:56:11.070Z - [31MERROR[39M: [31mError al registrar usuario: Error al encriptar la contraseña[39m
+2024-09-09T08:56:42.695Z - [31MERROR[39M: [31mError al registrar usuario: Error al encriptar la contraseña[39m
+2024-09-09T08:57:43.618Z - [31MERROR[39M: [31mError al registrar usuario: Error al encriptar la contraseña[39m

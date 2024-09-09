@@ -131,3 +131,50 @@ exports.getLeastUsedProducts = (req, res) => {
     }
   });
 };
+
+exports.createCarouselItem = (req, res) => {
+  console.log("hola")
+  try {
+    const { titulo, descripcion } = req.body;
+    const imagenRuta = req.file ? `/uploads/${req.file.filename}` : '';
+
+    if (!titulo || !descripcion || !imagenRuta) {
+      return res.status(400).json({ error: 'Todos los campos son obligatorios' });
+    }
+
+    const itemData = { titulo, descripcion, imagenRuta };
+    productService.addCarouselItem(itemData, (err, newItem) => {
+      if (err) {
+        logger.error('Error al agregar el ítem al carrusel:', err);
+        res.status(500).json({ error: 'Error al agregar el ítem al carrusel' });
+      } else {
+        res.status(201).json(newItem);
+      }
+    });
+  } catch (error) {
+    logger.error('Error al agregar el ítem al carrusel:', error);
+    res.status(500).json({ error: 'Error al agregar el ítem al carrusel' });
+  }
+};
+
+exports.listCarouselItems = (req, res) => {
+  console.log("Entrando en listCarouselItems"); // Añadido para depuración
+  try {
+    productService.getCarouselItems((err, items) => {
+      if (err) {
+        logger.error('Error al consultar los ítems del carrusel:', err);
+        res.status(500).json({ error: 'Error al consultar los ítems del carrusel' });
+      } else {
+        console.log('Ítems obtenidos:', items); // Añadido para depuración
+        if (items.length > 0) {
+          res.status(200).json(items);
+        } else {
+          res.status(404).json({ message: 'No se encontraron ítems del carrusel.' });
+        }
+      }
+    });
+  } catch (error) {
+    logger.error('Error al consultar los ítems del carrusel:', error);
+    res.status(500).json({ error: 'Error al consultar los ítems del carrusel' });
+  }
+};
