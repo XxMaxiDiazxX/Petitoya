@@ -16,7 +16,7 @@ export const AgrSu = () => {
           <Button
             className={`btn ${activeSection === 'registro' ? 'custom-button' : 'btn-secondary'}`}
             onClick={() => setActiveSection('registro')}>
-            Registro de empleados
+            Registro de Empleados
           </Button>
           <Button
             className={`btn ${activeSection === 'carousel' ? 'custom-button' : 'btn-secondary'}`}
@@ -26,7 +26,7 @@ export const AgrSu = () => {
           <Button
             className={`btn ${activeSection === 'consultar' ? 'custom-button' : 'btn-secondary'}`}
             onClick={() => setActiveSection('consultar')}>
-            Consultar Supervisor
+            Consultar Empleados
           </Button>
           <Button
             className={`btn ${activeSection === 'stats' ? 'custom-button' : 'btn-secondary'}`}

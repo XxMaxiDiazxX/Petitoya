@@ -214,6 +214,59 @@ const getCarouselItems = (callback) => {
   }
 };
 
+// Función para eliminar imágenes relacionadas
+const removeCarouselImages = () => {
+  const promises = carouselItems.map((item) => {
+    // Ajusta la ruta para ir un directorio atrás
+    const filePath = path.resolve(__dirname, '..', 'uploads', path.basename(item.imagenRuta)); // 'uploads' para acceder al directorio de imágenes
+    console.log(`Intentando eliminar la imagen en: ${filePath}`);
+    
+    return new Promise((resolve, reject) => {
+      fs.access(filePath, fs.constants.F_OK, (err) => {
+        if (err) {
+          console.log(`La imagen en ${filePath} no existe.`);
+          resolve(); // Continuamos incluso si la imagen no existe
+        } else {
+          fs.unlink(filePath, (err) => {
+            if (err) {
+              console.error(`Error al eliminar ${filePath}:`, err);
+              reject(err);
+            } else {
+              console.log(`Imagen ${filePath} eliminada.`);
+              resolve();
+            }
+          });
+        }
+      });
+    });
+  });
+
+  // Esperamos a que todas las promesas se completen
+  return Promise.all(promises);
+};
+
+// Limpiar ítems al apagar el servidor
+process.on('exit', async () => {
+  console.log('Servidor apagándose. Limpiando ítems del carrusel...');
+  await removeCarouselImages();
+  carouselItems = [];
+});
+
+// Manejo de interrupciones (CTRL+C)
+process.on('SIGINT', async () => {
+  console.log('Interrupción recibida. Limpiando ítems del carrusel...');
+  
+  await removeCarouselImages(); // Asegura que las imágenes se eliminen antes de salir
+  process.exit(0); // Luego cierra el proceso
+});
+
+// Manejo de errores no atrapados
+process.on('uncaughtException', async (err) => {
+  console.error('Excepción no atrapada:', err);
+  await removeCarouselImages(); // Limpiar imágenes en caso de error
+  process.exit(1); // Luego cierra el proceso con error
+});
+
 
 module.exports = {
   getProducts,
