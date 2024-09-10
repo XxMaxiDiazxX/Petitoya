@@ -81,7 +81,7 @@ const AgregarCaruselItem = () => {
               />
               <ErrorMessage name="imagen" component="div" className="text-danger" />
             </div>
-            <button type="submit" className="btn btn-primary" disabled={uploading}>
+            <button type="submit" className="btn custom-button2" disabled={uploading}>
               {uploading ? 'Subiendo...' : 'Agregar Ítem'}
             </button>
           </Form>

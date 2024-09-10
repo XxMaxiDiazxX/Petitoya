@@ -1,198 +1,45 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import { Row, Col, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import * as Yup from "yup";
-import { toast } from "react-toastify"; // Asegúrate de tener react-toastify importado
-
-import EstadisticasVentas from "./Stats";
-import ConsultarSuper from "./ConsultarSuper";
-import AgregarCaruselItem from "./AgregarCaruselItem";
-
-const apiUrl = import.meta.env.VITE_API_URL;
+import React, { useState } from 'react';
+import { Button, Col } from 'react-bootstrap';
+import AgregarCaruselItem from './AgregarCaruselItem';
+import ConsultarSuper from './ConsultarSuper';
+import EstadisticasVentas from './Stats';
+import RegistroEmpleado from './RegistroEmpleado'; // Este es tu formulario de registro
 
 export const AgrSu = () => {
-  const initialValues = {
-    nombre: "",
-    apellido: "",
-    documento: "",
-    correo_electronico: "",
-    contrasena: "",
-    confirmar_contrasena: "",
-    telefono: "",
-  };
-
-  const validationSchema = Yup.object().shape({
-    nombre: Yup.string()
-      .matches(/[A-Za-z]+/, "Ingrese un nombre válido")
-      .required("Campo requerido"),
-    apellido: Yup.string()
-      .matches(/[A-Za-z]+/, "Ingrese un apellido válido")
-      .required("Campo requerido"),
-    documento: Yup.number()
-      .min(0, "El documento no puede ser negativo") // Asegura que el número sea positivo
-      .required("Campo requerido"),
-    correo_electronico: Yup.string()
-      .email("Ingrese un correo electrónico válido")
-      .required("Campo requerido"),
-    contrasena: Yup.string()
-      .min(6, "La contraseña debe tener al menos 6 caracteres")
-      .matches(
-        /^(?=.*\d)(?=.*[A-Z])(?=.*[\W_]).*$/,
-        "La contraseña debe contener al menos un número, una letra mayúscula y un carácter especial"
-      )
-      .required("Campo requerido"),
-    confirmar_contrasena: Yup.string()
-      .oneOf([Yup.ref("contrasena"), null], "Las contraseñas deben coincidir")
-      .required("Campo requerido"),
-    telefono: Yup.number().required("Campo requerido"),
-  });
-
-  const [registrationError, setRegistrationError] = useState(null);
-  const [registrationSuccess, setRegistrationSuccess] = useState(false);
-
-  const onSubmit = (values, { setSubmitting, resetForm }) => {
-    axios
-      .post(`${apiUrl}/auth/registerSu`, values)
-      .then((response) => {
-        toast.success('Registro exitoso');
-        setRegistrationSuccess(true);
-        resetForm();
-      })
-      .catch((error) => {
-        console.error("Error de registro:", error.response?.data);
-        toast.error(error.response?.data?.error || "Error de registro");
-        setRegistrationError(
-          error.response?.data?.error || "Error de registro"
-        );
-      })
-      .finally(() => {
-        setSubmitting(false);
-      });
-  };
+  const [activeSection, setActiveSection] = useState('registro'); // Estado para controlar la sección activa
 
   return (
     <>
-      <div className="h-100">
-        <Col
-          xs={12}
-          md={8}
-          lg={6}
-          className="d-flex flex-column align-items-center justify-content-center w-100 h-100"
-        >
-          <h4 className="text-center cuerpo" style={{ fontSize: "45px" }}>
+      <div className="h-100 d-flex flex-column align-items-center justify-content-center">
+        <h4 className="text-center" style={{ fontSize: '45px' }}>Administración</h4>
+        <div className="btn-group mb-4" role="group">
+          <Button
+            className={`btn ${activeSection === 'registro' ? 'custom-button' : 'btn-secondary'}`}
+            onClick={() => setActiveSection('registro')}>
             Registro de empleados
-          </h4>
+          </Button>
+          <Button
+            className={`btn ${activeSection === 'carousel' ? 'custom-button' : 'btn-secondary'}`}
+            onClick={() => setActiveSection('carousel')}>
+            Agregar Carusel
+          </Button>
+          <Button
+            className={`btn ${activeSection === 'consultar' ? 'custom-button' : 'btn-secondary'}`}
+            onClick={() => setActiveSection('consultar')}>
+            Consultar Supervisor
+          </Button>
+          <Button
+            className={`btn ${activeSection === 'stats' ? 'custom-button' : 'btn-secondary'}`}
+            onClick={() => setActiveSection('stats')}>
+            Estadísticas de Ventas
+          </Button>
+        </div>
 
-          <Formik
-            initialValues={initialValues}
-            onSubmit={onSubmit}
-            validationSchema={validationSchema}
-          >
-            {({ isSubmitting }) => (
-              <Form className="fondito p-4 text-center labe naranj" style={{ width: "65%", fontSize: "20px" }}>
-                <Row className="mb-3 d-flex align-items-center">
-                  <Col className='mx-4'>
-                    <label htmlFor="nombre">Nombre:</label>
-                    <Field
-                      type="text"
-                      name="nombre"
-                      className="form-control bg-input usua"
-                      placeholder="Ingrese su nombre"
-                      maxLength="30"
-                    />
-                    <ErrorMessage name="nombre" component="span" className="error" />
-                  </Col>
-                  <Col className='mx-4'>
-                    <label htmlFor="apellido">Apellido:</label>
-                    <Field
-                      type="text"
-                      name="apellido"
-                      className="form-control bg-input usua"
-                      placeholder="Ingrese su apellido"
-                      maxLength="30"
-                    />
-                    <ErrorMessage name="apellido" component="span" className="error" />
-                  </Col>
-                </Row>
-                <Row className="mb-3 d-flex align-items-center">
-                  <Col className='mx-4'>
-                    <label htmlFor="documento">Documento:</label>
-                    <Field
-                      type="number"
-                      name="documento"
-                      className="form-control bg-input usua"
-                      placeholder="Ingrese su documento"
-                      maxLength="20"
-                      min="0" // Esto asegura que no se puedan ingresar números negativos
-                      step="1" // Esto asegura que solo se puedan ingresar enteros
-                    />
-                    <ErrorMessage name="documento" component="span" className="error" />
-                  </Col>
-                  <Col className='mx-4'>
-                    <label htmlFor="telefono">Teléfono:</label>
-                    <Field
-                      type="tel"
-                      name="telefono"
-                      className="form-control bg-input usua"
-                      placeholder="Ingrese su teléfono"
-                      maxLength="20"
-                    />
-                    <ErrorMessage name="telefono" component="span" className="error" />
-                  </Col>
-                </Row>
-                <Row className="mb-3 d-flex align-items-center">
-                  <Col className='mx-4'>
-                    <label htmlFor="contrasena">Contraseña:</label>
-                    <Field
-                      type="password"
-                      name="contrasena"
-                      className="form-control bg-input contra"
-                      placeholder="Ingrese su contraseña"
-                      maxLength="50"
-                    />
-                    <ErrorMessage name="contrasena" component="span" className="error" />
-                  </Col>
-
-                  <Col className='mx-4'>
-                    <label htmlFor="correo_electronico">Correo Electrónico:</label>
-                    <Field
-                      type="email"
-                      name="correo_electronico"
-                      className="form-control bg-input usua"
-                      placeholder="Ingrese su correo electrónico"
-                      maxLength="100"
-                    />
-                    <ErrorMessage name="correo_electronico" component="span" className="error" />
-                  </Col>
-                </Row>
-                <Row className="mb-3 d-flex align-items-center">
-                  <Col className='mx-4'>
-                    <label htmlFor="confirmar_contrasena">Confirmar Contraseña:</label>
-                    <Field
-                      type="password"
-                      name="confirmar_contrasena"
-                      className="form-control bg-input contra"
-                      placeholder="Ingrese su contraseña"
-                      maxLength="50"
-                    />
-                    <ErrorMessage name="confirmar_contrasena" component="span" className="error" />
-                  </Col>
-                  <Col className='mx-4 d-flex align-items-center justify-content-center cuerpo text-uppercase'>
-                    <Button type="submit" className='custom-button2 border-0' disabled={isSubmitting}>
-                      REGISTRAR
-                    </Button>
-                  </Col>
-                </Row>
-              </Form>
-            )}
-          </Formik>
-        </Col>
+        {activeSection === 'registro' && <RegistroEmpleado />}
+        {activeSection === 'carousel' && <AgregarCaruselItem />}
+        {activeSection === 'consultar' && <ConsultarSuper />}
+        {activeSection === 'stats' && <EstadisticasVentas />}
       </div>
-      <AgregarCaruselItem />
-      <ConsultarSuper />
-      <EstadisticasVentas />
     </>
   );
 };
