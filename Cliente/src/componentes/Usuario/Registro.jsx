@@ -72,9 +72,9 @@ export const Registro = () => {
           validationSchema={validationSchema}
         >
           {({ isSubmitting }) => (
-            <Form className="fondito p-4 text-center labe naranj" style={{ width: "65%", fontSize: "20px" }}>
+            <Form className="fondito p-4 text-center labe naranj" style={{ width: "80%", fontSize: "20px" }}>
               <Row className="mb-3 d-flex align-items-center">
-                <Col className='mx-4'>
+                <Col xs={12} md={6}>
                   <label htmlFor="nombre">Nombre:</label>
                   <Field
                     type="text"
@@ -85,7 +85,7 @@ export const Registro = () => {
                   />
                   <ErrorMessage name="nombre" component="span" className="error" />
                 </Col>
-                <Col className='mx-4'>
+                <Col xs={12} md={6}>
                   <label htmlFor="apellido">Apellido:</label>
                   <Field
                     type="text"
@@ -98,7 +98,7 @@ export const Registro = () => {
                 </Col>
               </Row>
               <Row className="mb-3 d-flex align-items-center">
-                <Col className='mx-4'>
+                <Col xs={12} md={6}>
                   <label htmlFor="documento">Documento:</label>
                   <Field
                     type="number"
@@ -111,7 +111,7 @@ export const Registro = () => {
                   />
                   <ErrorMessage name="documento" component="span" className="error" />
                 </Col>
-                <Col className='mx-4'>
+                <Col xs={12} md={6}>
                   <label htmlFor="telefono">Teléfono:</label>
                   <Field
                     type="tel"
@@ -124,7 +124,7 @@ export const Registro = () => {
                 </Col>
               </Row>
               <Row className="mb-3 d-flex align-items-center">
-                <Col className='mx-4'>
+                <Col xs={12} md={6}>
                   <label htmlFor="contrasena">Contraseña:</label>
                   <Field
                     type="password"
@@ -136,7 +136,7 @@ export const Registro = () => {
                   <ErrorMessage name="contrasena" component="span" className="error" />
                 </Col>
 
-                <Col className='mx-4'>
+                <Col xs={12} md={6}>
                   <label htmlFor="correo_electronico">Correo Electrónico:</label>
                   <Field
                     type="email"
@@ -149,7 +149,7 @@ export const Registro = () => {
                 </Col>
               </Row>
               <Row className="mb-3 d-flex align-items-center">
-                <Col className='mx-4'>
+                <Col xs={12} md={6}>
                   <label htmlFor="confirmar_contrasena">Confirmar Contraseña:</label>
                   <Field
                     type="password"

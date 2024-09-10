@@ -206,7 +206,6 @@ const addCarouselItem = (itemData, callback) => {
 };
 
 const getCarouselItems = (callback) => {
-  console.log('Datos en getCarouselItems:', carouselItems); // Añadido para depuración
   try {
     callback(null, carouselItems);
   } catch (error) {

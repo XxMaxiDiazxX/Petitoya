@@ -4,7 +4,6 @@ import { BarraNavegacion } from "./BarraNavegacion";
 import { Menu } from "./menu/Menu";
 import { Inicio } from "./inicio/Inicio";
 import { Pedidos } from "./pedidos/Pedidos";
-import { PieDePagina } from "./PieDePagina";
 import OrdersManagement from "./superusuario/OrdersManagement";
 import Carrito from "./pedidos/Carrito";
 import ActualizarUsuario from "./usuario/ActualizarUsuario";
@@ -87,7 +86,6 @@ export const PaginaPrincipal = () => {
           />
         </Routes>
       </div>
-      <PieDePagina />
 
       {/* ToastContainer para notificaciones */}
       <ToastContainer />

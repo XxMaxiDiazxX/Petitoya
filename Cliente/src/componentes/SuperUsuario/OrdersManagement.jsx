@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Modal, Button, Table } from 'react-bootstrap';
-import { toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 import io from 'socket.io-client';
 import 'react-toastify/dist/ReactToastify.css';
 import PedidoTable from '../pedidos/PedidoTable';
@@ -31,7 +31,7 @@ const OrdersManagement = () => {
     };
 
     socket.on('notificacion', handleNotification);
-  
+
     return () => {
       socket.off('notificacion', handleNotification); // Cleanup listener on unmount
     };
@@ -92,7 +92,7 @@ const OrdersManagement = () => {
       handleShowModal(order);
     }
   };
-    
+
   return (
     <div className="container mt-5">
       <div className="row mb-3">
@@ -133,51 +133,52 @@ const OrdersManagement = () => {
         </div>
       </div>
       <div className="row">
-      {ordersType === 'entregado' ? (
+        {ordersType === 'entregado' ? (
           <PedidoTable pedidos={orders} />
         ) : (
-        orders.map(order => (
-          <div key={order.id_pedido} className="col-md-6 mb-4">
-            <div className="card" onClick={(event) => handleDivClick(event, order)} style={{ cursor: 'pointer' }}>
-              <div className="card-body">
-                <h5 className="card-title">ID Pedido: {order.id_pedido}</h5>
-                <p className="card-text">Cliente: {order.id_cliente}</p>
-                <p className="card-text">Estado: {order.estado}</p>
-                <p className="card-text">Fecha de Compra: {formatDate(order.fecha_compra)}</p>
-                <div className="btn-group" role="group" aria-label="Opciones de estado">
-                  {ordersType === 'pendiente' && (
-                    <button
-                      type="button"
-                      className="btn btn-sm custom-button"
-                      onClick={() => handleUpdateOrderStatus(order.id_pedido, 'en proceso')}
-                    >
-                      Marcar como En Proceso
-                    </button>
-                  )}
-                  {ordersType === 'en proceso' && (
-                    <button
-                      type="button"
-                      className="btn btn-sm custom-button"
-                      onClick={() => handleUpdateOrderStatus(order.id_pedido, 'por entrega')}
-                    >
-                      Marcar como Por Entrega
-                    </button>
-                  )}
-                  {ordersType === 'por entrega' && (
-                    <button
-                      type="button"
-                      className="btn btn-sm custom-button"
-                      onClick={() => handleUpdateOrderStatus(order.id_pedido, 'entregado')}
-                    >
-                      Marcar como Entregado
-                    </button>
-                  )}
+          orders.map(order => (
+            <div key={order.id_pedido} className="col-md-6 mb-4">
+              <div className="card" onClick={(event) => handleDivClick(event, order)} style={{ cursor: 'pointer' }}>
+                <div className="card-body">
+                  <h5 className="card-title">ID Pedido: {order.id_pedido}</h5>
+                  <p className="card-text">Cliente: {order.cliente_nombre}</p>
+                  <p className="card-text">Correo: {order.cliente_correo}</p>
+                  <p className="card-text">Teléfono: {order.cliente_telefono}</p>
+                  <p className="card-text">Estado: {order.estado}</p>
+                  <p className="card-text">Fecha de Compra: {formatDate(order.fecha_compra)}</p>                <div className="btn-group" role="group" aria-label="Opciones de estado">
+                    {ordersType === 'pendiente' && (
+                      <button
+                        type="button"
+                        className="btn btn-sm custom-button2"
+                        onClick={() => handleUpdateOrderStatus(order.id_pedido, 'en proceso')}
+                      >
+                        Marcar como En Proceso
+                      </button>
+                    )}
+                    {ordersType === 'en proceso' && (
+                      <button
+                        type="button"
+                        className="btn btn-sm custom-button2"
+                        onClick={() => handleUpdateOrderStatus(order.id_pedido, 'por entrega')}
+                      >
+                        Marcar como Por Entrega
+                      </button>
+                    )}
+                    {ordersType === 'por entrega' && (
+                      <button
+                        type="button"
+                        className="btn btn-sm custom-button2"
+                        onClick={() => handleUpdateOrderStatus(order.id_pedido, 'entregado')}
+                      >
+                        Marcar como Entregado
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))
-      )}
+          ))
+        )}
       </div>
       {error && <div className="alert alert-danger mt-3">{error}</div>}
 
@@ -187,35 +188,42 @@ const OrdersManagement = () => {
             <Modal.Title>Detalles del Pedido</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <h5>{`Pedido ID: ${selectedOrder.id_pedido}`}</h5>
-            <p>{`Estado: ${selectedOrder.estado}`}</p>
-            <p>{`Total a Pagar: $${selectedOrder.monto_total}`}</p>
-            <p>{`Fecha de Compra: ${formatDate(selectedOrder.fecha_compra)}`}</p>
-            <h6>Productos:</h6>
-            {detalles.length > 0 ? (
-              <Table striped bordered hover responsive>
-                <thead>
-                  <tr>
-                    <th>Producto</th>
-                    <th>Descripción</th>
-                    <th>Precio</th>
-                    <th>Cantidad</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {detalles.map((detalle, index) => (
-                    <tr key={index}>
-                      <td>{detalle.nombre}</td>
-                      <td>{detalle.descripcion}</td>
-                      <td>{`$${detalle.precio}`}</td>
-                      <td>{detalle.cantidad}</td>
+            <div className="card-header">
+              <h5 className="card-title">{`Pedido ID: ${selectedOrder.id_pedido}`}</h5>
+            </div>
+            <div className="card-body">
+              <p className="card-text"><strong>Estado:</strong> {selectedOrder.estado}</p>
+              <p className="card-text"><strong>Cliente:</strong> {selectedOrder.cliente_nombre}</p>
+              <p className="card-text"><strong>Teléfono:</strong> {selectedOrder.cliente_telefono}</p>
+              <p className="card-text"><strong>Correo:</strong> {selectedOrder.cliente_correo}</p>
+              <p className="card-text"><strong>Total a Pagar:</strong> ${selectedOrder.monto_total}</p>
+              <p className="card-text"><strong>Fecha de Compra:</strong> {formatDate(selectedOrder.fecha_compra)}</p>
+              <h6 className="mt-4 mb-3">Productos:</h6>
+              {detalles.length > 0 ? (
+                <Table striped bordered hover responsive>
+                  <thead>
+                    <tr>
+                      <th>Producto</th>
+                      <th>Descripción</th>
+                      <th>Precio</th>
+                      <th>Cantidad</th>
                     </tr>
-                  ))}
-                </tbody>
-              </Table>
-            ) : (
-              <p>Cargando detalles...</p>
-            )}
+                  </thead>
+                  <tbody>
+                    {detalles.map((detalle, index) => (
+                      <tr key={index}>
+                        <td>{detalle.nombre}</td>
+                        <td>{detalle.descripcion}</td>
+                        <td>{`$${detalle.precio}`}</td>
+                        <td>{detalle.cantidad}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              ) : (
+                <p>Cargando detalles...</p>
+              )}
+            </div>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={() => setShowModal(false)}>

@@ -2,12 +2,24 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import Carousel from 'react-bootstrap/Carousel';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Importa los estilos de toast
+import imagen1 from '../../img/error/fondo.jpg'; // Imagen por defecto
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-
 const AgregarCaruselItem = () => {
   const [uploading, setUploading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [formValues, setFormValues] = useState(null); // Guardar valores del formulario
+  const [previewItem, setPreviewItem] = useState({
+    titulo: 'Título predeterminado',
+    descripcion: 'Descripción predeterminada',
+    imagen: imagen1,
+  }); // Estado inicial para previsualización con datos predeterminados
 
   const validationSchema = Yup.object().shape({
     titulo: Yup.string().required('El título es obligatorio'),
@@ -15,13 +27,28 @@ const AgregarCaruselItem = () => {
     imagen: Yup.mixed().required('La imagen es obligatoria'),
   });
 
+  const handleSubmit = async (values, { setSubmitting }) => {
+    setFormValues(values);
+    setShowModal(true);
+    setSubmitting(false);
+  };
 
-  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+  const previewChanges = (values) => {
+    setPreviewItem({
+      titulo: values.titulo,
+      descripcion: values.descripcion,
+      imagen: URL.createObjectURL(values.imagen), // Crear URL de la imagen para previsualización
+    });
+  };
+
+  const confirmSubmit = async () => {
+    if (!formValues) return;
+
     setUploading(true);
     const formData = new FormData();
-    formData.append('titulo', values.titulo);
-    formData.append('descripcion', values.descripcion);
-    formData.append('imagen', values.imagen);
+    formData.append('titulo', formValues.titulo);
+    formData.append('descripcion', formValues.descripcion);
+    formData.append('imagen', formValues.imagen);
 
     try {
       await axios.post(`${apiUrl}/products/anadircarru`, formData, {
@@ -29,15 +56,31 @@ const AgregarCaruselItem = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      alert('Item agregado al carrusel con éxito');
-      resetForm();
+      toast.success('Item agregado al carrusel con éxito');
+      setFormValues(null);
+      setPreviewItem({
+        titulo: 'Título predeterminado',
+        descripcion: 'Descripción predeterminada',
+        imagen: imagen1, // Resetear previsualización a predeterminada
+      });
     } catch (error) {
       console.error('Error al agregar el ítem:', error);
-      alert('Error al agregar el ítem');
+      toast.error('Error al agregar el ítem');
     } finally {
       setUploading(false);
-      setSubmitting(false);
+      setShowModal(false);
     }
+  };
+
+  const handleCancel = () => {
+    setShowModal(false);
+    setFormValues(null);
+    setUploading(false);
+    setPreviewItem({
+      titulo: 'Título predeterminado',
+      descripcion: 'Descripción predeterminada',
+      imagen: imagen1, // Resetear previsualización a predeterminada si se cancela
+    });
   };
 
   return (
@@ -48,7 +91,7 @@ const AgregarCaruselItem = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ setFieldValue }) => (
+        {({ setFieldValue, values, setSubmitting }) => (
           <Form encType="multipart/form-data">
             <div className="mb-3">
               <label htmlFor="titulo" className="form-label">Título</label>
@@ -77,7 +120,13 @@ const AgregarCaruselItem = () => {
                 name="imagen"
                 accept="image/*"
                 className="form-control"
-                onChange={(event) => setFieldValue('imagen', event.currentTarget.files[0])}
+                onChange={(event) => {
+                  setFieldValue('imagen', event.currentTarget.files[0]);
+                  previewChanges({
+                    ...values,
+                    imagen: event.currentTarget.files[0],
+                  });
+                }}
               />
               <ErrorMessage name="imagen" component="div" className="text-danger" />
             </div>
@@ -87,6 +136,36 @@ const AgregarCaruselItem = () => {
           </Form>
         )}
       </Formik>
+
+      <Modal show={showModal} onHide={handleCancel}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmar Adición</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          ¿Estás seguro de que deseas agregar este ítem al carrusel?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCancel}>
+            Cancelar
+          </Button>
+          <Button variant="primary" onClick={confirmSubmit}>
+            Confirmar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <div className="mt-4">
+        <h3>Previsualización</h3>
+        <Carousel className="carusel align-items-md-center p-2 mb-5">
+          <Carousel.Item className="carusel">
+            <img src={previewItem.imagen} alt={previewItem.titulo} className="d-block w-100" />
+            <Carousel.Caption className="carousel-caption-dark">
+              <h3>{previewItem.titulo}</h3>
+              <p>{previewItem.descripcion}</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+        </Carousel>
+      </div>
     </div>
   );
 };

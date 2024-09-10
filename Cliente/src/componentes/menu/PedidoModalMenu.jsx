@@ -72,20 +72,17 @@ export const PedidoModalMenu = ({
       toast.info("Debes iniciar sesión para realizar un pedido.");
       return;
     }
-
+  
     try {
-      await axios.post(`${apiUrl}/cart`, {
+      // Realizar el pedido de un producto específico
+      await axios.post(`${apiUrl}/orders/pedido`, {
         id_cliente,
         id_producto: producto.id_producto,
         cantidad,
       });
-
-      const response = await axios.post(`${apiUrl}/orders`, {
-        id_cliente,
-      });
-
+  
       // Mostrar notificación de éxito
-      toast.success(`Pedido realizado con éxito`, {
+      toast.success("Pedido realizado con éxito", {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -94,7 +91,7 @@ export const PedidoModalMenu = ({
         draggable: true,
         progress: undefined,
       });
-
+  
       setMostrarModal(false);
     } catch (error) {
       console.error(error);
@@ -113,7 +110,7 @@ export const PedidoModalMenu = ({
       );
     }
   };
-
+  
 
   const confirmarAgregarAlCarrito = () => {
     handleAddToCart();

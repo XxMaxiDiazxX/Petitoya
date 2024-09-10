@@ -123,3 +123,11 @@
 2024-09-09T08:56:11.070Z - [31MERROR[39M: [31mError al registrar usuario: Error al encriptar la contraseña[39m
 2024-09-09T08:56:42.695Z - [31MERROR[39M: [31mError al registrar usuario: Error al encriptar la contraseña[39m
 2024-09-09T08:57:43.618Z - [31MERROR[39M: [31mError al registrar usuario: Error al encriptar la contraseña[39m
+2024-09-10T04:01:23.129Z - [31MERROR[39M: [31mError en placeOrder (realizarPedidoQuery): ER_SP_DOES_NOT_EXIST: PROCEDURE petitoya.RealizarPedidoProducto does not exist[39m
+2024-09-10T04:01:23.132Z - [31MERROR[39M: [31mError al realizar el pedido: ER_SP_DOES_NOT_EXIST: PROCEDURE petitoya.RealizarPedidoProducto does not exist[39m
+2024-09-10T04:03:41.757Z - [31MERROR[39M: [31mError al insertar el pedido: ER_BAD_FIELD_ERROR: Unknown column 'fecha' in 'field list'[39m
+2024-09-10T04:03:41.760Z - [31MERROR[39M: [31mError al realizar el pedido: ER_BAD_FIELD_ERROR: Unknown column 'fecha' in 'field list'[39m
+2024-09-10T04:10:43.057Z - [31MERROR[39M: [31mError al insertar el pedido: ER_BAD_FIELD_ERROR: Unknown column 'fecha' in 'field list'[39m
+2024-09-10T04:10:43.060Z - [31MERROR[39M: [31mError al realizar el pedido: ER_BAD_FIELD_ERROR: Unknown column 'fecha' in 'field list'[39m
+2024-09-10T04:29:22.930Z - [31MERROR[39M: [31mError al obtener pedidos en proceso: ER_BAD_FIELD_ERROR: Unknown column 'c.correo' in 'field list'[39m
+2024-09-10T04:29:24.026Z - [31MERROR[39M: [31mError al obtener pedidos pendiente: ER_BAD_FIELD_ERROR: Unknown column 'c.correo' in 'field list'[39m

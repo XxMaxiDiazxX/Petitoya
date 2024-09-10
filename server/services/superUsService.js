@@ -27,13 +27,22 @@ const getOrdersByState = (estado, callback) => {
     if (!validStates.includes(estado)) {
       return callback(new Error("Estado no válido"), null);
     }
-    whereClause = "WHERE estado = ?";
+    whereClause = "WHERE p.estado = ?";
     queryParams = [estado];
   }
 
   const query = `
-    SELECT id_pedido, id_cliente, estado, fecha_compra, monto_total
-    FROM pedidos
+    SELECT 
+      p.id_pedido, 
+      p.id_cliente, 
+      p.estado, 
+      p.fecha_compra, 
+      p.monto_total,
+      c.nombre AS cliente_nombre,
+      c.correo_electronico AS cliente_correo,
+      c.telefono AS cliente_telefono
+    FROM pedidos p
+    JOIN clientes c ON p.id_cliente = c.id_cliente
     ${whereClause};
   `;
 

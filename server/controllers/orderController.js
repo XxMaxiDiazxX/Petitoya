@@ -39,3 +39,15 @@ exports.placeOrder = async (req, res) => {
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
+
+exports.placeOrderuno = async (req, res) => {
+  const { id_cliente, id_producto, cantidad } = req.body;
+
+  try {
+    const result = await orderService.placeOrderuno(id_cliente, id_producto, cantidad);
+    res.status(200).json(result);
+  } catch (error) {
+    logger.error('Error al realizar el pedido:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
