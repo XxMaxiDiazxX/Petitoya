@@ -157,61 +157,70 @@ export const PedidoModalMenu = ({
           className="modal-dialog modal-dialog-centered"
           role="document"
         >
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">Realizar Pedido</h5>
-              <button
-                type="button"
-                className="close"
-                aria-label="Close"
-                onClick={() => setMostrarModal(false)}
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div className="modal-body">
-              <img
-                src={urlImagen}
-                alt="Imagen del producto"
-                className="card-img-top"
-                style={{ maxHeight: "200px", objectFit: "cover" }}
-              />
-              <h5>{producto.nombre}</h5>
-              <p>{producto.descripcion}</p>
-              <p>
-                <strong>Precio: ${producto.precio}</strong>
-              </p>
-              <form onSubmit={(e) => e.preventDefault()}>
-                <div className="form-group">
-                  <label htmlFor="cantidad">Cantidad:</label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    id="cantidad"
-                    value={cantidad}
-                    min={1}
-                    onChange={(e) => setCantidad(parseInt(e.target.value))}
-                  />
-                </div>
-                <div className="d-flex justify-content-between mt-3">
-                  <button
-                    type="button"
-                    className="btn btn-primary custom-button1"
-                    onClick={() => setMostrarConfirmacionAgregar(true)}
-                  >
-                    Añadir al Carrito
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-success custom-button1"
-                    onClick={() => setMostrarConfirmacionPedido(true)}
-                  >
-                    Realizar Pedido
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
+<div className="modal-dialog" style={{ maxWidth: '500px', margin: '1.75rem auto' }}>
+  <div className="modal-content">
+    <div className="modal-header">
+      <h5 className="modal-title">Realizar Pedido</h5>
+      <button
+        type="button"
+        className="close"
+        aria-label="Close"
+        onClick={() => setMostrarModal(false)}
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div 
+      className="modal-body"
+      style={{
+        maxHeight: 'calc(100vh - 150px)',  // Limita la altura del modal al 100% de la ventana menos margen
+        overflowY: 'auto',  // Permite que el contenido haga scroll si es demasiado largo
+        overflowX: 'hidden',  // Evita desbordamiento horizontal
+      }}
+    >
+      <img
+        src={urlImagen}
+        alt="Imagen del producto"
+        className="card-img-top"
+        style={{ maxHeight: '200px', objectFit: 'cover', width: '100%' }}
+      />
+      <h5>{producto.nombre}</h5>
+      <p>{producto.descripcion}</p>
+      <p>
+        <strong>Precio: ${producto.precio}</strong>
+      </p>
+      <form onSubmit={(e) => e.preventDefault()}>
+        <div className="form-group">
+          <label htmlFor="cantidad">Cantidad:</label>
+          <input
+            type="number"
+            className="form-control"
+            id="cantidad"
+            value={cantidad}
+            min={1}
+            onChange={(e) => setCantidad(parseInt(e.target.value))}
+          />
+        </div>
+        <div className="d-flex justify-content-between mt-3">
+          <button
+            type="button"
+            className="btn btn-primary custom-button1"
+            onClick={() => setMostrarConfirmacionAgregar(true)}
+          >
+            Añadir al Carrito
+          </button>
+          <button
+            type="button"
+            className="btn btn-success custom-button1"
+            onClick={() => setMostrarConfirmacionPedido(true)}
+          >
+            Realizar Pedido
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
         </div>
       </div>
 

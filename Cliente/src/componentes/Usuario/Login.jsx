@@ -91,7 +91,7 @@ export const Login = () => {
                         placeholder="Tu Documento"
                         maxLength="20"
                       />
-                      <ErrorMessage name="documento" component="div" className="text-danger fs-6 lh-1" />
+                      <ErrorMessage name="documento" component="div" className="fs-6 lh-1" />
                     </div>
                     <div className="form-group mb-4">
                       <label htmlFor="contrasena">Contraseña</label>
@@ -102,7 +102,7 @@ export const Login = () => {
                         placeholder="Tu Contraseña"
                         maxLength="50"
                       />
-                      <ErrorMessage name="contrasena" component="div" className="text-danger fs-6 lh-1" />
+                      <ErrorMessage name="contrasena" component="div" className="fs-6 lh-1" />
                     </div>
                     <div className='mx-4 d-flex align-items-center justify-content-center cuerpo text-uppercase text-uppercase mb-5'>
                       <button type="submit" className="btn text-white bg-naranj border-0">Ingresar</button>
